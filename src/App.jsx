@@ -1,20 +1,14 @@
-import './App.css'
-import Header from './frontend/main/user/components/Header'
-import Footer from './frontend/main/user/components/Footer'
 import { Outlet } from 'react-router-dom'
-
+import Header from './role/user/components/Header'
+import Footer from './role/user/components/Footer'
+import './App.css'
 
 function App() {
-
-  const h1 = './assets/download.png'
-
   return (
     <>
       <Header></Header>
-
       <Outlet></Outlet>
       <Footer></Footer>
-
     </>
   )
 }

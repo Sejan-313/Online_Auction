@@ -1,185 +1,145 @@
-import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Messages } from "primereact/messages";
-import { useRef } from "react";
-
-// import axios from "axios";
-import css from "./login_signup.module.css";
+import css from "./user_seller.module.css";
 
 export default function Signup_User() {
-    const msgs = useRef(null);
-
-    const [errors, setErrors] = useState({});
     const [formData, setFormData] = useState({
-      full_name: "",
-      email: "",
-      password: "",
-      phone_number: "",
-      address: {
-        street: "",
+        fullName: "",
+        email: "",
+        address: "",
         city: "",
-        state: "",
-        zip: "",
-      },
+        pincode: "",
+        mobile: "",
+        gender: "",
+        birthdate: "",
+        image: null,
+        password: "",
+        confirmPassword: "",
     });
 
-    const validateField = (name, value) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^[6-9]\d{9}$/;
-        let errorMessage = "";
-        if (!value.trim()) {
-          errorMessage = "This field is required.";
-        } else if (name === "email" && !emailRegex.test(value)) {
-          errorMessage = "Invalid email format.";
-        } else if (name === "phone_number" && !phoneRegex.test(value)) {
-          errorMessage = "Invalid phone number.";
-        }
-        return errorMessage;
-    };
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (["street", "city", "state", "zip"].includes(name)) {
-          setFormData({
-            ...formData,
-            address: { ...formData.address, [name]: value },
-          });
-        } else {
-          setFormData({ ...formData, [name]: value });
-        }
-    
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: validateField(name, value),
+        const { name, value, type, files } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "file" ? files[0] : value,
         }));
+        setErrors({ ...errors, [e.target.name]: "" });
     };
 
+    const validateForm = () => {
+        let newErrors = {};
+        if (!formData.fullName.trim()) newErrors.fullName = "Full Name is required";
+        if (!formData.email.trim()) newErrors.email = "Email is required";
+        if (!formData.address.trim()) newErrors.address = "Address is required";
+        if (!formData.city.trim()) newErrors.city = "City is required";
+        if (!formData.pincode.match(/^\d{6}$/)) newErrors.pincode = "Enter a valid 6-digit Pincode";
+        if (!formData.mobile.match(/^\d{10}$/)) newErrors.mobile = "Enter a valid 10-digit Mobile number";
+        if (!formData.gender) newErrors.gender = "Select Gender";
+        if (!formData.birthdate) newErrors.birthdate = "Select Birthdate";
+        if (!formData.image) newErrors.image = "Upload an Image";
+        if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+        if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match";
+        
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-    
-        const formErrors = {};
-        for (const field in formData) {
-            if (field === "address") {
-                for (const subField in formData.address) {
-                    formErrors[subField] = validateField(subField, formData.address[subField]);
-                }
-            } else {
-                formErrors[field] = validateField(field, formData[field]);
-            }
+        if (validateForm()) {
+            console.log("Form Data:", formData);
         }
-        setErrors(formErrors);
-        
-        if (Object.values(formErrors).every((error) => !error)) {
-            try {
-                const response = await axios.post(
-                    `${import.meta.env.VITE_REACT_APP_BACKEND_URL}home/signup_user`,
-                    formData
-                );
-                
-                if (response.status === 201) {
-    
-                    setFormData({
-                        full_name: "",
-                        email: "",
-                        password: "",
-                        phone_number: "",
-                        address: { street: "", city: "", state: "", zip: "" },
-                    });
-        
-                    msgs.current.show([
-                        { severity: "success", summary: "Success", detail: response.data.message, life: 5000 },
-                    ]);
-                }
-                
-            } catch (error) {
-                const errorMessage = error.response?.data?.message || "Signup failed. Please try again.";
-                console.error("Error submitting form:", errorMessage);
-        
-                msgs.current.show([
-                    { severity: "error", summary: "Error", detail: errorMessage, life: 8000 },
-                ]);
-            }
-        }
-        
-        
-        
     };
 
     return (
-        <div className={`${css["main_body"]} flex-column gap-2 d-flex justify-content-center align-items-center`}>
-            <div className="position-absolute top-0 end-0 p-3" style={{ zIndex: 1000 }}>
-                <Messages ref={msgs} />
-            </div>
-            <form method="POST" className={`${css["signup_user_form"]} border rounded d-flex flex-column justify-content-between gap-3 p-2 py-4`} onSubmit={handleSubmit}>
-                <h1 className="text-center">Signup User</h1>
-                <div>
-                    <div className={`${css["signup_user_form_field"]} d-flex justify-content-evenly`}>
-                        <div className="d-flex flex-column ">
-                            <label htmlFor="full_name">Full Name</label>
-                            <div>
-                                <InputText id="full_name" name="full_name" placeholder="Full Name" value={formData.full_name} onChange={handleChange} className={errors.full_name ? "p-invalid" : ""}/>
-                                <div> {errors.full_name && <small className="p-error">{errors.full_name}</small>} </div>
+        <div className={`${css.container}`}>
+            <div className={`${css.signup}`}>
+                <div className={`${css.signup_form} border p-4 shadow-sm bg-white`}>
+                    <h4 className="text-center mb-3 font-weight-bold text-secondary">Sign Up</h4>
+                    <form onSubmit={handleSubmit}>
+                        <div className={`${css.signup_form_field} d-flex gap-3`}>
+                            <div className="w-100">
+                                <label className="form-label">Full Name</label>
+                                <input type="text" name="fullName" placeholder="enter fullName" className={`form-control ${errors.fullName ? "border-danger" : ""}`} value={formData.fullName} onChange={handleChange} />
+                                {errors.fullName && <small className="text-danger">{errors.fullName}</small>}
+                            </div>
+                            <div className="w-100">
+                                <label className="form-label">Email</label>
+                                <input type="email" name="email" placeholder="enter email" className={`form-control ${errors.email ? "border-danger" : ""}`} value={formData.email} onChange={handleChange} />
+                                {errors.email && <small className="text-danger">{errors.email}</small>}
+                            </div>
+                        </div>  
+                        <div className={`${css.signup_form_field_textarea}`}>
+                            <label className="form-label">Address</label>
+                            <textarea name="address" placeholder="enter address" className={`form-control ${errors.address ? "border-danger" : ""}`} value={formData.address} onChange={handleChange}></textarea>
+                            {errors.address && <small className="text-danger">{errors.address}</small>}
+                        </div>
+
+                        <div className={`${css.signup_form_field} d-flex gap-3`}>
+                            <div className="w-100">
+                                <label className="form-label">City</label>
+                                <input type="text" name="city" placeholder="enter city" className={`form-control ${errors.email ? "border-danger" : ""}`} value={formData.city} onChange={handleChange} />
+                                {errors.city && <small className="text-danger">{errors.city}</small>}
+                            </div>
+                            <div className="w-100">
+                                <label className="form-label">Pincode</label>
+                                <input type="text" name="pincode" placeholder="enter pincode" className={`form-control ${errors.pincode ? "border-danger" : ""}`} value={formData.pincode} onChange={handleChange} />
+                                {errors.pincode && <small className="text-danger">{errors.pincode}</small>}
                             </div>
                         </div>
-                        <div className="d-flex flex-column">
-                            <label htmlFor="email">Email</label>
-                            <div>
-                                <InputText id="email" name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} className={errors.email ? "p-invalid" : ""}/>
-                                <div>{errors.email && <small className="p-error">{errors.email}</small>}</div>
+
+                        <div className={`${css.signup_form_field} d-flex gap-3`}>
+                            <div className="w-100">
+                                <label className="form-label">Birthdate</label>
+                                <input type="date" name="birthdate" className={`form-control ${errors.birthdate ? "border-danger" : ""}`} value={formData.birthdate} onChange={handleChange} />
+                                {errors.birthdate && <small className="text-danger">{errors.birthdate}</small>}
                             </div>
-                        </div>
-                    </div>
-                    <div className={`${css["signup_user_form_field_address"]} d-flex justify-content-evenly flex-column`}>
-                        <label className="ps-2">Address</label>
-                        <div className="h-100 d-flex flex-column justify-content-evenly">
-                            <div className="d-flex justify-content-evenly h-100">
-                                <div className="flex flex-column gap-2">
-                                    <InputText name="street" placeholder="Street" value={formData.address.street} onChange={handleChange} className={errors.street ? "p-invalid" : ""}/>
-                                    <div>{errors.street && <small className="p-error">{errors.street}</small>}</div>
+                            <div className="w-100">
+                                <label className="form-label">Gender</label>
+                                <div className={`form-control ${errors.gender ? "border-danger" : ""} border rounded p-2`}>
+                                    <input type="radio" name="gender" value="Male" onChange={handleChange} /> Male
+                                    <input type="radio" name="gender" value="Female" className="ms-3" onChange={handleChange} /> Female
                                 </div>
-                                <div className="flex flex-column gap-2">
-                                    <InputText name="city" placeholder="City" value={formData.address.city} onChange={handleChange} className={errors.city ? "p-invalid" : ""}/>
-                                    <div>{errors.city && <small className="p-error">{errors.city}</small>}</div>
-                                </div>
-                            </div>
-                            <div className="d-flex justify-content-evenly h-100">
-                                <div className="flex flex-column gap-2">
-                                    <InputText name="state" placeholder="State" value={formData.address.state} onChange={handleChange} className={errors.state ? "p-invalid" : ""}/>
-                                    <div>{errors.state && <small className="p-error">{errors.state}</small>}</div>
-                                </div>
-                                <div className="flex flex-column gap-2">
-                                    <InputText name="zip" placeholder="Zip" value={formData.address.zip} onChange={handleChange} className={errors.zip ? "p-invalid" : ""}/>
-                                    <div>{errors.zip && <small className="p-error">{errors.zip}</small>}</div>
-                                </div>
+                                {errors.gender && <small className="text-danger">{errors.gender}</small>}
                             </div>
                         </div>
-                    </div>
-                    <div className={`${css["signup_user_form_field"]} d-flex justify-content-evenly`}>
-                        <div className="d-flex flex-column">
-                            <label htmlFor="password">Password</label>
-                            <div>
-                                <InputText id="password" name="password" placeholder="Password" type="password" value={formData.password} onChange={handleChange} className={errors.password ? "p-invalid" : ""}/>
-                                <div>{errors.password && <small className="p-error">{errors.password}</small>}</div>
+
+                        <div className={`${css.signup_form_field} d-flex gap-3`}>
+                            <div className="w-100">
+                                <label className="form-label">Mobile</label>
+                                <input type="text" name="mobile" placeholder="enter fullName" className={`form-control ${errors.mobile ? "border-danger" : ""}`} value={formData.mobile} onChange={handleChange} />
+                                {errors.mobile && <small className="text-danger">{errors.mobile}</small>}
+                            </div>
+                            <div className="w-100">
+                                <label className="form-label">Profile Image</label>
+                                <input type="file" name="image" className={`form-control ${errors.image ? "border-danger" : ""}`} accept="image/*" onChange={handleChange} />
+                                {errors.image && <small className="text-danger">{errors.image}</small>}
                             </div>
                         </div>
-                        <div className="d-flex flex-column">
-                            <label htmlFor="phone_number">Phone Number</label>
-                            <div>
-                                <InputText id="phone_number" name="phone_number" placeholder="Phone Number" value={formData.phone_number} onChange={handleChange} className={errors.phone_number ? "p-invalid" : ""}/>
-                                <div>{errors.phone_number && <small className="p-error">{errors.phone_number}</small>}</div>
+
+                        <div className={`${css.signup_form_field} d-flex gap-3`}>
+                            <div className="w-100">
+                                <label className="form-label">Password</label>
+                                <input type="password" name="password" placeholder="enter password" className={`form-control ${errors.password ? "border-danger" : ""}`} value={formData.password} onChange={handleChange} />
+                                {errors.password && <small className="text-danger">{errors.password}</small>}
+                            </div>
+                            <div className="w-100">
+                                <label className="form-label">Confirm Password</label>
+                                <input type="password" name="confirmPassword" placeholder="enter confirmPassword" className={`form-control ${errors.confirmPassword ? "border-danger" : ""}`} value={formData.confirmPassword} onChange={handleChange} />
+                                {errors.confirmPassword && <small className="text-danger">{errors.confirmPassword}</small>}
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" className={`btn btn-primary w-100`}>Submit</button>
+                        <button type="submit" className="btn btn-secondary w-100">sign up</button>
+                    </form>
                 </div>
-                <div></div>
-            </form>
-            <div className={`${css["signup_link"]} card p-2 py-4 text-center`}>
-                <span>Have an account? <Link to="/login" className="text-primary">Login</Link></span>
-                <span>Looking to sell your products? <Link to="/signup_seller" className="text-primary">Register as a Seller</Link></span>
+
+                <div className={`${css.signup_link} border p-3 shadow-sm bg-white text-center`}>
+                    <p className="m-0 text-black">Don't have an account? <Link to="/signup_seller" className="text-primary">Seller</Link></p>
+                    <p className="m-0 text-black">Already have an account? <Link to="/login" className="text-primary">Login</Link></p>
+                </div>
             </div>
         </div>
-    )
+    );
 }

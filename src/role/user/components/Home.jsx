@@ -5,15 +5,13 @@ import Slider from "./Slider"
 
 const Home = () =>
 {
-    return <>
-
-      
-      <Slider></Slider>
-      <Feature></Feature>
-      <Latest></Latest>
-  
-    
-    </>
+    return (
+      <>
+        <Slider />
+        <Latest />
+        <Feature />
+      </>
+    )
 }
 
 export default Home;

@@ -16,10 +16,10 @@ const Header = () =>
                     <span>2</span>
                 </a>
             </div>
-            <div className="user-access">
-                <Link to="/signup_user">Register</Link>
+            <div className="user-access w-25 d-flex justify-content-center align-items-center gap-2 ">
+                <Link to="/signup_user">Sign up</Link>
                 /
-                <Link to="/login">Sign in</Link>
+                <Link to="/login">Login</Link>
             </div>
             <nav className="main-menu mobile-menu">
                 <ul>
