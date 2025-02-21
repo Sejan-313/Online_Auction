@@ -1,0 +1,64 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    height: 520px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.login_form {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.login_form_field {
+    height: 95px;
+}
+.login_link {
+    height: 60px;
+}
+
+.signup {
+    height: 800px;
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.signup_form {
+    height: 730px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.signup_form_field {
+    height: 95px;
+}
+.signup_form_field_textarea {
+    height: 120px;
+}
+.signup_link {
+    height: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.icon
+{
+    font-size: 70px;
+    color:dimgray;
+}
+
+.icon:hover
+{
+    color: black;
+
+}
+
