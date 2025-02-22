@@ -50,9 +50,7 @@ export default function Login() {
 
     return (
          <>
-                <div>
-                            <Link to="/"><AiFillHome className={`${css.icon}`}/></Link>
-                </div>
+        {/* <div> <Link to="/"><AiFillHome className={`${css.icon}`}/></Link> </div> */}
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
                 <div className={`${css.login_form} border p-2 shadow-sm bg-white`}>

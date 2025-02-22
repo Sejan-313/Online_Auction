@@ -56,9 +56,7 @@ export default function Signup_User() {
 
     return (
         <>
-        <div>
-                    <Link to="/"><AiFillHome className={`${css.icon}`}/></Link>
-        </div>
+        {/* <div> <Link to="/"><AiFillHome className={`${css.icon}`}/></Link> </div> */}
         <div className={`${css.container}`}>
             <div className={`${css.signup}`}>
                 <div className={`${css.signup_form} border p-4 shadow-sm bg-white`}>

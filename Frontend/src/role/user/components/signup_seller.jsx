@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import css from "./user_seller.module.css";
-import { AiFillHome } from "react-icons/ai";
+// import { AiFillHome } from "react-icons/ai";
 
 
 export default function Signup_Seller() {
@@ -58,9 +58,7 @@ export default function Signup_Seller() {
     return (
         <>
 
-        <div>
-            <Link to="/"><AiFillHome className={`${css.icon}`}/></Link>
-        </div>
+        {/* <div> <Link to="/"><AiFillHome className={`${css.icon}`}/></Link> </div> */}
         <div className={`${css.container}`}>
             <div className={`${css.signup}`}>
                 <div className={`${css.signup_form} border p-4 shadow-sm bg-white`}>
