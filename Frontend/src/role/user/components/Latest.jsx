@@ -7,73 +7,101 @@ const Latest = () =>
     const images =[
     {
         name:"img/products/img-1.jpg",
-        price:"$22.90",
-        prdname:"BM"
+        price:"22.90 Rs",
+        prdname:"BM",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-2.jpg",
-        price:"$22.90",
-        prdname:"Slavia"
+        price:"22.90 Rs",
+        prdname:"Slavia",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-3.jpg",
-        price:"$22.90",
-        prdname:"Virtus"
+        price:"22.90 Rs",
+        prdname:"Virtus",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-4.jpg",
-        price:"$22.90",
-        prdname:"Swift"
+        price:"22.90 Rs",
+        prdname:"Swift",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-5.jpg",
-        price:"$22.90",
-        prdname:"Audi"
+        price:"22.90 Rs",
+        prdname:"Audi",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-6.jpg",
-        price:"$22.90",
-        prdname:"Rolse Royce"
+        price:"22.90 Rs",
+        prdname:"Rolse Royce",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-7.jpg",
-        price:"$22.90",
-        prdname:"Mercedes"
+        price:"22.90 Rs",
+        prdname:"Mercedes",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-8.jpg",
-        price:"$22.90",
-        prdname:"BMW"
+        price:"22.90 Rs",
+        prdname:"BMW",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-8.jpg",
-        price:"$22.90",
-        prdname:"car"
+        price:"22.90 Rs",
+        prdname:"car",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-10.jpg",
-        price:"$22.90",
-        prdname:"laptop"
+        price:"22.90 Rs",
+        prdname:"laptop",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-11.jpg",
-        price:"$22.90",
-        prdname:"television"
+        price:"22.90 Rs",
+        prdname:"television",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-12.jpg",
-        price:"$22.90",
-        prdname:"pen"
+        price:"22.90 Rs",
+        prdname:"pen",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-10.jpg",
-        price:"$22.90",
-        prdname:"eraser"
+        price:"22.90 Rs",
+        prdname:"eraser",
+        description:"Best Product",
+        company:"bmw"
     },
     {
         name:"img/products/img-14.jpg",
-        price:"$22.90",
-        prdname:"pencil"
+        price:"22.90 Rs",
+        prdname:"pencil",
+        description:"Best Product",
+        company:"bmw"
     }
 ]
 
@@ -92,7 +120,9 @@ const Latest = () =>
                          </figure>
                          <div className="product-text">
                              <h6>{images.prdname}</h6>
+                             <p>Company : {images.company}</p>
                              <p>{images.price}</p>
+                             <p>{images.description}</p>
                              <button className="btn btn-success mt-1">Bid</button>
                          </div>
                      </div>
