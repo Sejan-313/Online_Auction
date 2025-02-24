@@ -9,11 +9,13 @@ import Login from './role/user/components/login.jsx';
 import Signup_Seller from './role/user/components/signup_seller.jsx';
 import Signup_User from './role/user/components/signup_user.jsx';
 import "bootstrap/dist/css/bootstrap.min.css"
+import ContactUs from './role/user/pages/contactUs.jsx';
 
 const router=createBrowserRouter([
   { 
     path:'/', element:<App/>, children:[
       {path:'/',element:<Home/>},
+      {path:'/ContactUs',element:<ContactUs/>},
     ],  
   },
   { path:'signup_seller', element:<Signup_Seller/> },
