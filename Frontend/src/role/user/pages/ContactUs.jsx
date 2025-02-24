@@ -1,17 +1,12 @@
-// src/ContactUs.jsx
 import React, { useState } from 'react';
-import styles from './ContactUs.module.css';
-import axios from "axios"
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import styles from './ContactUs.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-
 const ContactUs = () => {
-
   const navigate = useNavigate();
-
 
   const [formData, setFormData] = useState({
     contactdate: '',
@@ -32,6 +27,11 @@ const ContactUs = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFocus = (e) => {
+    const { name } = e.target;
+    setErrors({ ...errors, [name]: '' }); // Clear error when the user focuses on the field
   };
 
   const validateForm = () => {
@@ -76,20 +76,15 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
-    
-
-    try {
-      await axios.post(API_URL, formData);
-      navigate("/");
-      console.log("sended");
-      
-  } catch (error) {
-      console.error("Error adding student:", error);
-  }
-
     if (validateForm()) {
-      alert('Form submitted successfully!');
+      try {
+        await axios.post(API_URL, formData);
+        navigate("/");
+        console.log("Form submitted successfully.");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+
       setFormData({
         contactdate: '',
         fullname: '',
@@ -112,10 +107,12 @@ const ContactUs = () => {
             name="contactdate"
             value={formData.contactdate}
             onChange={handleChange}
-            className={styles.input}
+            onFocus={handleFocus}
+            className={`${styles.input} form-control ${errors.contactdate ? 'is-invalid' : ''}`}
           />
-          {errors.contactdate && <p className={styles.error}>{errors.contactdate}</p>}
+          {errors.contactdate && <div className="invalid-feedback">{errors.contactdate}</div>}
         </div>
+
         <div className={styles.field}>
           <label htmlFor="fullname">Full Name</label>
           <input
@@ -124,10 +121,12 @@ const ContactUs = () => {
             name="fullname"
             value={formData.fullname}
             onChange={handleChange}
-            className={styles.input}
+            onFocus={handleFocus}
+            className={`${styles.input} form-control ${errors.fullname ? 'is-invalid' : ''}`}
           />
-          {errors.fullname && <p className={styles.error}>{errors.fullname}</p>}
+          {errors.fullname && <div className="invalid-feedback">{errors.fullname}</div>}
         </div>
+
         <div className={styles.field}>
           <label htmlFor="contactno">Contact Number</label>
           <input
@@ -136,10 +135,12 @@ const ContactUs = () => {
             name="contactno"
             value={formData.contactno}
             onChange={handleChange}
-            className={styles.input}
+            onFocus={handleFocus}
+            className={`${styles.input} form-control ${errors.contactno ? 'is-invalid' : ''}`}
           />
-          {errors.contactno && <p className={styles.error}>{errors.contactno}</p>}
+          {errors.contactno && <div className="invalid-feedback">{errors.contactno}</div>}
         </div>
+
         <div className={styles.field}>
           <label htmlFor="emailid">Email ID</label>
           <input
@@ -148,10 +149,12 @@ const ContactUs = () => {
             name="emailid"
             value={formData.emailid}
             onChange={handleChange}
-            className={styles.input}
+            onFocus={handleFocus}
+            className={`${styles.input} form-control ${errors.emailid ? 'is-invalid' : ''}`}
           />
-          {errors.emailid && <p className={styles.error}>{errors.emailid}</p>}
+          {errors.emailid && <div className="invalid-feedback">{errors.emailid}</div>}
         </div>
+
         <div className={styles.field}>
           <label htmlFor="details">Details</label>
           <textarea
@@ -159,11 +162,13 @@ const ContactUs = () => {
             name="details"
             value={formData.details}
             onChange={handleChange}
-            className={styles.textarea}
+            onFocus={handleFocus}
+            className={`${styles.textarea} form-control ${errors.details ? 'is-invalid' : ''}`}
           />
-          {errors.details && <p className={styles.error}>{errors.details}</p>}
+          {errors.details && <div className="invalid-feedback">{errors.details}</div>}
         </div>
-        <button type="submit" className={styles.submitBtn}>
+
+        <button type="submit" className={`${styles.submitBtn} btn btn-primary w-100`}>
           Submit
         </button>
       </form>
