@@ -43,7 +43,7 @@ const Header = () => {
               )}
               <a href="#">
                 <img src="img/icons/bag.png" alt="" />
-                <span>2</span>
+                {/* // <span>2</span> */}
               </a>
             </div>
             <div className="user-access d-flex justify-content-center align-items-center gap-2 ">
