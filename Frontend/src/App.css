@@ -21,3 +21,29 @@ a {
     right: 0px;
     left: 90px;
 }
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #87857f;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, rgb(232, 222, 189), rgb(10, 10, 10));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom,dimgray,dimgray)
+    }
+
+.userhome
+{
+    text-decoration: none;
+    color: dimgray;
+    font-size: 40px;
+    position: relative;
+    left: 30px;
+    top: 10px;
+}
+
+.userhome:hover
+{
+    color: black;
+}

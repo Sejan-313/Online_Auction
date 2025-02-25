@@ -10,6 +10,8 @@ import Signup_Seller from './role/user/page/signup_seller.jsx';
 import Signup_User from './role/user/page/signup_user.jsx';
 import Seller from './role/seller/seller.jsx';
 import "bootstrap/dist/css/bootstrap.min.css"
+import UserProfile from './role/user/component/userProfile.jsx';
+
 
 const router=createBrowserRouter([
   { 
@@ -21,6 +23,7 @@ const router=createBrowserRouter([
   { path:'signup_user', element:<Signup_User/> },
   { path:'login', element:<Login/> },
   { path:'seller', element:<Seller/> },
+  {path:'userprofile',element:<UserProfile/>},
 ]);
 
 createRoot(document.getElementById('root')).render(

@@ -38,7 +38,7 @@ const Header = () => {
               <img src="img/icons/search.png" alt="" className="search-trigger" />
               {data.token && localStorage.getItem("role") === "user" && (
                 <>
-                  <img src="img/icons/man.png" alt="" />
+                  <Link to="userprofile"><div><img src="img/icons/man.png" alt="" /></div></Link>
                 </>
               )}
               <a href="#">
