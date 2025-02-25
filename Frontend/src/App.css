@@ -6,3 +6,18 @@ a {
 {
     size: 100px;
 }
+
+.user-font
+{
+    font-size: 200;
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    right: 10px;
+}
+
+.logout-btn
+{
+    position: relative;
+    right: 0px;
+    left: 90px;
+}
