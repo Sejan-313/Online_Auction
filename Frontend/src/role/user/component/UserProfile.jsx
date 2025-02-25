@@ -32,14 +32,14 @@ const UserProfile = () => {
 
   return (
     <>
-    <div  style={{backgroundColor:"dimgray",height:"100%", width:"100%"}}>
+    <div  style={{backgroundColor:"silver",height:"100%", width:"100%"}}>
       <div>
         <Link to="/" className='userhome'>
           <IoHome />
         </Link>
       </div>
 
-<div style={{backgroundColor:"dimgray",height:"100%", width:"100%"}}>
+<div style={{backgroundColor:"silver",height:"100%", width:"100%",position:"relative",bottom:"40px",}}>
   
     <div class="container py-5">
         <div class="row">
