@@ -22,6 +22,7 @@ a {
     left: 90px;
 }
 
+
 .gradient-custom {
     /* fallback for old browsers */
     background: #87857f;
@@ -36,7 +37,7 @@ a {
 .userhome
 {
     text-decoration: none;
-    color: dimgray;
+    color: black;
     font-size: 40px;
     position: relative;
     left: 30px;
@@ -45,5 +46,6 @@ a {
 
 .userhome:hover
 {
-    color: black;
+    color: white;
 }
+

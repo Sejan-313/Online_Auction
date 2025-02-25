@@ -46,8 +46,20 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const email = req.params.email;  
+    const user = await User.findOne({ email }); 
+    if (!user) return res.status(404).json({ message: "Student not found" });
+    res.status(200).json(user);  
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 
-module.exports = { registerUser, loginUser };
+
+
+module.exports = { registerUser, loginUser ,getUser };
 
 
 
