@@ -21,11 +21,11 @@ const Header = () =>
                 </a>
             </div>
             <div className="user-access d-flex justify-content-center align-items-center gap-2 ">
-            {localStorage.getItem("role") !== "user" && (
+            {localStorage.getItem("role") !== "user" ? (
                 <>
                     <Link to="/signup_user">Sign up</Link> / <Link to="/login">Login</Link>
                 </>
-            )}
+            ):<h3 className="user-font">Welcome : {localStorage.getItem("fullName")}</h3>}
             </div>
             <nav className="main-menu mobile-menu">
                 <ul>
