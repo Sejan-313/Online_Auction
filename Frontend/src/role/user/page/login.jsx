@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import css from "./user_seller.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Login() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -51,11 +53,11 @@ export default function Login() {
                     localStorage.setItem("email", data.email);
                     localStorage.setItem("role", data.role);
                     if (data.role === "admin") {
-                        window.location.href = "/admin";
+                        navigate("/admin");
                     } else if (data.role === "seller") {
-                        window.location.href = "/seller";
+                        navigate("/seller");
                     } else {
-                        window.location.href = "/";
+                        navigate("/");
                     }
                 } else {
                     alert(data.message);
@@ -65,7 +67,7 @@ export default function Login() {
                 alert(error.response?.data?.message || "Login failed");
             }
         }
-    };    
+    };  
     
 
     return (
