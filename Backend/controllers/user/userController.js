@@ -19,8 +19,7 @@ const registerUser = (req, res) => {
     try {
       const { password, ...otherData } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10); 
-
-      const newUser = new User({ ...otherData, password: hashedPassword, image: req.file.path });
+      const newUser = new User({ ...otherData, password: hashedPassword, image: req.file.filename });
       await newUser.save();
       res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch {
@@ -39,7 +38,7 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET, { expiresIn: "24h" });
     res.json({ success: true, message: "Login successful", token, email: user.email, role: "user" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error" });

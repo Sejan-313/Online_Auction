@@ -19,7 +19,7 @@ const registerSeller = (req, res) => {
     try {
       const { password, ...otherData } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10); 
-      const newUser = new Seller({ ...otherData, password: hashedPassword, image: req.file.path });
+      const newUser = new Seller({ ...otherData, password: hashedPassword, image: req.file.filename });
       await newUser.save();
       res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch {

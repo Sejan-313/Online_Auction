@@ -9,12 +9,14 @@ import Login from './role/user/page/login.jsx';
 import Signup_Seller from './role/user/page/signup_seller.jsx';
 import Signup_User from './role/user/page/signup_user.jsx';
 import Seller from './role/seller/seller.jsx';
+import Contact from './role/user/page/contact.jsx';
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const router=createBrowserRouter([
   { 
     path:'/', element:<App/>, children:[
-      {path:'/',element:<Home/>},
+      {path:'/', element:<Home/>},
+      {path:'contact', element:<Contact/>}
     ],  
   },
   { path:'signup_seller', element:<Signup_Seller/> },
