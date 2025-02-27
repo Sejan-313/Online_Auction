@@ -76,24 +76,15 @@ const Header = () => {
                     <li>
                       <a href="product-page.html">Product Page</a>
                     </li>
-                    <li>
-                      <a href="shopping-cart.html">Shopping Card</a>
-                    </li>
-                    <li>
-                      <a href="check-out.html">Check out</a>
-                    </li>
+
                   </ul>
+             
+
+                    <li><Link to="/about">About</Link></li>
+                    <li><a href="./check-out.html">Blog</a></li>
+                    <li><Link to="/contact">Contact</Link></li>
                 </li>
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <a href="./check-out.html">Blog</a>
-                </li>
-                <li>
-                  <Link to="/ContactUs">Contact</Link>
-                </li>
-              </ul>
+                </ul>
             </nav>
           </div>
         </div>

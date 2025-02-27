@@ -1,0 +1,15 @@
+.seller_container {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container_col {
+    width: 322px;
+}
+
+.container_col2 {
+    width: 100%;
+}
