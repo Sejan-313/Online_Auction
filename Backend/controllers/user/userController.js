@@ -30,18 +30,21 @@ const registerUser = (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+      const { email, password } = req.body;
+      const user = await User.findOne({ email });
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ success: false, message: "User not found" });
+      if (!user) return res.status(400).json({ success: false, message: "User not found" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET, { expiresIn: "24h" });
-    res.json({ success: true, message: "Login successful", token, email: user.email, role: "user" });
+      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
+
+      res.json({ success: true, message: "Login successful", token, user_id: user._id, email: user.email, role: "user" });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server error" });
+      console.error("Login Error:", error);
+      res.status(500).json({ success: false, message: "Server error" });
   }
 };
 

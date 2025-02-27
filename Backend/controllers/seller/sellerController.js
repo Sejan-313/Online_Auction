@@ -38,15 +38,16 @@ const loginSellerr = async (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-      res.json({ success: true, message: "Login successful", token, email: user.email, role: "seller" });
+      res.json({ success: true, message: "Login successful", token, seller_id: user._id, email: user.email, role: "seller" });
 
   } catch (error) {
       console.error("Login Error:", error);
       res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 
 
 module.exports = { registerSeller, loginSellerr };
