@@ -50,8 +50,10 @@ export default function Login() {
                 const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/${formData.role}/login`, formData);
                 if (data.success) {
                     localStorage.setItem("token", data.token);
+                    localStorage.setItem(`${data.role}_id`, data[`${data.role}_id`]);
                     localStorage.setItem("email", data.email);
                     localStorage.setItem("role", data.role);
+    
                     if (data.role === "admin") {
                         navigate("/admin");
                     } else if (data.role === "seller") {
@@ -67,7 +69,7 @@ export default function Login() {
                 alert(error.response?.data?.message || "Login failed");
             }
         }
-    };  
+    }; 
     
 
     return (
