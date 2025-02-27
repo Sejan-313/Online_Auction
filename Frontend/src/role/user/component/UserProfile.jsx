@@ -28,6 +28,10 @@ const UserProfile = () => {
       console.error("Error fetching student data:", error);
     }
   };
+
+  const imagepath = "/Online_Auction/Backend/uploads/user/" + students.image;
+console.log(imagepath); // Check if the path is correct
+  
   
 
   return (
@@ -46,7 +50,7 @@ const UserProfile = () => {
             <div class="col-12 mb-4">
                 <div class="text-center">
                     <div class="position-relative d-inline-block">
-                        <img src="https://randomuser.me/api/portraits/men/40.jpg" class="rounded-circle profile-pic" alt="Profile Picture" />
+                        <img src={imagepath} class="rounded-circle profile-pic" alt="Profile Picture" />
                     </div>
                     <h3 class="mt-3 mb-1">{students.fullName}</h3>
                     <p class="text-muted mb-3">Senior Product Designer</p>

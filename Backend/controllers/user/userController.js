@@ -14,13 +14,15 @@ const upload = multer({
 const registerUser = (req, res) => {
   upload(req, res, async (err) => {
     if (err) return res.status(400).json({ error: err.message });
+    console.log(req.body);
+    
     if (!req.file) return res.status(400).json({ error: "Image is required" });
 
     try {
       const { password, ...otherData } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10); 
 
-      const newUser = new User({ ...otherData, password: hashedPassword, image: req.file.path });
+      const newUser = new User({ ...otherData, password: hashedPassword, image: req.file.name });
       await newUser.save();
       res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch {
