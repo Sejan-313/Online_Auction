@@ -52,7 +52,7 @@ const Add_Auction = () => {
                 formDataObj.append(key, formData[key]);
             }
 
-            formDataObj.append("status", "Active");
+            formDataObj.append("status", "Pending");
             const seller_id = localStorage.getItem("seller_id")?.toString(); 
             formDataObj.append("seller_id", seller_id);
 

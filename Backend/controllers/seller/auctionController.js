@@ -31,7 +31,7 @@ const createAuction = async (req, res) => {
                 start_date,
                 end_date,
                 image: req.file.filename,
-                status: "Active", 
+                status: "Pending", 
                 seller_id, 
             });
 
