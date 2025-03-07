@@ -44,4 +44,37 @@ const createAuction = async (req, res) => {
     });
 };
 
-module.exports = { createAuction };
+const getAuction = async (req, res) => {
+    try {
+      const seller_id = req.params.seller_id;
+      const auction = await Auction.find({ seller_id });
+      if (auction.length === 0) return res.status(404).json({ message: "Auction not  found" });
+      res.status(200).json(auction);
+    } catch (error) {
+      console.error("Error in getAuction:", error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  };
+
+  const deleteAuction = async (req, res) => {
+    try {
+        await Auction.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Auction deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error" });
+    }
+};
+
+const getAuctionAll = async (req, res) => {
+  try {  
+    const Auction = await Auction.find(); 
+    if (!Auction) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(seller);  
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+  
+  
+
+module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll};

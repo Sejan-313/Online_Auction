@@ -50,7 +50,16 @@ const loginSellerr = async (req, res) => {
   }
 };
 
+const getsellrAll = async (req, res) => {
+  try {  
+    const seller = await Seller.find(); 
+    if (!seller) return res.status(404).json({ message: "Seller not found" });
+    res.status(200).json(seller);  
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 
 
-module.exports = { registerSeller, loginSellerr };
+module.exports = { registerSeller, loginSellerr,getsellrAll };
 
