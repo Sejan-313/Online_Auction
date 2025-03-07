@@ -50,9 +50,10 @@ const Add_Auction = () => {
             const formDataObj = new FormData();
             for (const key in formData) {
                 formDataObj.append(key, formData[key]);
-            }
-
+   
             formDataObj.append("status", "pending");
+
+
             const seller_id = localStorage.getItem("seller_id")?.toString(); 
             formDataObj.append("seller_id", seller_id);
 
