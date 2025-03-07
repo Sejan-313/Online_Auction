@@ -11,7 +11,7 @@ const upload = multer({
   }),
 }).single("image");
 
-const registerSeller = (req, res) => {
+const register = (req, res) => {
   upload(req, res, async (err) => {
     if (err) return res.status(400).json({ error: err.message });
     if (!req.file) return res.status(400).json({ error: "Image is required" });
@@ -28,7 +28,7 @@ const registerSeller = (req, res) => {
   });
 };
 
-const loginSellerr = async (req, res) => {
+const login = async (req, res) => {
   try {
       const { email, password } = req.body;
       const user = await Seller.findOne({ email });
@@ -61,5 +61,5 @@ const getsellrAll = async (req, res) => {
 };
 
 
-module.exports = { registerSeller, loginSellerr,getsellrAll };
+module.exports = { register, login, getsellrAll };
 

@@ -11,7 +11,7 @@ const upload = multer({
   }),
 }).single("image");
 
-const registerUser = (req, res) => {
+const register = (req, res) => {
   upload(req, res, async (err) => {
     if (err) return res.status(400).json({ error: err.message });
     console.log(req.body);
@@ -31,23 +31,19 @@ const registerUser = (req, res) => {
   });
 };
 
-const loginUser = async (req, res) => {
+const login = async (req, res) => {
   try {
-      const { email, password } = req.body;
-      const user = await User.findOne({ email });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-      if (!user) return res.status(400).json({ success: false, message: "User not found" });
+    if (!user) return res.status(400).json({ success: false, message: "User not found" });
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-      res.json({ success: true, message: "Login successful", token, user_id: user._id, email: user.email,fullName: user.fullName, role: "user" });
-
-
-    // const token = jwt.sign({ id: user._id, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    // res.json({ success: true, message: "Login successful", token, email: user.email,  role: "user" });
+    res.json({ success: true, message: "Login successful", token, user_id: user._id, email: user.email,fullName: user.fullName, role: "user" });
 
   } catch (error) {
       console.error("Login Error:", error);
@@ -57,12 +53,11 @@ const loginUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const email = req.params.email;  
-    const user = await User.findOne({ email }); 
+    const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json(user);  
-  } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.json(user);
+  } catch {
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -78,7 +73,7 @@ const getUserAll = async (req, res) => {
 
 
 
-module.exports = { registerUser, loginUser ,getUser, getUserAll };
+module.exports = { register, login ,getUser, getUserAll };
 
 
 

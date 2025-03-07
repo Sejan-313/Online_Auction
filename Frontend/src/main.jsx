@@ -23,21 +23,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import UserProfile from './role/user/component/UserProfile.jsx';
 import UpdateAuctions from './role/seller/page/UpdateAuctions.jsx';
 import AHome from './role/admin/components/AHome.jsx';
-import Admin from './role/admin/Admin.jsx';
+import Admin from './role/admin/admin.jsx';
 import UserDetails from './role/admin/pages/UserDetails.jsx';
 import SellerDetails from './role/admin/pages/SellerDetails.jsx';
 import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
+import Auction_Page from './role/user/page/auction_page.jsx';
+import Basket_Page from './role/user/page/basket_page.jsx';
+import Account_Page from './role/user/page/account_page.jsx';
 
 // Admin Router Setup
 const router = createBrowserRouter([
+  { path: "signup_seller", element: <Signup_Seller /> },
+  { path: "signup_user", element: <Signup_User /> },
+  { path: "login",  element: <Login /> },
+
   {
     path: "/", 
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
       { path: "contact", element: <Contact /> },
+      { path: "auction-product/:id", element: <Auction_Page /> },
+      { path:'user-account',element:<Account_Page/>, children: [
+          // { path: "update-profile", element: <Update_Profile/> },
+        ],
+      },
+      {path:'user-basket',element:<Basket_Page/>},
     ],
   },
+  { path: 'userprofile', element: <UserProfile /> },
+
   {
     path: "seller", 
     element: <Seller />,
@@ -52,22 +67,7 @@ const router = createBrowserRouter([
       { path: "update", element: <UpdateAuctions /> },
     ],
   },
-  {
-    path: "signup_seller", 
-    element: <Signup_Seller />
-  },
-  {
-    path: "signup_user", 
-    element: <Signup_User />
-  },
-  {
-    path: "login", 
-    element: <Login />
-  },
-  {
-    path: 'userprofile', 
-    element: <UserProfile />
-  },
+
   {
     path: "admin", 
     element: <Admin/>, 

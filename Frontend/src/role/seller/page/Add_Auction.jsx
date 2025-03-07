@@ -155,7 +155,7 @@ const Add_Auction = () => {
             </form>
         </div>
     )
+    }
 }
 
-export default Add_Auction;
-
+export default Add_Auction

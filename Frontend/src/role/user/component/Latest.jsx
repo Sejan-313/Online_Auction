@@ -1,138 +1,59 @@
-
 import Latestlink from "./Latestlink";
+import css from "./Latest.module.css";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
+const Latest = () => {
+    const [auctions, setAuctions] = useState([]);
+    const [filteredAuctions, setFilteredAuctions] = useState([]);
 
-const Latest = () =>
-{
-    const images =[
-    {
-        name:"img/products/img-1.jpg",
-        price:"22.90 Rs",
-        prdname:"BM",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-2.jpg",
-        price:"22.90 Rs",
-        prdname:"Slavia",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-3.jpg",
-        price:"22.90 Rs",
-        prdname:"Virtus",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-4.jpg",
-        price:"22.90 Rs",
-        prdname:"Swift",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-5.jpg",
-        price:"22.90 Rs",
-        prdname:"Audi",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-6.jpg",
-        price:"22.90 Rs",
-        prdname:"Rolse Royce",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-7.jpg",
-        price:"22.90 Rs",
-        prdname:"Mercedes",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-8.jpg",
-        price:"22.90 Rs",
-        prdname:"BMW",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-8.jpg",
-        price:"22.90 Rs",
-        prdname:"car",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-10.jpg",
-        price:"22.90 Rs",
-        prdname:"laptop",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-11.jpg",
-        price:"22.90 Rs",
-        prdname:"television",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-12.jpg",
-        price:"22.90 Rs",
-        prdname:"pen",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-10.jpg",
-        price:"22.90 Rs",
-        prdname:"eraser",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-14.jpg",
-        price:"22.90 Rs",
-        prdname:"pencil",
-        description:"Best Product",
-        company:"bmw"
-    }
-]
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction`);
+                setAuctions(data);
+                setFilteredAuctions(data.slice(0, 12))
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
 
-    return <>
-         <section className="latest-products spad">
-        <div className="container">
-        <Latestlink></Latestlink>
-            <div className="row" id="product-list">
+    const handleFilter = (selectedCategory) => {
+        if (selectedCategory === "All") {
+            setFilteredAuctions(auctions.slice(0, 12))
+        } else {
+            const filtered = auctions.filter(item => item.product_type.toLowerCase() === selectedCategory.toLowerCase());
+            setFilteredAuctions(filtered.slice(0, 12))
+        }
+    };
 
-                {images.map((images)=>(
-                     <div className="col-lg-3 col-sm-6 mix all dresses bags">
-                     <div className="single-product-item">
-                         <figure>
-                             <a href="#"><img src={images.name} alt=""/></a>
-                             <div className="p-status">new</div>
-                         </figure>
-                         <div className="product-text">
-                             <h6>{images.prdname}</h6>
-                             <p>Company : {images.company}</p>
-                             <p>{images.price}</p>
-                             <p>{images.description}</p>
-                             <button className="btn btn-success mt-1">Bid</button>
-                         </div>
-                     </div>
-                 </div>
-                ))}
+    return (
+        <div className="latest-products spad">
+            <div className="container">
+                <Latestlink onFilter={handleFilter} />
+                <div className="row" id="product-list">
+                    {filteredAuctions.length > 0 ? (
+                        filteredAuctions.map((item) => (
+                            <Link key={item.id} to={`/auction-product/${item._id}`} className="col-lg-3 col-sm-6">
+                                <div className={css.productItem}>
+                                    <figure className="position-relative border rounded">
+                                        <img src={`http://localhost:5000/uploads/seller/${item.image}`} alt={item.product_name} className={css.productImage} />
+                                        <div className={`${css.pStatus} w-25`}>{`₹ ${item.current_bid + item.starting_price}`}</div>
+                                        <div className={css.overlay}>{item.product_name}</div>
+                                    </figure>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <p>No Products Available</p>
+                    )}
+                </div>
             </div>
         </div>
-    </section>
-
-    </>
-}
+    );
+};
 
 export default Latest;
