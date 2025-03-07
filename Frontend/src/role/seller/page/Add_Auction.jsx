@@ -52,7 +52,7 @@ const Add_Auction = () => {
                 formDataObj.append(key, formData[key]);
             }
 
-            formDataObj.append("status", "Active");
+            formDataObj.append("status", "pending");
             const seller_id = localStorage.getItem("seller_id")?.toString(); 
             formDataObj.append("seller_id", seller_id);
 
@@ -91,7 +91,7 @@ const Add_Auction = () => {
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
                         <label className="form-label">Name</label>
-                        <input type="text" name="product_name" placeholder="enter name" className={`form-control ${errors.product_name ? "border-danger" : ""}`} value={formData.product_name} onChange={handleChange} />
+                        <input type="text" name="product_name" placeholder="Enter Name" className={`form-control ${errors.product_name ? "border-danger" : ""}`} value={formData.product_name} onChange={handleChange} />
                         {errors.product_name && <small className="text-danger">{errors.product_name}</small>}
                     </div>
                     <div className="w-100">
@@ -102,18 +102,18 @@ const Add_Auction = () => {
                 </div>
                 <div className={css['Auction_Row2']}>
                     <label className="form-label">Description</label>
-                    <textarea name="description" placeholder="enter description" className={`form-control ${errors.description ? "border-danger" : ""} h-75`} value={formData.description} onChange={handleChange} ></textarea>
+                    <textarea name="description" placeholder="Enter Description" className={`form-control ${errors.description ? "border-danger" : ""} h-75`} value={formData.description} onChange={handleChange} ></textarea>
                     {errors.description && <small className="text-danger">{errors.description}</small>}
                 </div>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
                         <label className="form-label">Starting Price</label>
-                        <input type="text" name="starting_price" placeholder="enter price" className={`form-control ${errors.starting_price ? "border-danger" : ""}`} value={formData.starting_price} onChange={handleChange} />
+                        <input type="text" name="starting_price" placeholder="Enter Price" className={`form-control ${errors.starting_price ? "border-danger" : ""}`} value={formData.starting_price} onChange={handleChange} />
                         {errors.starting_price && <small className="text-danger">{errors.starting_price}</small>}
                     </div>
                     <div className="w-100">
                         <label className="form-label">Increment Price</label>
-                        <input type="text" name="increment_price" placeholder="enter price" className={`form-control ${errors.increment_price ? "border-danger" : ""}`} value={formData.increment_price} onChange={handleChange} />
+                        <input type="text" name="increment_price" placeholder="Enter Price" className={`form-control ${errors.increment_price ? "border-danger" : ""}`} value={formData.increment_price} onChange={handleChange} />
                         {errors.increment_price && <small className="text-danger">{errors.increment_price}</small>}
                     </div>
                 </div>
@@ -133,7 +133,7 @@ const Add_Auction = () => {
                     <div className="w-100">
                         <label className="form-label">Type</label>
                         <select name="product_type" className={`form-select ${errors.product_type ? "border-danger" : ""}`} value={formData.product_type} onChange={handleChange}>
-                            <option value="" className='text-secondary'>type</option>
+                            <option value="" className='text-secondary'>Type</option>
                             <option value="electronics">Electronics</option>
                             <option value="furniture">Furniture</option>
                             <option value="automobile">Automobile</option>
@@ -144,12 +144,12 @@ const Add_Auction = () => {
                     </div>
                     <div className="w-100">
                         <label className="form-label">Quantity</label>
-                        <input type="number" name="quantity" placeholder="enter quantity" className={`form-control ${errors.quantity ? "border-danger" : ""}`} value={formData.quantity} onChange={handleChange} />
+                        <input type="number" name="quantity" placeholder="Enter Quantity" className={`form-control ${errors.quantity ? "border-danger" : ""}`} value={formData.quantity} onChange={handleChange} />
                         {errors.quantity && <small className="text-danger">{errors.quantity}</small>}
                     </div>
                 </div>
                 <div className={css['Auction_Row_Btn']}>
-                    <button type="submit" className="btn btn-secondary w-100 text-start">add auction</button>
+                    <button type="submit" className="btn btn-secondary w-100 text-start">Add Auction</button>
                 </div>
             </form>
         </div>

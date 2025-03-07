@@ -59,7 +59,17 @@ const getUser = async (req, res) => {
   try {
     const email = req.params.email;  
     const user = await User.findOne({ email }); 
-    if (!user) return res.status(404).json({ message: "Student not found" });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json(user);  
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getUserAll = async (req, res) => {
+  try {  
+    const user = await User.find(); 
+    if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);  
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
@@ -68,7 +78,7 @@ const getUser = async (req, res) => {
 
 
 
-module.exports = { registerUser, loginUser ,getUser };
+module.exports = { registerUser, loginUser ,getUser, getUserAll };
 
 
 

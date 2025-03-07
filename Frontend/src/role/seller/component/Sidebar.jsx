@@ -1,9 +1,21 @@
 import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {FaTachometerAlt, FaPlus, FaList, FaEdit, FaTrash, FaGavel, FaShoppingCart, FaMoneyBill, FaChartBar, FaUserCog, FaSignOutAlt } from "react-icons/fa";
 
 
 const Sidebar = () => {
+
+    const navigate=useNavigate();
+    const logout = () =>
+    {
+
+        localStorage.removeItem("email");
+        navigate("/");
+    }
+
+    const email = localStorage.getItem("email");
+    const fullname = localStorage.getItem("fullName");
+
     return (
         <div className="d-flex flex-column p-3 bg-light h-100">
             <h4 className="text-primary mb-4">Seller<span className="text-secondary">Panel</span></h4>
@@ -41,7 +53,7 @@ const Sidebar = () => {
                 <Link to="settings" className="text-secondary nav-link d-flex align-items-center">
                     <FaUserCog className="me-2" /> Settings
                 </Link>
-                <Link to="logout" className="text-secondary nav-link d-flex align-items-center">
+                <Link onClick={logout} className="text-secondary nav-link d-flex align-items-center">
                     <FaSignOutAlt className="me-2" /> Logout
                 </Link>
             </Nav>
@@ -49,8 +61,8 @@ const Sidebar = () => {
             <div className="mt-auto d-flex align-items-center">
                 <img src="/img/products/img-3.jpg" className="rounded-circle me-2" alt="User" style={{ width: "40px", height: "40px" }} />
                 <div>
-                    <strong>vinit@gmail.com</strong>
-                    <p className="text-muted mb-0">vinit bawjee</p>
+                    <strong>{email}</strong>
+                    <p className="text-muted mb-0">{fullname}</p>
                 </div>
             </div>
         </div>

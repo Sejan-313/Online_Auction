@@ -7,21 +7,21 @@ const UserProfile = () => {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  const [students, setStudents] = useState([]);
+  const [userdata, setuserdata] = useState([]);
 
   useEffect(() => {
-      const id = localStorage.getItem("email"); // Get the id from localStorage
+      const id = localStorage.getItem("email"); 
       if (id) {
-        fetchStudents(id);
+        fetchuserdata(id);
       } else {
         console.error("No user ID found in localStorage.");
       }
   }, []);
 
-  const fetchStudents = async (id) => {
+  const fetchuserdata = async (id) => {
     try {
       const response = await axios.get(`${API_URL}/user/${id}`); 
-      setStudents(response.data);
+      setuserdata(response.data);
       console.log(response.data);
       
     } catch (error) {
@@ -29,8 +29,8 @@ const UserProfile = () => {
     }
   };
 
-  const imagepath = "/Online_Auction/Backend/uploads/user/" + students.image;
-console.log(imagepath); // Check if the path is correct
+  const imagepath = "/Online_Auction/Backend/uploads/user/" + userdata.image;
+console.log(imagepath); 
   
   
 
@@ -50,9 +50,9 @@ console.log(imagepath); // Check if the path is correct
             <div class="col-12 mb-4">
                 <div class="text-center">
                     <div class="position-relative d-inline-block">
-                        <img src={imagepath} class="rounded-circle profile-pic" alt="Profile Picture" />
+                        <img  src={`http://localhost:5000/uploads/user/${userdata?.image}`} class="rounded-circle profile-pic " alt="Profile Picture"  style={{ width: '100px', height: 'auto' }}/>
                     </div>
-                    <h3 class="mt-3 mb-1">{students.fullName}</h3>
+                    <h3 class="mt-3 mb-1">{userdata.fullName}</h3>
                     <p class="text-muted mb-3">Senior Product Designer</p>
                     {/* <div class="d-flex justify-content-center gap-2 mb-4">
                         <button class="btn btn-outline-primary"><i class="fas fa-envelope me-2"></i>Message</button>
@@ -72,34 +72,34 @@ console.log(imagepath); // Check if the path is correct
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Name</label>
-                                                <p>{students.fullName}</p>
+                                                <p>{userdata.fullName}</p>
                                             </div>
                                               
                                             <div class="col-md-6">
                                                 <label class="form-label">Email</label>
-                                                <p>{students.email}</p>
+                                                <p>{userdata.email}</p>
                                             </div>
                                             <div class="col-md-6">
                                                   <label class="form-label">BirthDate</label>
-                                                  <p>{students.birthdate}</p>
+                                                  <p>{userdata.birthdate}</p>
                                               </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Phone</label>
-                                                <p>{students.mobile}</p>
+                                                <p>{userdata.mobile}</p>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Adreess</label>
-                                                <p>{students.address
+                                                <p>{userdata.address
                                                 }</p>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Gender</label>
-                                                <p>{students.gender
+                                                <p>{userdata.gender
                                                 }</p>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label">Pincode</label>
-                                                <p>{students.pincode
+                                                <p>{userdata.pincode
                                                 }</p>
                                             </div>
                                         </div>
