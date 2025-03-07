@@ -12,8 +12,8 @@ router.post("/login", login);
 router.post("/register", register);
 router.get("/user-account/:id", getUser);
 
-router.get("/:email", getUser);  
-router.get("/", getUserAll); 
+// router.get("/:email", getUser);  
+// router.get("/", getUserAll); 
 
 // auction
 router.get("/auction", get_Auction);
