@@ -46,9 +46,12 @@ const createAuction = async (req, res) => {
 
 const getAuction = async (req, res) => {
     try {
-      const seller_id = req.params.seller_id;
-      const auction = await Auction.find({ seller_id });
-      if (auction.length === 0) return res.status(404).json({ message: "Auction not  found" });
+      const seller_id= req.params.seller_id;
+      const auction = await Auction.find({ seller_id  });
+      console.log(seller_id);  
+      
+      console.log(auction.length);
+      if (auction.length === 0) return res.status(404).json({ message: "Auction not  found " });
       res.status(200).json(auction);
     } catch (error) {
       console.error("Error in getAuction:", error);

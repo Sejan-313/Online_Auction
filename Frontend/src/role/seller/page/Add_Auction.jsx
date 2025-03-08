@@ -46,14 +46,15 @@ const Add_Auction = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
-        if (validateForm()) {
+        if (validateForm()) 
+            {
+
             const formDataObj = new FormData();
             for (const key in formData) {
                 formDataObj.append(key, formData[key]);
-   
+            }
+
             formDataObj.append("status", "pending");
-
-
             const seller_id = localStorage.getItem("seller_id")?.toString(); 
             formDataObj.append("seller_id", seller_id);
 
@@ -155,7 +156,7 @@ const Add_Auction = () => {
             </form>
         </div>
     )
-    }
 }
 
-export default Add_Auction
+export default Add_Auction;
+

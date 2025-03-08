@@ -75,7 +75,7 @@ const router = createBrowserRouter([
       { path: "reg_user_data", element: <UserDetails/>},
       { path: "reg_seller_data", element: <SellerDetails/>},
       { path: "auctiondata", element: <AuctionDetails/> },
-      // { path: "manage-auctions", element: <Manage_Auctions /> },
+      // { path: "manage-auctions", element: <Add_Auction/>},
       // { path: "order-management", element: <Order_Management /> },
       // { path: "payments-&-earnings", element: <Payments_Earnings /> },
       // { path: "reports-&-analytics", element: <Reports_Analytics /> },
