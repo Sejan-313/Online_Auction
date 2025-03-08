@@ -34,7 +34,7 @@ const Header = () => {
             
             <div className="">
                 <a href="./index.html">
-                  <img src="../../../../public/img/logos/logo-2.png" alt="Logo" className="img-fluid" />
+                <img src="img/logo.png" alt=""/>
                 </a>
             </div>
 
