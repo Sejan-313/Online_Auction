@@ -15,7 +15,6 @@ router.get("/user-account/:id", getUser);
 // router.get("/:email", getUser);  
 // router.get("/", getUserAll); 
 
-// auction
 router.get("/auction", get_Auction);
 router.get("/auction/:id", get_AuctionById);
 router.get("/auction-recommend", get_RecommendAuction);

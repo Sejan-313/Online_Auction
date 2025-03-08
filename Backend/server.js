@@ -5,6 +5,8 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/user/userRoutes");
 const sellerRoutes = require("./routes/seller/sellerRoutes");
 
+const adminRoutes = require("./routes/admin/adminRoutes");
+
 
 
 const app = express();
@@ -18,6 +20,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use("/api/user", userRoutes);
 app.use("/api/seller", sellerRoutes);
+app.use("/api/admin", adminRoutes);
 
 
 

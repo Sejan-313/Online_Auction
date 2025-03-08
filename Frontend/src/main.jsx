@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-// Importing all components
 import App from './App.jsx';
 import Home from './role/user/page/Home.jsx';
 import store from './role/store/index.js';
@@ -57,7 +56,7 @@ const router = createBrowserRouter([
     path: "seller", 
     element: <Seller />,
     children: [
-      { path: "add-auction", element: <Add_Auction /> },
+      { path: "add-auction", element: <Add_Auction/> },
       { path: "dashboard", element: <Dashboard /> },
       { path: "manage-auctions", element: <Manage_Auctions /> },
       { path: "order-management", element: <Order_Management /> },

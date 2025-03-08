@@ -11,6 +11,15 @@ const get_Auction = async (req, res) => {
     }
 };
 
+const get_Auction_All = async (req, res) => {
+    try {
+        const auction = await Auction.find();
+        res.json(auction);
+    } catch (error) {
+        res.status(500).json({ message: "Server Error" });
+    }
+};
+
 const get_AuctionById = async (req, res) => {
     try {
         const auction = await Auction.findById(req.params.id);
@@ -106,5 +115,5 @@ const place_Bid = async (req, res) => {
 
 
 
-module.exports = { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid };
+module.exports = { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All };
 

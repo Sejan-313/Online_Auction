@@ -22,7 +22,7 @@ const Manage_Auctions = () => {
 
   const fetchsellerdata = async (id) => {
     try {
-      const response = await axios.get(`${API_URL}/seller/auction/${id}`);
+      const response = await axios.get(`${API_URL}/seller/${id}`);
       setsellerdata(response.data);
       console.log(response.data);
     } catch (error) {

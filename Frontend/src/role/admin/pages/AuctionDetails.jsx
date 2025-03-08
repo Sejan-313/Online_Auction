@@ -15,7 +15,7 @@ const AuctionDetails = () => {
 
   const fetchaucdata = async () => {
     try {
-      const response = await axios.get(`${API_URL}/seller/all`);
+      const response = await axios.get(`${API_URL}/admin/all/auction`);
       setaucdata(response.data);
       console.log(response.data);
     } catch (error) {

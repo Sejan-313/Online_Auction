@@ -15,7 +15,7 @@
     
       const fetchsellerdata = async () => {
         try {
-          const response = await axios.get(`${API_URL}/seller`);
+          const response = await axios.get(`${API_URL}/admin/all/seller`);
           setusellerdata(response.data);
           console.log(response.data);
         } catch (error) {

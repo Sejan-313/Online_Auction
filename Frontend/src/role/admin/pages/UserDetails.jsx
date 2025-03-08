@@ -15,7 +15,7 @@ const UserDetails = () => {
 
   const fetchsellerdata = async () => {
     try {
-      const response = await axios.get(`${API_URL}/user`);
+      const response = await axios.get(`${API_URL}/admin/all/user`);
       setuserdata(response.data);
       console.log(response.data);
     } catch (error) {
