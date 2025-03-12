@@ -19,16 +19,19 @@ const Auction_Page = () => {
                 if (id) {
                     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction/${id}`);
                     setProduct(data);
+    
                     const token = localStorage.getItem("token");
                     if (token) {
-                        const savedRes = await axios.get(`${import.meta.env.VITE_API_URL}/user/is-saved/${id}`, {
-                            headers: { Authorization: `Bearer ${token}` },
-                        });
-                        setIsSaved(savedRes.data.saved);
+                        const { data: savedRes } = await axios.get(
+                            `${import.meta.env.VITE_API_URL}/user/is-saved/${id}`,
+                            { headers: { Authorization: `Bearer ${token}` } }
+                        );
+                        setIsSaved(savedRes.saved);
                     }
                 }
-                const recData = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction-recommend`);
-                setRecommendations(recData.data);
+    
+                const { data: recData } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction-recommend`);
+                setRecommendations(recData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -39,47 +42,42 @@ const Auction_Page = () => {
     const handleSaveProduct = async () => {
         try {
             const token = localStorage.getItem("token");
-            const role = localStorage.getItem("role");
-
-            if (!token || role !== "user") {
-                alert("Login required to save product!");
-                return;
+            if (!token || localStorage.getItem("role") !== "user") {
+                return alert("Login required to save product!");
             }
-
             const { data } = await axios.post(
                 `${import.meta.env.VITE_API_URL}/user/auction-save`,
                 { product_id: id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
+    
             setIsSaved(data.saved);
         } catch (error) {
-            alert(error.response?.data?.error);
+            alert(error.response?.data?.message || "Something went wrong");
         }
-    };
+    };    
     
     const handleBid = async () => {
         try {
             const token = localStorage.getItem("token");
-            const role = localStorage.getItem("role");
-
-            if (!token || role !== "user") {
-                alert("Login required to save product!");
-                return;
+            if (!token || localStorage.getItem("role") !== "user") {
+                return alert("Login required to place a bid!");
             }
+    
             setLoading(true);
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user/place-bid`, 
                 { product_id: id, bid_amount: product.current_bid + product.increment_price }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            setProduct({ ...product, current_bid: data.current_bid });
+    
+            setProduct(prev => ({ ...prev, current_bid: data.current_bid }));
             alert(data.message);
         } catch (error) {
-            alert(error.response?.data?.error);
+            alert(error.response?.data?.error || "Something went wrong");
         } finally {
             setLoading(false);
         }
-    };
+    };    
 
     return (
         <div className="container-fluid p-5">

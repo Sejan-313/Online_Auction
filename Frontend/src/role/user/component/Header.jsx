@@ -69,7 +69,7 @@ const Header = () => {
             </nav>
 
             <div className="d-flex align-items-center gap-4">
-              <IoIosSearch className="text-muted" size={25} />
+              <IoIosSearch className="text-muted" size={27} />
               {data.token && data.role === "user" && (
                 <>
                   <Link to="/user-basket" className="text-dark"> <HiOutlineShoppingBag className="text-muted" size={25} /> </Link>
