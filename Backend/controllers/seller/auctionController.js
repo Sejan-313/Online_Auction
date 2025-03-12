@@ -66,7 +66,7 @@ const getAuction = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Server Error" });
     }
-};
+  };
 
 const getAuctionAll = async (req, res) => {
   try {  
@@ -77,7 +77,21 @@ const getAuctionAll = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+const updateAuction = async (req, res) => {
+  try {
+    const auction_id = req.params.id;
+    const auction = await Auction.findOneAndUpdate(
+      { _id: auction_id, status: "Pending" },
+      { $set: { status: "Active" } },        
+      { new: true }                          
+    );
+      res.status(200).json(auction);
+  } catch (error) {
+      res.status(500).json({ message: "Server Error" });
+  }
+};
   
   
 
-module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll};
+module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuction};

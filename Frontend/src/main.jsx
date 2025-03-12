@@ -29,6 +29,7 @@ import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
 import Auction_Page from './role/user/page/auction_page.jsx';
 import Basket_Page from './role/user/page/basket_page.jsx';
 import Account_Page from './role/user/page/account_page.jsx';
+import AboutUs from './role/user/component/AboutUs.jsx';
 
 // Admin Router Setup
 const router = createBrowserRouter([
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "contact", element: <Contact /> },
+      { path: "about", element: <AboutUs /> },
       { path: "auction-product/:id", element: <Auction_Page /> },
       { path:'user-account',element:<Account_Page/>, children: [
           // { path: "update-profile", element: <Update_Profile/> },

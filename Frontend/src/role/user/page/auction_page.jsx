@@ -64,7 +64,7 @@ const Auction_Page = () => {
             const role = localStorage.getItem("role");
 
             if (!token || role !== "user") {
-                alert("Login required to save product!");
+                alert("Login required to bidding on product!");
                 return;
             }
             setLoading(true);
