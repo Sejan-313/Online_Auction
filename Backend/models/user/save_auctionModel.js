@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 
-const saved_auctionSchema = new mongoose.Schema({
-    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
-    product_id: { type: mongoose.Schema.Types.ObjectId, ref: "Auction", required: true }
+const savedAuctionSchema = new mongoose.Schema({
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    products: [{ product_id: { type: mongoose.Schema.Types.ObjectId, ref: "Auction" } }]
 }, { timestamps: true });
 
-module.exports = mongoose.model("save_auction", saved_auctionSchema);
-
+module.exports = mongoose.model("SavedAuction", savedAuctionSchema);

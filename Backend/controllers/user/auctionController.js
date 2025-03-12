@@ -47,45 +47,57 @@ const get_RecommendAuction = async (req, res) => {
 const toggleSave = async (req, res) => {
     try {
         const { product_id } = req.body;
-        const user_id = req.user.id; 
+        const user_id = req.user.id;
 
-        const existingEntry = await Save_Auction.findOne({ user_id, product_id });
+        let savedAuction = await Save_Auction.findOne({ user_id });
 
-        if (existingEntry) {
-            await Save_Auction.deleteOne({ user_id, product_id });
-            return res.json({ saved: false });
+        if (!savedAuction) {
+            savedAuction = new Save_Auction({ user_id, products: [{ product_id }] });
         } else {
-            await Save_Auction.create({ user_id, product_id });
-            return res.json({ saved: true });
+            const index = savedAuction.products.findIndex(p => p.product_id.toString() === product_id);
+            if (index !== -1) {
+                savedAuction.products.splice(index, 1); // Remove if already saved
+            } else {
+                savedAuction.products.push({ product_id }); // Add new saved product
+            }
         }
+
+        await savedAuction.save();
+        res.json({ saved: savedAuction.products.some(p => p.product_id.toString() === product_id) });
     } catch (error) {
-        console.error("Error saving product:", error);
         res.status(500).json({ message: "Server error" });
     }
-}
+};
 
 const checkSavedProduct = async (req, res) => {
     try {
         const { product_id } = req.params;
         const user_id = req.user.id;
 
-        const existingEntry = await Save_Auction.findOne({ user_id, product_id });
-
-        res.json({ saved: !!existingEntry });
+        const savedAuction = await Save_Auction.findOne({ user_id, "products.product_id": product_id });
+        res.json({ saved: !!savedAuction });
     } catch (error) {
-        console.error("Error checking saved product:", error);
         res.status(500).json({ message: "Server error" });
     }
 };
 
 const getUserSavedProducts = async (req, res) => {
     try {
-        const savedProducts = await Save_Auction.find({ user_id: req.params.userId }).populate("product_id");
-
-        res.json(savedProducts);
+        const savedAuction = await Save_Auction.findOne({ user_id: req.user.id }).populate("products.product_id");
+        res.json(savedAuction ? savedAuction.products.map(p => p.product_id) : []);
     } catch (error) {
-        console.error("Error fetching saved products:", error); 
-        res.status(500).json({ message: "Error fetching saved products", error: error.message });
+        res.status(500).json({ message: "Error fetching saved products" });
+    }
+};
+
+const getUserBiddedAuctions = async (req, res) => {
+    try {
+        const userId = req.user.id; 
+        const userBids = await Bid.find({ "users.user_id": userId }).populate("auction_id").populate("users.user_id");
+        const auctions = userBids.map(bid => bid.auction_id);
+        res.status(200).json(auctions);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
     }
 };
 
@@ -101,9 +113,20 @@ const place_Bid = async (req, res) => {
             return res.status(400).json({ error: "Bid must be higher than the current bid + increment price" });
         }
 
-        const newBid = new Bid({ auction_id: product_id, user_id, amount: bid_amount });
-        await newBid.save();
+        let bid = await Bid.findOne({ auction_id: product_id });
 
+        if (!bid) {
+            bid = new Bid({ auction_id: product_id, users: [{ user_id, bids: [{ amount: bid_amount }] }] });
+        } else {
+            const userBid = bid.users.find(u => u.user_id.toString() === user_id);
+            if (userBid) {
+                userBid.bids.push({ amount: bid_amount });
+            } else {
+                bid.users.push({ user_id, bids: [{ amount: bid_amount }] });
+            }
+        }
+
+        await bid.save();
         auction.current_bid = bid_amount;
         await auction.save();
 
@@ -113,7 +136,36 @@ const place_Bid = async (req, res) => {
     }
 };
 
+const getUserBiddingHistory = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const userBids = await Bid.find({ "users.user_id": userId }).populate("auction_id");
+
+        let biddingHistory = [];
+        userBids.forEach(bid => {
+            const user = bid.users.find(u => u.user_id.toString() === userId);
+            if (!user || !user.bids.length) return;
+        
+            user.bids.forEach((userBid, index, bidsArray) => {
+                biddingHistory.push({
+                    product: bid.auction_id?.product_name || "Unknown Product",
+                    amount: userBid.amount,
+                    lastBid: index > 0 ? bidsArray[index - 1]?.amount || 0 : 0,
+                    bidCount: bidsArray.length,
+                    status: "Winning",
+                    bidDate: new Date(userBid.bid_time).toLocaleDateString("en-GB"), 
+                    bidTime: new Date(userBid.bid_time).toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"})
+                });
+            });
+        });
+
+        res.status(200).json(biddingHistory);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+};
 
 
-module.exports = { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All };
+module.exports = { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All, getUserBiddedAuctions, getUserBiddingHistory };
 

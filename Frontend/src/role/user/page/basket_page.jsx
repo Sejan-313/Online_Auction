@@ -12,23 +12,22 @@ const Basket_Page = () => {
     useEffect(() => {
         const fetchUserProducts = async () => {
             const token = localStorage.getItem("token");
-            const userId = localStorage.getItem("user_id");
-            if (!token || !userId) return;
-
+            if (!token) return;
+    
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction-user-save/${userId}`, {
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction-user-save`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setProducts(data.map(({ product_id }) => product_id));
+                setProducts(data);
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchUserProducts();
-    }, []);
+    }, []);    
 
     return (
         <div className="p-5">

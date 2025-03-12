@@ -23,10 +23,10 @@ const Account_Page_slidebar = () => {
     }, []);
 
     return (
-        <div className="d-flex flex-column p-3 bg-light h-100">
-            <Nav className="flex-column p-3 bg-light vh-100">
+        <div className="d-flex flex-column p-3 h-100 border">
+            <Nav className="flex-column p-3 vh-100">
                 <h6 className="text-dark">Auctions</h6>
-                <Link to="ongoing-auctions" className="text-secondary nav-link d-flex align-items-center">
+                <Link to="" className="text-secondary nav-link d-flex align-items-center">
                     <FaGavel className="me-2" /> Ongoing Auctions
                 </Link>
                 <Link to="bidding-history" className="text-secondary nav-link d-flex align-items-center">
@@ -51,14 +51,10 @@ const Account_Page_slidebar = () => {
                 <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
                     <FaUserCog className="me-2" /> Update Profile
                 </Link>
-                <Link to="change-password" className="text-secondary nav-link d-flex align-items-center">
-                    <FaKey className="me-2" /> Change Password
-                </Link>
-                <Link to="payment-methods" className="text-secondary nav-link d-flex align-items-center">
-                    <FaCreditCard className="me-2" /> Payment Methods
+                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
+                    <FaCreditCard className="me-2" /> Payment Method
                 </Link>
             </Nav>
-
             <div className="mt-auto d-flex align-items-center">
                 <img 
                     src={user?.image ? `http://localhost:5000/uploads/user/${user.image}` : ""} 
