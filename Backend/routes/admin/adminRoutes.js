@@ -1,13 +1,21 @@
 const express = require("express");
 const { getsellrAll } = require("../../controllers/seller/authController");
-const {  getUser ,getUserAll} = require("../../controllers/user/authController");
+const { getUserAll} = require("../../controllers/user/authController");
 const {get_Auction_All } = require("../../controllers/user/auctionController");
-const {updateAuction} = require("../../controllers/seller/auctionController");
+const {updateAuctionAprove,updateAuctionRejectDescription} = require("../../controllers/seller/auctionController");
+const { login } = require("../../controllers/admin/authController");
 
 const router = express.Router();
-router.get("/:email", getUser);  
+
+router.post("/login", login);
+ 
 router.get("/all/user", getUserAll); 
 router.get("/all/seller", getsellrAll);
 router.get("/all/auction", get_Auction_All);
-router.put('/approve/:id', updateAuction);
+router.put('/approve/:id', updateAuctionAprove);
+router.put('/rejectproduct/:id', updateAuctionRejectDescription);
+
+
+
+
 module.exports = router;

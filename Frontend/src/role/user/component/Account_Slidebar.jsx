@@ -1,6 +1,7 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaGavel, FaHistory, FaBell, FaUserCog, FaMoneyBill, FaKey, FaCreditCard, FaFileInvoice, FaShoppingCart, FaBookmark } from "react-icons/fa";
+import { IoPersonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -25,8 +26,19 @@ const Account_Page_slidebar = () => {
     return (
         <div className="d-flex flex-column p-3 h-100 border">
             <Nav className="flex-column p-3 vh-100">
-                <h6 className="text-dark">Auctions</h6>
+                <h6 className="text-dark ">Settings</h6>
                 <Link to="" className="text-secondary nav-link d-flex align-items-center">
+                    <IoPersonSharp className="me-2" /> Profile
+                </Link>
+                <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
+                    <FaUserCog className="me-2" /> Update Profile
+                </Link>
+                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
+                    <FaCreditCard className="me-2" /> Payment Method
+                </Link>
+
+                <h6 className="text-dark mt-3">Auctions</h6>
+                <Link to="ongoin-auctions" className="text-secondary nav-link d-flex align-items-center">
                     <FaGavel className="me-2" /> Ongoing Auctions
                 </Link>
                 <Link to="bidding-history" className="text-secondary nav-link d-flex align-items-center">
@@ -47,14 +59,9 @@ const Account_Page_slidebar = () => {
                     <FaShoppingCart className="me-2" /> Pending Payments
                 </Link>
 
-                <h6 className="text-dark mt-3">Settings</h6>
-                <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
-                    <FaUserCog className="me-2" /> Update Profile
-                </Link>
-                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
-                    <FaCreditCard className="me-2" /> Payment Method
-                </Link>
+               
             </Nav>
+            
             <div className="mt-auto d-flex align-items-center">
                 <img 
                     src={user?.image ? `http://localhost:5000/uploads/user/${user.image}` : ""} 

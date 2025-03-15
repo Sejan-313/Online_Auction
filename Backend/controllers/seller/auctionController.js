@@ -47,10 +47,22 @@ const createAuction = async (req, res) => {
 const getAuction = async (req, res) => {
     try {
       const seller_id= req.params.seller_id;
-      const auction = await Auction.find({ seller_id  });
-      console.log(seller_id);  
-      
-      console.log(auction.length);
+      const auction = await Auction.find({
+        seller_id: seller_id,
+        status: { $in: ['Pending', 'Reject'] }
+      })
+      if (auction.length === 0) return res.status(404).json({ message: "Auction not  found " });
+      res.status(200).json(auction);
+    } catch (error) {
+      console.error("Error in getAuction:", error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  };
+
+  const getAuctionreg = async (req, res) => {
+    try {
+      const seller_id= req.params.seller_id;
+      const auction = await Auction.find({ seller_id: seller_id, status: 'Reject'  })
       if (auction.length === 0) return res.status(404).json({ message: "Auction not  found " });
       res.status(200).json(auction);
     } catch (error) {
@@ -78,7 +90,7 @@ const getAuctionAll = async (req, res) => {
   }
 };
 
-const updateAuction = async (req, res) => {
+const updateAuctionAprove = async (req, res) => {
   try {
     const auction_id = req.params.id;
     const auction = await Auction.findOneAndUpdate(
@@ -91,7 +103,26 @@ const updateAuction = async (req, res) => {
       res.status(500).json({ message: "Server Error" });
   }
 };
+
+
+
+const updateAuctionRejectDescription = async (req, res) => {
+  try {
+    const auction_id = req.params.id;
+    const description = req.body.description;    
+    const auction = await Auction.findOneAndUpdate(
+      { _id: auction_id },
+      { $set: { status: "Reject", Rejection: description } },
+      { new: true }
+    );            
+      res.status(200).json(auction);
+  } catch (error) {
+      res.status(500).json({ message: "Server Error" });
+  }
+};
+
+
   
   
 
-module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuction};
+module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg};

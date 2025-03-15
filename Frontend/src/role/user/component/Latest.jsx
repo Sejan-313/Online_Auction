@@ -31,7 +31,7 @@ const Latest = () => {
     };
 
     return (
-        <div className="latest-products spad">
+        // <div className="latest-products spad">
             <div className="container">
                 <Latestlink onFilter={handleFilter} />
                 <div className="row" id="product-list">
@@ -52,7 +52,7 @@ const Latest = () => {
                     )}
                 </div>
             </div>
-        </div>
+        // </div>
     );
 };
 

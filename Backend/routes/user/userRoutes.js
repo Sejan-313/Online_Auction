@@ -19,7 +19,7 @@ router.post("/send-otp", forgotPassword);
 router.post("/verify-otp", verifyOTP);
 router.post("/reset-password", resetPassword);
 
-// router.get("/:email", getUser);  
+router.get("/user/:email", getUser);  
 // router.get("/", getUserAll); 
 
 router.get("/auction", get_Auction);

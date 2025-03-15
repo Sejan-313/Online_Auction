@@ -147,7 +147,6 @@ const handleOtpKeyDown = (e, index) => {
                                     <select name="role" className="form-select" value={formData.role} onChange={handleChange}>
                                         <option value="user">User</option>
                                         <option value="seller">Seller</option>
-                                        <option value="admin">Admin</option>
                                     </select>
                                 </div>
                                 <button type="submit" className="w-100 btn btn-secondary">{isSending ? "Sending..." : "Send OTP"}</button>

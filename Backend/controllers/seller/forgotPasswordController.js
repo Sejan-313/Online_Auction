@@ -1,6 +1,6 @@
-const User = require("../../models/user/userModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const Seller = require("../../models/seller/sellerModel");
 
 let otpStore = {}; 
 
@@ -12,15 +12,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Forgot Password - Send OTP
+
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    const user = await Seller.findOne({ email });
 
     if (!user) return res.status(400).json({ success: false, message: "Email not found!" });
 
     const otp = Math.floor(1000 + Math.random() * 9000);
-    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // Expires in 5 minutes
+    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // 5min
 
     try {
         await transporter.sendMail({
@@ -37,7 +37,7 @@ exports.forgotPassword = async (req, res) => {
 };
 
 
-// 2. Verify OTP
+
 exports.verifyOTP = async (req, res) => {
     const { email, otp } = req.body;
     if (!otpStore[email]) {
@@ -51,14 +51,14 @@ exports.verifyOTP = async (req, res) => {
 };
 
 
-// 3. Reset Password
+
 exports.resetPassword = async (req, res) => {
     const { email, password } = req.body;
 
     if (!otpStore[email]) return res.status(400).json({ success: false, message: "OTP verification required!" });
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.updateOne({ email }, { password: hashedPassword });
+    await Seller.updateOne({ email }, { password: hashedPassword });
 
     delete otpStore[email]; 
 

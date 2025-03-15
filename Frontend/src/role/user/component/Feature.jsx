@@ -1,7 +1,7 @@
 const Feature = () =>
 {
     return <>
-     <section className="features-section spad">
+     {/* <section className="features-section spad"> */}
         <div className="features-ads">
             <div className="container">
                 <div className="row">
@@ -74,7 +74,7 @@ const Feature = () =>
                 </div>
             </div>
         </div>
-    </section>
+    {/* </section> */}
 
     </>
 }

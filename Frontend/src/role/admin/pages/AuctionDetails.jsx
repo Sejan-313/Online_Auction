@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 const AuctionDetails = () => {
+  const navigate =  useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [aucdata, setaucdata] = useState([]);
@@ -46,6 +49,14 @@ const AuctionDetails = () => {
 
     fetchaucdata();
   };
+
+  const handleRegect = async (auctionId)  => 
+  {
+    
+
+    fetchaucdata();
+    navigate(`/admin/reject?id=${auctionId}`);
+  }
 
   return (
     <>
@@ -200,7 +211,9 @@ const AuctionDetails = () => {
                           {item.status == "Pending" ? 
                           <div>      
                           <input type="submit" value="Approve" className="form-group btn btn-success" onClick={() => { handleApprove(item._id) }}/>
-                          <input type="submit" value="Reject" className="form-group btn btn-danger"/>
+                          {sessionStorage.setItem("prdid",item.id)}
+                          <input type="submit" value="Reject" className="form-group btn btn-danger" onClick={()=>{handleRegect(item._id)}}/>
+                          
                           </div>
                            :<input type="submit" className="form-group btn btn-danger" value="Delete" onClick={() => { handleDelete(item._id) }} />}
                          

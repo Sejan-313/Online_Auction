@@ -74,117 +74,41 @@ const UserDetails = () => {
                       </div>
                     </div>
                     <div className="datatable-container">
-                      <table className="table datatable datatable-table">
-                        <thead>
-                          <tr>
-                            <th
-                              data-sortable="true"
-                              style={{ width: "20.825852782764812%" }}
-                            >
-                              Name
-                            </th>
-                            <th
-                              data-sortable="true"
-                              style={{ width: "11.131059245960502%" }}
-                            >
-                              Image
-                            </th>
-                            <th
-                              data-sortable="true"
-                              style={{ width: "26.750448833034113%" }}
-                            >
-                              Email
-                            </th>
-                            <th
-                              data-format="YYYY/DD/MM"
-                              data-sortable="true"
-                              data-type="date"
-                              style={{ width: "18.850987432675044%" }}
-                            >
-                              Gender
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              Mobile No
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              Birthdate
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              City
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              Address
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              Pincode
-                            </th>
-                            <th
-                              data-sortable="true"
-                              className="red"
-                              style={{ width: "22.44165170556553%" }}
-                            >
-                              Operations
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
+
                           {msg ? (
-                            <tr>
-                            <td colSpan="9" classNameName="no-data-message">
                             <p>Data not found</p>
-                            </td>
-                          </tr>
                           ) : (
                             userdata.map((item) => {
                               return (
-                                <tr key={item._id}>
-                                  <td>{item.fullName}</td>
-                                  <td>
-                                    <img
+
+                                <div class="card mb-3" style={{maxwidth:" 540px"}}>
+                                <div class="row g-0">
+                                  <div class="col-md-4">
+                                  <img
                                       src={`http://localhost:5000/uploads/user/${item?.image}`}
                                       alt="Auction Image"
-                                      style={{ width: "100px", height: "auto" }}
+                                      style={{ width: "500px", height: "100%" }}
                                     />
-                                  </td>
-                                  <td>{item.email}</td>
-                                  <td>{item.gender}</td>
-                                  <td>{item.mobile}</td>
-                                  <td>{item.birthdate}</td>
-                                  <td>{item.address}</td>
-                                  <td>{item.city}</td>
-                                  <td>{item.pincode}</td>
-                                  <td>
-                                    {/* <Link to="update">
-                            <input type="submit" value="Update" />
-                          </Link>
-                          <input type="submit" value="Delete" onClick={() => { handleDelete(item._id) }} /> */}
-                                  </td>
-                                </tr>
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Name : {item.fullName}</h5>
+                                      <p class="card-text">Email : {item.email}</p>
+                                      <p class="card-text">Gender : {item.gender}</p>
+                                      <p class="card-text">Mobile Number :{item.mobile}</p>
+                                      <p class="card-text">Birthdatae :{item.birthdate}</p>
+                                      <p class="card-text">Address : {item.address}</p>
+                                      <p class="card-text">City : {item.city}</p>
+                                      <p class="card-text">Pincode : {item.pincode}</p>
+                                      <input type="submit" value="Delete" className="btn btn-danger"></input>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                               );
                             })
                           )}
-                        </tbody>
-                      </table>
+
                     </div>
                     <div className="datatable-bottom">
                       <div className="datatable-info">
