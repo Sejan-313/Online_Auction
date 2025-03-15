@@ -10,6 +10,7 @@ import store from './role/store/index.js';
 import Login from './role/user/page/login.jsx';
 import Signup_Seller from './role/user/page/signup_seller.jsx';
 import Signup_User from './role/user/page/signup_user.jsx';
+import Forgot_Password from './role/user/page/forgot_password.jsx';
 
 import Home from './role/user/page/Home.jsx';
 import Contact from './role/user/page/contact.jsx';
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
   { path: "signup_seller", element: <Signup_Seller /> },
   { path: "signup_user", element: <Signup_User /> },
   { path: "login",  element: <Login /> },
+  { path: "forgot-password",  element: <Forgot_Password /> },
 
   {
     path: "/", 
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "contact", element: <Contact /> },
-      { path: "about", element: <AboutUs /> },
+      // { path: "about", element: <AboutUs /> },
       { path: "auction-product/:id", element: <Auction_Page /> },
       { path:'user-account',element:<Account_Page/>, children: [
           { index: true, element: <Ongoing_Auction/> },

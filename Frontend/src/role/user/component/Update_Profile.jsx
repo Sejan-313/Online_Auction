@@ -6,7 +6,7 @@ import css from "./Update_Profile.module.css";
 const Update_Profile = () => {
     const fileInputRef = useRef(null);
     const [errors, setErrors] = useState({});
-    
+    const [activeTab, setActiveTab] = useState("update");
     const [updateDetails, setUpdateDetails] = useState({
         fullName: "",
         email: "",
@@ -149,7 +149,14 @@ const Update_Profile = () => {
 
     return (
         <div className={css.container}>
-            <div>
+            <div className="d-flex justify-content-end">
+                <button onClick={() => setActiveTab(activeTab === "update" ? "password" : "update")} className="btn btn-link">
+                    {activeTab === "update" ? "Change Password" : "Update Details"}
+                </button>
+            </div>
+
+            {activeTab === "update" && (
+                <div>
                 <h5 className="text-muted mb-3">Update Details</h5>
                 <div>
                     <div className={`${css.signup_form_field} d-flex gap-3`}>
@@ -210,9 +217,10 @@ const Update_Profile = () => {
                     </div>
                     <button className="btn btn-secondary w-100 mt-1" onClick={handleUpdateSubmit}>update</button>
                 </div>
-            </div>
-            <div className="w-100 border my-5"></div>
-            <div>
+                </div>
+            )}
+            {activeTab === "password" && (
+                <div>
                 <h5 className="text-muted mb-3">Change Password</h5>
                 <div className={`${css.signup_form_field} d-flex gap-3`}>
                     <div className="w-100">
@@ -233,6 +241,7 @@ const Update_Profile = () => {
                 </div>
                 <button className="btn btn-secondary w-100 mt-1" onClick={handlePasswordSubmit}>change</button>
             </div>
+            )}
         </div>
     );
 };
