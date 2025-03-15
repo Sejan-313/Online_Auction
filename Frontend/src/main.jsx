@@ -13,7 +13,7 @@ import Signup_User from './role/user/page/signup_user.jsx';
 
 import Home from './role/user/page/Home.jsx';
 import Contact from './role/user/page/contact.jsx';
-import UserProfile from './role/user/component/UserProfile.jsx';
+// import UserProfile from './role/user/component/UserProfile.jsx';
 import Auction_Page from './role/user/page/auction_page.jsx';
 import Basket_Page from './role/user/page/basket_page.jsx';
 import Account_Page from './role/user/page/account_page.jsx';
@@ -25,8 +25,9 @@ import Update_Profile from './role/user/component/Update_Profile.jsx';
 import Seller from './role/seller/seller.jsx';
 import Add_Auction from './role/seller/page/Add_Auction.jsx';
 import Dashboard from './role/seller/page/Dashboard.jsx';
+import Reject_auction from './role/seller/page/Reject_auction.jsx';
 import Manage_Auctions from './role/seller/page/Manage_Auctions.jsx';
-import Order_Management from './role/seller/page/Order_Management.jsx';
+import Order_Management from './role/seller/page/Order_Management .jsx';
 import Payments_Earnings from './role/seller/page/Payments_&_Earnings.jsx';
 import Reports_Analytics from './role/seller/page/Reports_&_Analytics.jsx';
 import Settings from './role/seller/page/Settings.jsx';
@@ -40,8 +41,9 @@ import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
 
 // import Auction_Page from './role/user/page/auction_page.jsx';
 // import Basket_Page from './role/user/page/basket_page.jsx';
-// import Account_Page from './role/user/page/account_page.jsx';
-// import AboutUs from './role/user/component/AboutUs.jsx';
+import UserProfile from './role/user/page/UserProfile.jsx';
+import AboutUs from './role/user/component/AboutUs.jsx';
+import RejectProduct from './role/admin/pages/RejectProduct.jsx';
 
 
 const router = createBrowserRouter([
@@ -58,7 +60,9 @@ const router = createBrowserRouter([
       { path: "about", element: <AboutUs /> },
       { path: "auction-product/:id", element: <Auction_Page /> },
       { path:'user-account',element:<Account_Page/>, children: [
-          { index: true, element: <Ongoing_Auction/> },
+          { index: true, element: <UserProfile/>},
+          {path:"ongoin-auctions",element:<Ongoing_Auction/>},
+          
           { path: "bidding-history", element: <Bidding_History/> },
           { path: "bid-notifications", element: <Bid_Notification/> },
           { path: "update-profile", element: <Update_Profile/> },
@@ -67,15 +71,17 @@ const router = createBrowserRouter([
       {path:'user-basket',element:<Basket_Page/>},
     ],
   },
-  { path: 'userprofile', element: <UserProfile /> },
+  // { path: 'userprofile', element: <UserProfile /> },
 
   {
     path: "seller", 
     element: <Seller />,
     children: [
+      {index:true, element: <Dashboard />},
       { path: "add-auction", element: <Add_Auction/> },
       { path: "dashboard", element: <Dashboard /> },
-      { path: "manage-auctions", element: <Manage_Auctions /> },
+      { path: "manage-auctions", element: <Manage_Auctions/> },
+      { path: "reject-auctions", element: <Reject_auction/> },
       { path: "order-management", element: <Order_Management /> },
       { path: "payments-&-earnings", element: <Payments_Earnings /> },
       { path: "reports-&-analytics", element: <Reports_Analytics /> },
@@ -88,11 +94,12 @@ const router = createBrowserRouter([
     path: "admin", 
     element: <Admin/>, 
     children: [
+      { index:true, element: <AHome></AHome> },
       { path: "home", element: <AHome></AHome> },
       { path: "reg_user_data", element: <UserDetails/>},
       { path: "reg_seller_data", element: <SellerDetails/>},
       { path: "auctiondata", element: <AuctionDetails/> },
-      // { path: "manage-auctions", element: <Add_Auction/>},
+      { path: "reject", element: <RejectProduct />},
       // { path: "order-management", element: <Order_Management /> },
       // { path: "payments-&-earnings", element: <Payments_Earnings /> },
       // { path: "reports-&-analytics", element: <Reports_Analytics /> },

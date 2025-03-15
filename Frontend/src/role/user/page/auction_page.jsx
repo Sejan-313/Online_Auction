@@ -60,16 +60,14 @@ const Auction_Page = () => {
     const handleBid = async () => {
         try {
             const token = localStorage.getItem("token");
-<<<<<<< HEAD
+
             const role = localStorage.getItem("role");
 
-            if (!token || role !== "user") {
-                alert("Login required to bidding on product!");
-                return;
-=======
+     
+
             if (!token || localStorage.getItem("role") !== "user") {
                 return alert("Login required to place a bid!");
->>>>>>> vinit
+
             }
     
             setLoading(true);

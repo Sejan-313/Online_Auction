@@ -25,8 +25,24 @@ const Account_Page_slidebar = () => {
     return (
         <div className="d-flex flex-column p-3 h-100 border">
             <Nav className="flex-column p-3 vh-100">
-                <h6 className="text-dark">Auctions</h6>
+            <h6 className="text-dark mt-3">Settings</h6>
+
                 <Link to="" className="text-secondary nav-link d-flex align-items-center">
+                    <FaUserCog className="me-2" /> Profile
+                </Link>
+
+                <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
+                    <FaUserCog className="me-2" /> Update Profile
+                </Link>
+
+                {/* <Link to="change-password" className="text-secondary nav-link d-flex align-items-center">
+                    <FaUserCog className="me-2" /> Change Password
+                </Link> */}
+
+            
+
+                <h6 className="text-dark">Auctions</h6>
+                <Link to="ongoin-auctions" className="text-secondary nav-link d-flex align-items-center">
                     <FaGavel className="me-2" /> Ongoing Auctions
                 </Link>
                 <Link to="bidding-history" className="text-secondary nav-link d-flex align-items-center">
@@ -40,6 +56,11 @@ const Account_Page_slidebar = () => {
                 <Link to="transaction-history" className="text-secondary nav-link d-flex align-items-center">
                     <FaMoneyBill className="me-2" /> Transaction History
                 </Link>
+
+                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
+                    <FaCreditCard className="me-2" /> Payment Method
+                </Link>
+
                 <Link to="download-invoices" className="text-secondary nav-link d-flex align-items-center">
                     <FaFileInvoice className="me-2" /> Download Invoices
                 </Link>
@@ -47,14 +68,9 @@ const Account_Page_slidebar = () => {
                     <FaShoppingCart className="me-2" /> Pending Payments
                 </Link>
 
-                <h6 className="text-dark mt-3">Settings</h6>
-                <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
-                    <FaUserCog className="me-2" /> Update Profile
-                </Link>
-                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
-                    <FaCreditCard className="me-2" /> Payment Method
-                </Link>
+               
             </Nav>
+            
             <div className="mt-auto d-flex align-items-center">
                 <img 
                     src={user?.image ? `http://localhost:5000/uploads/user/${user.image}` : ""} 

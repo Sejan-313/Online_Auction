@@ -33,6 +33,10 @@ const Sidebar = () => {
                 <Link to="manage-auctions" className="text-secondary nav-link d-flex align-items-center">
                     <FaList className="me-2" /> Manage Auctions
                 </Link>
+                <Link to="reject-auctions" className="text-secondary nav-link d-flex align-items-center">
+                    <FaList className="me-2" /> Manage Rejected Auctions
+                </Link>
+                
 
                 <h6 className="text-dark mt-3">Orders</h6>
                 <Link to="order-management" className="text-secondary nav-link d-flex align-items-center">

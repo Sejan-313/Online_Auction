@@ -25,14 +25,11 @@ const UserProfile = () => {
       console.log(response.data);
       
     } catch (error) {
-      console.error("Error fetching student data:", error);
+      console.error("Error fetching user data:", error);
     }
   };
 
-  const imagepath = "/Online_Auction/Backend/uploads/user/" + userdata.image;
-console.log(imagepath); 
-  
-  
+
 
   return (
     <>

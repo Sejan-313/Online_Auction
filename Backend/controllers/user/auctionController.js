@@ -13,7 +13,7 @@ const get_Auction = async (req, res) => {
 
 const get_Auction_All = async (req, res) => {
     try {
-        const auction = await Auction.find();
+        const auction = await Auction.find({ status: { $in: ["Active", "Pending"] } });
         res.json(auction);
     } catch (error) {
         res.status(500).json({ message: "Server Error" });

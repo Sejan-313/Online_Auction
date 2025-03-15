@@ -15,7 +15,7 @@ router.get("/user/:id", getUserById);
 router.post("/update-user", authenticate, updateUser);
 router.post("/change-password", authenticate, changePassword);
 
-// router.get("/:email", getUser);  
+router.get("/user/:email", getUser);  
 // router.get("/", getUserAll); 
 
 router.get("/auction", get_Auction);
