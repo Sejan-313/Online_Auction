@@ -34,7 +34,7 @@ const Feature = () =>
         </div>
        
         <div className="features-box p-5">
-            <div className="container">
+            <div className="">
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="row">

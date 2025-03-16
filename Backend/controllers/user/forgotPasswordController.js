@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Forgot Password - Send OTP
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -20,7 +19,7 @@ exports.forgotPassword = async (req, res) => {
     if (!user) return res.status(400).json({ success: false, message: "Email not found!" });
 
     const otp = Math.floor(1000 + Math.random() * 9000);
-    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // Expires in 5 minutes
+    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; 
 
     try {
         await transporter.sendMail({

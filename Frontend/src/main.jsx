@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "contact", element: <Contact /> },
-      // { path: "about", element: <AboutUs /> },
+      { path: "about", element: <AboutUs /> },
       { path: "auction-product/:id", element: <Auction_Page /> },
       { path:'user-account',element:<Account_Page/>, children: [
           { index: true, element: <UserProfile/>},
@@ -101,11 +101,7 @@ const router = createBrowserRouter([
       { path: "reg_seller_data", element: <SellerDetails/>},
       { path: "auctiondata", element: <AuctionDetails/> },
       { path: "reject", element: <RejectProduct />},
-      // { path: "order-management", element: <Order_Management /> },
-      // { path: "payments-&-earnings", element: <Payments_Earnings /> },
-      // { path: "reports-&-analytics", element: <Reports_Analytics /> },
-      // { path: "settings", element: <Settings /> },
-      // { path: "update", element: <UpdateAuctions /> },
+   
     ],
   },
 ]);
