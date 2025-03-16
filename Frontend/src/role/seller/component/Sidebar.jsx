@@ -1,5 +1,6 @@
 import { Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { IoBan } from "react-icons/io5";
 import {FaTachometerAlt, FaPlus, FaList, FaEdit, FaTrash, FaGavel, FaShoppingCart, FaMoneyBill, FaChartBar, FaUserCog, FaSignOutAlt } from "react-icons/fa";
 
 
@@ -34,7 +35,7 @@ const Sidebar = () => {
                     <FaList className="me-2" /> Manage Auctions
                 </Link>
                 <Link to="reject-auctions" className="text-secondary nav-link d-flex align-items-center">
-                    <FaList className="me-2" /> Manage Rejected Auctions
+                    <IoBan size={22} className="me-2" /> Rejected Auctions
                 </Link>
                 
 

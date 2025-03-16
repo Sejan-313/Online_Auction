@@ -14,7 +14,6 @@ const upload = multer({
 const register = (req, res) => {
   upload(req, res, async (err) => {
     if (err) return res.status(400).json({ error: err.message });
-    console.log(req.body);
     
     if (!req.file) return res.status(400).json({ error: "Image is required" });
 
@@ -103,7 +102,6 @@ const getUser = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await User.findById(id);
-    console.log("id is"+id);  
     
     if (!user) return res.status(404).json({ message: "User  not found" });
     res.json(user);
