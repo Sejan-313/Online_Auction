@@ -98,8 +98,9 @@ const Auction_Page = () => {
                         <div className="h-100 d-flex gap-1">
                             <div className="w-75 pe-3 border-end">
                                 <h3 className="text-muted">{product.product_name}</h3>
-                                <p className="text-muted">{product.description}
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit expedita, voluptatibus dicta amet non ipsa perferendis? Molestiae, sunt minus ea sapiente praesentium asperiores suscipit tenetur, quia veritatis ullam adipisci error, voluptatum sequi doloremque! Ipsa qui rem reprehenderit velit ad est asperiores expedita animi, consectetur, natus iure et, sint sed corrupti at doloremque earum eum error incidunt eligendi iste veniam. Unde, sint corporis eaque molestiae dolorum repellat illo maxime enim facilis officiis laborum dicta asperiores cum explicabo reiciendis sit autem. Repellat odit, error animi sunt laboriosam cum dolorum dolor. Molestias ab odit exercitationem atque autem praesentium vero incidunt obcaecati suscipit doloribus, quibusdam temporibus consequuntur? Voluptatum libero unde aut ratione odit suscipit doloribus, deserunt veritatis corrupti aspernatur, possimus, exercitationem ullam facere doloremque temporibus qui officiis nam error! Vel earum aut nesciunt ipsam quas nulla! Aut </p>
+                                <p className="text-muted h-75 p-3 overflow-auto">
+                                    {product.description}
+                                 </p>
                             </div>
                             <div className="w-25 ps-3">
                                 <p><strong>Type:</strong> {product.product_type}</p>

@@ -1,8 +1,8 @@
 const Footer = () =>
 {
     return <>
-     <footer className="footer-section spad footer">
-        <div className="container">
+     <footer className="footer-section spad footer p-5">
+        <div className="w-75 mx-auto">
             <div className="newslatter-form">
                 <div className="row">
                     <div className="col-lg-12">
@@ -14,9 +14,9 @@ const Footer = () =>
                 </div>
             </div>
             <div className="footer-widget">
-                <div className="row">
+                <div className="row d-flex justify-content-evenly">
                     <div className="col-lg-3 col-sm-6">
-                        <div className="single-footer-widget">
+                        <div className="single-footer-widget d-flex flex-column align-items-center">
                             <h4>About us</h4>
                             <ul>
                                 <li>About Us</li>
@@ -28,7 +28,7 @@ const Footer = () =>
                         </div>
                     </div>
                     <div className="col-lg-3 col-sm-6">
-                        <div className="single-footer-widget">
+                        <div className="single-footer-widget d-flex flex-column align-items-center">
                             <h4>Customer Care</h4>
                             <ul>
                                 <li>Search</li>
@@ -40,7 +40,7 @@ const Footer = () =>
                         </div>
                     </div>
                     <div className="col-lg-3 col-sm-6">
-                        <div className="single-footer-widget">
+                        <div className="single-footer-widget d-flex flex-column align-items-center">
                             <h4>Our Services</h4>
                             <ul>
                                 <li>Free Shipping</li>
@@ -52,7 +52,7 @@ const Footer = () =>
                         </div>
                     </div>
                     <div className="col-lg-3 col-sm-6">
-                        <div className="single-footer-widget">
+                        <div className="single-footer-widget d-flex flex-column align-items-center">
                             <h4>Information</h4>
                             <ul>
                                 <li>Payment methods</li>

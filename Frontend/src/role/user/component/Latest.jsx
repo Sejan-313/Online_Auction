@@ -31,8 +31,8 @@ const Latest = () => {
     };
 
     return (
-        // <div className="latest-products spad">
-            <div className="container">
+        <div className="latest-products spad p-5">
+            <div className="container-fluid">
                 <Latestlink onFilter={handleFilter} />
                 <div className="row" id="product-list">
                     {filteredAuctions.length > 0 ? (
@@ -52,7 +52,7 @@ const Latest = () => {
                     )}
                 </div>
             </div>
-        // </div>
+        </div>
     );
 };
 
