@@ -169,18 +169,26 @@ const Contact = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Google Map Section */}
             <div className="map" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto" }}>
-                <div className="row">
-                    <div className="col-lg-12">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26440.72384129847!2d-118.24906619231132!3d34.06719475913053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c659f50c318d%3A0xe2ffb80a9d3820ae!2sChinatown%2C%20Los%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1570213740685!5m2!1sen!2sbd"
-                            height="560" style={{ border: 0, width: "100%" }} allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
-                    </div>
-                </div>
-            </div>
+
+    <div className="map" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="row">
+        <div className="col-lg-12">
+            <iframe 
+                src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=ssagrawal%20navsari+(Dental%20Health%20Care)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                height="560" 
+                style={{ border: 0, width: "100%" }} 
+                allowFullScreen="" 
+                aria-hidden="false"     
+                tabIndex="0">
+            </iframe>
         </div>
+    </div>
+</div>
+
+        
+    </div>
+</div>
     );
 }
 
