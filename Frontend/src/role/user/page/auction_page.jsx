@@ -12,6 +12,7 @@ const Auction_Page = () => {
     const [recommendations, setRecommendations] = useState([]);
     const [isSaved, setIsSaved] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [bidAmount, setbidAmount] = useState("0");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +56,12 @@ const Auction_Page = () => {
         } catch (error) {
             alert(error.response?.data?.message || "Something went wrong");
         }
-    };    
+    };  
+    
+    const handleONchnageBid = (event) =>
+    {
+        setbidAmount(event.target.value === "" || event.target.value < 0 ? 0 : parseInt(event.target.value))
+    }
     
     const handleBid = async () => {
         try {
@@ -63,10 +69,13 @@ const Auction_Page = () => {
             if (!token || localStorage.getItem("role") !== "user") {
                 return alert("Login required to place a bid!");
             }
+
+           
     
+
             setLoading(true);
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user/place-bid`, 
-                { product_id: id, bid_amount: product.current_bid + product.increment_price }, 
+                { product_id: id, bid_amount: product.current_bid + bidAmount }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
     
@@ -110,8 +119,12 @@ const Auction_Page = () => {
                                 <p><strong>End Date:</strong> {product.end_date}</p>
                                 <p><strong>Status:</strong> {product.status}</p>
                                 <p><strong>Current Bid:</strong> {`₹${product.starting_price + product.current_bid}`}</p>
-                                <button className="btn btn-secondary w-100" onClick={handleBid} disabled={loading}>
-                                    {loading ? "Placing Bid..." : product.status !== "Active" ? "Bidding Not Allowed" : `+ ₹${product.increment_price}`}
+                                <input type="text" className="input-group mb-3" placeholder="Enter Your Bidding Amount" onChange={(e)=>{handleONchnageBid(e)}} />
+
+                                {/* <input className="btn btn-secondary w-100" type="submit" value="Bid"  onClick={handleBid} /> */}
+
+                                <button className="btn btn-secondary w-100"  disabled={loading} onClick={handleBid}>
+                                    {loading ? "Placing Bid..." : product.status !== "Active" ? "Bidding Not Allowed" : `+ ₹${bidAmount}`}
                                 </button>
                             </div>
                         </div>

@@ -121,8 +121,20 @@ const updateAuctionRejectDescription = async (req, res) => {
   }
 };
 
+const updateAuctionExpired = async (req, res) => {
+  try {
+       
+    const auction = await Auction.Update({ $set: { status: "Expired"} },
+  {new: true }
+  );            
+      res.status(200).json(auction);
+  } catch (error) {
+      res.status(500).json({ message: "Server Error" });
+  }
+};
+
 
   
   
 
-module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg};
+module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,updateAuctionExpired};

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const bidSchema = new mongoose.Schema({
-    auction_id: { type: mongoose.Schema.Types.ObjectId, ref: "Auction", required: true },
+    auction_id : { type: mongoose.Schema.Types.ObjectId, ref: "Auction", required: true },
     users: [
         {
             user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -15,4 +15,4 @@ const bidSchema = new mongoose.Schema({
     ]
 }, { timestamps: true });
 
-module.exports = mongoose.model("Bid", bidSchema);
+module.exports = mongoose.model("Bid", bidSchema);  
