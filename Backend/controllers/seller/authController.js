@@ -60,6 +60,67 @@ const getsellrAll = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  try {
+      const userId = req.params.id; 
+      const user = await Seller.findById(userId)
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
 
-module.exports = { register, login, getsellrAll };
+      res.json(user);
+  } catch (error) {
+      res.status(500).json({ message: "Server error" });
+  }
+}
+
+const updateUser = (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    try {
+      const userId = req.user.id;
+      const updateData = { ...req.body };
+      if (req.file) updateData.image = req.file.filename;
+
+      const updatedUser = await Seller.findByIdAndUpdate(userId, updateData, { new: true });
+      if (!updatedUser) return res.status(404).json({ message: "User not found" });
+      
+      res.status(200).json({ 
+        message: "User updated successfully", 
+        user: {
+          email: updatedUser.email,
+          fullName: updatedUser.fullName,
+          role: "user"
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error updating user", error });
+    }
+  });
+};
+
+const changePassword = async (req, res) => {
+  try {
+      const { old_password, new_password } = req.body;
+      const userId = req.user.id;
+
+      const user = await Seller.findById(userId);
+      if (!user) return res.status(404).json({ message: "User not found" });
+
+      const isMatch = await bcrypt.compare(old_password, user.password);
+      if (!isMatch) return res.status(400).json({ message: "Old password is incorrect" });
+
+      if (old_password === new_password) return res.status(400).json({ message: "New password cannot be the same as old password" });
+
+      const hashedPassword = await bcrypt.hash(new_password, 10);
+      user.password = hashedPassword;
+      await user.save();
+
+      res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+      res.status(500).json({ message: "Error changing password", error });
+  }
+};
+
+module.exports = { register, login, getsellrAll, getUserById, updateUser, changePassword };
 

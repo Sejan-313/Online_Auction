@@ -10,7 +10,7 @@ const UserProfile = () =>
 
   const [userdata, setuserdata] = useState([]);
   useEffect(() => {
-      const id = localStorage.getItem("user_id"); 
+      const id = localStorage.getItem("seller_id"); 
       if (id) {
         fetchuserdata(id);
       } else {
@@ -20,7 +20,7 @@ const UserProfile = () =>
 
   const fetchuserdata = async (id) => {
     try {
-      const response = await axios.get(`${API_URL}/user/user/${id}`); 
+      const response = await axios.get(`${API_URL}/seller/user/${id}`); 
       setuserdata(response.data);
       
     } catch (error) {
@@ -29,13 +29,14 @@ const UserProfile = () =>
   };
 
   return (
-    <div class={`${css['UserProfile']} d-flex gap-5`}>
-            <div>
-                <img  src={`http://localhost:5000/uploads/user/${userdata?.image}`} class="img" alt="Profile Picture" className=" rounded"  style={{ width: '400px', height: 'auto' }}/>
-            </div>
-            <div className="w-100">
+    <div class={`${css['UserProfile']} p-5`}>
+      <div className="h-50 w-100 d-flex gap-5">
+        <div>
+              <img  src={`http://localhost:5000/uploads/seller/${userdata?.image}`} class="img" alt="Profile Picture" className="rounded"  style={{ width: '200px', height: '200px',  }}/>
+        </div>
+        <div className="w-50">
                 <div class="about-text go-to">
-                    <h3 class="dark-color">{userdata.fullName}</h3>
+                    <h3 class="dark-color mb-4 border-bottom">{userdata.fullName}</h3>
                     <div class="row about-list">
                         <div class="col-md-6">
                             <div class="media">
@@ -71,7 +72,8 @@ const UserProfile = () =>
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
+      </div>
     </div>
   )
 };

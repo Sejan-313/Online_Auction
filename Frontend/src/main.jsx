@@ -14,7 +14,6 @@ import Forgot_Password from './role/user/page/forgot_password.jsx';
 
 import Home from './role/user/page/Home.jsx';
 import Contact from './role/user/page/contact.jsx';
-// import UserProfile from './role/user/component/UserProfile.jsx';
 import Auction_Page from './role/user/page/auction_page.jsx';
 import Basket_Page from './role/user/page/basket_page.jsx';
 import Account_Page from './role/user/page/account_page.jsx';
@@ -22,6 +21,8 @@ import Bid_Notification from './role/user/component/Bid_Notification.jsx';
 import Bidding_History from './role/user/component/Bidding_History.jsx';
 import Ongoing_Auction from './role/user/component/Ongoing_Auction.jsx';
 import Update_Profile from './role/user/component/Update_Profile.jsx';
+import UserProfile from './role/user/component/UserProfile.jsx';
+import AboutUs from './role/user/component/AboutUs.jsx';
 
 import Seller from './role/seller/seller.jsx';
 import Add_Auction from './role/seller/page/Add_Auction.jsx';
@@ -32,18 +33,16 @@ import Order_Management from './role/seller/page/Order_Management .jsx';
 import Payments_Earnings from './role/seller/page/Payments_&_Earnings.jsx';
 import Reports_Analytics from './role/seller/page/Reports_&_Analytics.jsx';
 import Settings from './role/seller/page/Settings.jsx';
-import UpdateAuctions from './role/seller/page/UpdateAuctions.jsx';
+import Update_Auction from './role/seller/page/Update_Auction.jsx';
+import Update_Profile_seller from './role/seller/page/Update_Profile.jsx';
+import Profile_Seller from "./role/seller/page/UserProfile.jsx"
+import Auction_Status from './role/seller/page/Auction_Status.jsx';
 
 import AHome from './role/admin/components/AHome.jsx';
 import Admin from './role/admin/admin.jsx';
 import UserDetails from './role/admin/pages/UserDetails.jsx';
 import SellerDetails from './role/admin/pages/SellerDetails.jsx';
 import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
-
-// import Auction_Page from './role/user/page/auction_page.jsx';
-// import Basket_Page from './role/user/page/basket_page.jsx';
-import UserProfile from './role/user/component/UserProfile.jsx';
-import AboutUs from './role/user/component/AboutUs.jsx';
 import RejectProduct from './role/admin/pages/RejectProduct.jsx';
 
 
@@ -72,7 +71,6 @@ const router = createBrowserRouter([
       {path:'user-basket',element:<Basket_Page/>},
     ],
   },
-  // { path: 'userprofile', element: <UserProfile /> },
 
   {
     path: "seller", 
@@ -87,7 +85,10 @@ const router = createBrowserRouter([
       { path: "payments-&-earnings", element: <Payments_Earnings /> },
       { path: "reports-&-analytics", element: <Reports_Analytics /> },
       { path: "settings", element: <Settings /> },
-      { path: "update", element: <UpdateAuctions /> },
+      { path: "profile", element: <Profile_Seller /> },
+      { path: "update-profile", element: <Update_Profile_seller /> },
+      { path: "auction-status", element: <Auction_Status />},
+      { path: "update-auction/:id", element: <Update_Auction /> }
     ],
   },
 
