@@ -2,8 +2,8 @@ const Feature = () =>
 {
     return <>
      <section className="features-section spad">
-        <div className="features-ads">
-            <div className="container">
+        <div className="features-ads p-5">
+            <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-4">
                         <div className="single-features-ads first">
@@ -33,8 +33,8 @@ const Feature = () =>
             </div>
         </div>
        
-        <div className="features-box">
-            <div className="container">
+        <div className="features-box p-5">
+            <div className="">
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="row">

@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 const AuctionDetails = () => {
+  const navigate =  useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [aucdata, setaucdata] = useState([]);
@@ -15,7 +18,7 @@ const AuctionDetails = () => {
 
   const fetchaucdata = async () => {
     try {
-      const response = await axios.get(`${API_URL}/seller/all`);
+      const response = await axios.get(`${API_URL}/admin/all/auction`);
       setaucdata(response.data);
       console.log(response.data);
     } catch (error) {
@@ -23,6 +26,37 @@ const AuctionDetails = () => {
       setmsg(true);
     }
   };
+
+  const handleDelete = async (pid) => {
+    try {
+      const id = localStorage.getItem("seller_id");
+      await axios.delete(`${API_URL}/seller/${pid}`);
+    } catch (error) {
+      console.log(pid);
+      console.error("Error deleting Auction:", error);
+    }
+
+    fetchaucdata();
+  };
+
+  const handleApprove = async (auctionId) => {
+    try {
+      const response = await axios.put(`${API_URL}/admin/approve/${auctionId}`);
+      console.log('Auction status updated:', response.data);
+    } catch (error) {
+      console.error('Error updating auction status:', error);
+    }
+
+    fetchaucdata();
+  };
+
+  const handleRegect = async (auctionId)  => 
+  {
+    
+
+    fetchaucdata();
+    navigate(`/admin/reject?id=${auctionId}`);
+  }
 
   return (
     <>
@@ -93,7 +127,7 @@ const AuctionDetails = () => {
                               data-sortable="true"
                               style={{ width: "26.750448833034113%" }}
                             >
-                              Email
+                              Starting Price
                             </th>
                             <th
                               data-format="YYYY/DD/MM"
@@ -101,42 +135,42 @@ const AuctionDetails = () => {
                               data-type="date"
                               style={{ width: "18.850987432675044%" }}
                             >
-                              Gender
+                              Increament Price
                             </th>
                             <th
                               data-sortable="true"
                               className="red"
                               style={{ width: "22.44165170556553%" }}
                             >
-                              Mobile No
+                              Start date
                             </th>
                             <th
                               data-sortable="true"
                               className="red"
                               style={{ width: "22.44165170556553%" }}
                             >
-                              Birthdate
+                              End Date
                             </th>
                             <th
                               data-sortable="true"
                               className="red"
                               style={{ width: "22.44165170556553%" }}
                             >
-                              City
+                              Product Type
                             </th>
                             <th
                               data-sortable="true"
                               className="red"
                               style={{ width: "22.44165170556553%" }}
                             >
-                              Address
+                              Quantity
                             </th>
                             <th
                               data-sortable="true"
                               className="red"
                               style={{ width: "22.44165170556553%" }}
                             >
-                              Pincode
+                              Status
                             </th>
                             <th
                               data-sortable="true"
@@ -172,14 +206,21 @@ const AuctionDetails = () => {
                         <td>{item.end_date}</td>
                         <td>{item.product_type}</td>
                         <td>{item.quantity}</td>
+                        <td>{item.status}</td>
                         <td>
-                          <Link to="update">
-                            <input type="submit" value="Update" />
-                          </Link>
-                          <input type="submit" value="Delete" onClick={() => { handleDelete(item._id) }} />
+                          {item.status == "Pending" ? 
+                          <div>      
+                          <input type="submit" value="Approve" className="form-group btn btn-success" onClick={() => { handleApprove(item._id) }}/>
+                          {sessionStorage.setItem("prdid",item.id)}
+                          <input type="submit" value="Reject" className="form-group btn btn-danger" onClick={()=>{handleRegect(item._id)}}/>
+                          
+                          </div>
+                           :<input type="submit" className="form-group btn btn-danger" value="Delete" onClick={() => { handleDelete(item._id) }} />}
+                         
                         </td>
                       </tr>
                     );
+                    
                   })}
                         </tbody>
                       </table>

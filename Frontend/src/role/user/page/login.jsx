@@ -77,51 +77,54 @@ export default function Login() {
          <>
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border p-2 shadow-sm bg-white`}>
-                    <h3 className="text-center mb-3 font-weight-bold text-secondary">Login</h3>
-                    <form onSubmit={handleSubmit}>
-                        <div className={`${css.login_form_field}`}>
-                            <label className="form-label">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                className={`form-control ${errors.email ? "border-danger" : ""}`}
-                                placeholder="enter email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                            {errors.email && <small className="text-danger">{errors.email}</small>}
-                        </div>
-                        <div className={`${css.login_form_field}`}>
-                            <label className="form-label">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                className={`form-control ${errors.password ? "border-danger" : ""}`}
-                                placeholder="enter password"
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                            {errors.password && <small className="text-danger">{errors.password}</small>}
-                        </div>
-                        <div className={`${css.login_form_field} mb-2`}>
-                            <label className="form-label">Role</label>
-                            <select
-                                name="role"
-                                className={`form-select ${errors.role ? "border-danger" : ""}`}
-                                value={formData.role}
-                                onChange={handleChange}
-                            >
-                                <option value="user" selected>User</option>
-                                <option value="seller">Seller</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                            {errors.role && <small className="text-danger">{errors.role}</small>}
-                        </div>
-                        <button type="submit" className="w-100 btn btn-secondary"> Login </button>
-                    </form>
+                <div className={`${css.login_form} border bg-white px-2`}>
+                    <div className={`${css.login_form_container} border-bottom d-flex flex-column justify-content-evenly`}>
+                        <h3 className="text-center mb-3 font-weight-bold text-secondary">Login</h3>
+                        <form onSubmit={handleSubmit}>
+                            <div className={`${css.login_form_field}`}>
+                                <label className="form-label">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className={`form-control ${errors.email ? "border-danger" : ""}`}
+                                    placeholder="enter email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                                {errors.email && <small className="text-danger">{errors.email}</small>}
+                            </div>
+                            <div className={`${css.login_form_field}`}>
+                                <label className="form-label">Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    className={`form-control ${errors.password ? "border-danger" : ""}`}
+                                    placeholder="enter password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                                {errors.password && <small className="text-danger">{errors.password}</small>}
+                            </div>
+                            <div className={`${css.login_form_field}`}>
+                                <label className="form-label">Role</label>
+                                <select
+                                    name="role"
+                                    className={`form-select ${errors.role ? "border-danger" : ""}`}
+                                    value={formData.role}
+                                    onChange={handleChange}
+                                >
+                                    <option value="user" selected>User</option>
+                                    <option value="seller">Seller</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                {errors.role && <small className="text-danger">{errors.role}</small>}
+                            </div>
+                            <button type="submit" className="w-100 btn btn-secondary"> Login </button>
+                        </form>
+                    </div>
+                    <Link to="/forgot-password" className={css['forgot_password_link']}>Forgot password?</Link>
                 </div>
-                <div className={`${css.login_link} border p-3 shadow-sm bg-white text-center`}>
+                <div className={`${css.login_link} border p-3 bg-white text-center`}>
                     <p className="text-black"> Don't have an account?  
                         <Link to="/signup_user" className="text-primary"> User</Link> |  
                         <Link to="/signup_seller" className="text-primary"> Seller</Link>

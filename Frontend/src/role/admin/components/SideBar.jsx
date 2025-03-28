@@ -132,7 +132,7 @@ const SideBar = () =>
             </Link>
           </li>
           <li>
-          <Link to="">
+          <Link to="manage-auctions">
               <i class="bi bi-circle"></i><span>Manage Auctions</span>
             </Link>
           </li>

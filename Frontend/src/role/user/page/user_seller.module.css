@@ -6,17 +6,17 @@
 }
 
 .login {
-    height: 520px;
+    height: 590px;
     width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.login_form {
+.login_form_container {
     height: 450px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+}
+.login_form {
+    height: 520px;
 }
 .login_form_field {
     height: 95px;
@@ -59,6 +59,13 @@
 .icon:hover
 {
     color: black;
-
 }
 
+.forgot_password_link {
+    height: 68px;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}
