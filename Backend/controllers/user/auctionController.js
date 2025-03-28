@@ -109,9 +109,9 @@ const place_Bid = async (req, res) => {
         const auction = await Auction.findById(product_id);
         if (!auction) return res.status(404).json({ error: "Auction not found" });
 
-        if (bid_amount < auction.current_bid + auction.increment_price) {
-            return res.status(400).json({ error: "Bid must be higher than the current bid + increment price" });
-        }
+            // if (bid_amount < auction.current_bid + auction.increment_price) {
+            //     return res.status(400).json({ error: "Bid must be higher than the current bid + increment price" });
+            // }
 
         let bid = await Bid.findOne({ auction_id: product_id });
 

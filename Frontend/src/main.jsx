@@ -23,6 +23,7 @@ import Ongoing_Auction from './role/user/component/Ongoing_Auction.jsx';
 import Update_Profile from './role/user/component/Update_Profile.jsx';
 import UserProfile from './role/user/component/UserProfile.jsx';
 import AboutUs from './role/user/component/AboutUs.jsx';
+import Pending_Payment from './role/user/component/Pending_Payment.jsx';
 
 import Seller from './role/seller/seller.jsx';
 import Add_Auction from './role/seller/page/Add_Auction.jsx';
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
           { path: "bidding-history", element: <Bidding_History/> },
           { path: "bid-notifications", element: <Bid_Notification/> },
           { path: "update-profile", element: <Update_Profile/> },
+          { path: "pending-payment", element: <Pending_Payment/> },
         ],
       },
       {path:'user-basket',element:<Basket_Page/>},

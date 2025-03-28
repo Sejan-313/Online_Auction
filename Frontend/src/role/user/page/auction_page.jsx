@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CiSaveUp2, CiSaveDown2 } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import css from "./auction_page.module.css";
 
@@ -11,7 +11,13 @@ const Auction_Page = () => {
     const [product, setProduct] = useState(null);
     const [recommendations, setRecommendations] = useState([]);
     const [isSaved, setIsSaved] = useState(false);
+    const [bidAmount, setBidAmount] = useState(0);
+    const [currentBidAmount, setCurrentBidAmount] = useState("");
+    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isAuctionActive, setIsAuctionActive] = useState(true);
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [timeLeft, setTimeLeft] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +45,40 @@ const Auction_Page = () => {
         fetchData();
     }, [id]);
     
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            setCurrentTime(now);
+    
+            const hours = now.getHours();
+            if (hours >= 16 || hours < 9) {
+                setIsAuctionActive(false);
+                setError("Auction is active from 9:00 AM to 4:00 PM.");
+
+                const nextAuctionStart = new Date();
+                nextAuctionStart.setHours(10, 0, 0, 0); 
+    
+                if (hours >= 17) {
+                    nextAuctionStart.setDate(nextAuctionStart.getDate() + 1); 
+                }
+    
+                const timeDiff = nextAuctionStart - now;
+                const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    
+                setTimeLeft(`Auction starts in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`);
+            } else {
+                setIsAuctionActive(true);
+                setError("");
+                setTimeLeft(""); 
+                clearInterval(interval); 
+            }
+        }, 1000); 
+    
+        return () => clearInterval(interval);
+    }, []);   
+    
     const handleSaveProduct = async () => {
         try {
             const token = localStorage.getItem("token");
@@ -55,34 +95,50 @@ const Auction_Page = () => {
         } catch (error) {
             alert(error.response?.data?.message || "Something went wrong");
         }
-    };    
+    };  
+    
+    const validateBid = () => {
+        const value = parseInt(currentBidAmount) || 0;
+        if (value <= 0) {
+            setError("Bid amount must be greater than zero.");
+            return false;
+        } else if (value < product.increment_price) {
+            setError(`Minimum bid increment is ₹${product.increment_price}.`);
+            return false;
+        }
+        setError("");
+        return true;
+    };
     
     const handleBid = async () => {
+        if (!validateBid()) return;
+    
         try {
             const token = localStorage.getItem("token");
             if (!token || localStorage.getItem("role") !== "user") {
                 return alert("Login required to place a bid!");
             }
-    
             setLoading(true);
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user/place-bid`, 
-                { product_id: id, bid_amount: product.current_bid + product.increment_price }, 
+                { product_id: id, bid_amount: product.current_bid + parseInt(currentBidAmount) }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-    
             setProduct(prev => ({ ...prev, current_bid: data.current_bid }));
             alert(data.message);
+            setBidAmount(0);
+            setCurrentBidAmount("");
         } catch (error) {
             alert(error.response?.data?.error || "Something went wrong");
         } finally {
             setLoading(false);
         }
-    };    
+    };  
 
     return (
         <div className="container-fluid p-5">
-            <div className="d-flex mb-4 gap-3">
+            <div className="d-flex justify-content-between mb-4 gap-3">
                 <button className="nav-link mb-4 text-muted" onClick={() => navigate(-1)}>Previous</button>
+                <p className="text-danger">{timeLeft}</p>
             </div>
             <div className={`d-flex mb-5 ${css['Auction_Product']}`}>
                 <div className="w-25">
@@ -94,28 +150,42 @@ const Auction_Page = () => {
                     </figure>
                 </div>
                 <div className="w-75 p-3">
-                    {product ? (
-                        <div className="h-100 d-flex gap-1">
-                            <div className="w-75 pe-3 border-end">
-                                <h3 className="text-muted">{product.product_name}</h3>
-                                <p className="text-muted h-75 p-3 overflow-auto">
-                                    {product.description}
-                                 </p>
-                            </div>
-                            <div className="w-25 ps-3">
-                                <p><strong>Type:</strong> {product.product_type}</p>
-                                <p><strong>Quantity:</strong> {product.quantity}</p>
-                                <p><strong>Starting Price:</strong> ₹{product.starting_price}</p>
-                                <p><strong>Start Date:</strong> {product.start_date}</p>
-                                <p><strong>End Date:</strong> {product.end_date}</p>
-                                <p><strong>Status:</strong> {product.status}</p>
-                                <p><strong>Current Bid:</strong> {`₹${product.starting_price + product.current_bid}`}</p>
-                                <button className="btn btn-secondary w-100" onClick={handleBid} disabled={loading}>
-                                    {loading ? "Placing Bid..." : product.status !== "Active" ? "Bidding Not Allowed" : `+ ₹${product.increment_price}`}
-                                </button>
-                            </div>
+                {product ? (
+                    <div className="h-100 d-flex gap-1">
+                        <div className="w-75 pe-3 border-end">
+                            <h3 className="text-muted">{product.product_name}</h3>
+                            <p className="text-muted h-75 p-3 overflow-auto">{product.description}</p>
                         </div>
-                    ) : ( <p>Loading...</p> )}
+                        <div className="w-25 ps-3">
+                            <p><strong>Type:</strong> {product.product_type}</p>
+                            <p><strong>Quantity:</strong> {product.quantity}</p>
+                            <p><strong>Starting Price:</strong> ₹{product.starting_price}</p>
+                            <p><strong>Increment Price:</strong> ₹{product.increment_price}</p>
+                            <p><strong>Start Date:</strong> {product.start_date}</p>
+                            <p><strong>End Date:</strong> {product.end_date}</p>
+                            <p><strong>Status:</strong> {product.status}</p>
+                            <p><strong>Current Bid:</strong> {`₹${product.starting_price + product.current_bid}`}</p>
+                            <div style={{ height: "70px" }}>
+                                <input 
+                                    type="text" 
+                                    className={`input-group ${error ? 'border border-danger' : ''}`}
+                                    value={currentBidAmount}
+                                    placeholder="Enter Your Bidding Amount" 
+                                    onChange={(e) => setCurrentBidAmount(e.target.value)}
+                                    disabled={!isAuctionActive}
+                                />
+                                {error && <span className="text-danger">{error}</span>}
+                            </div>
+                            <button 
+                                className="btn btn-secondary w-100" 
+                                disabled={!isAuctionActive || loading} 
+                                onClick={handleBid}
+                            >
+                                {loading ? "Placing Bid..." : product.status !== "Active" ? "Bidding Not Allowed" : `+ ₹${bidAmount}`}
+                            </button>
+                        </div>
+                    </div>
+                ) : (<p>Loading...</p>)}
                 </div>
             </div>
             <h5 className="text-muted">Recommend</h5>

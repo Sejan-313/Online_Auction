@@ -119,9 +119,24 @@ const updateAuctionRejectDescription = async (req, res) => {
   }
 };
 
+// <<<<<<< HEAD
 const updateAuction = async (req, res) => {
   upload(req, res, async (err) => {  
       if (err) return res.status(400).json({ error: err.message });
+// =======
+// const updateAuctionExpired = async (req, res) => {
+//   try {
+       
+//     const auction = await Auction.Update({ $set: { status: "Expired"} },
+//   {new: true }
+//   );            
+//       res.status(200).json(auction);
+//   } catch (error) {
+//       res.status(500).json({ message: "Server Error" });
+//   }
+// };
+
+// >>>>>>> developer
 
       try {
           const { id } = req.params;
@@ -200,4 +215,8 @@ const getAuctionById = async (req, res) => {
 };  
   
 
+// <<<<<<< HEAD
 module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,getAuctionsStatus,getAuctionById, updateAuction };
+// =======
+// module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,updateAuctionExpired};
+// >>>>>>> developer
