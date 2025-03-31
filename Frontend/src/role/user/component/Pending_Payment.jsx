@@ -1,8 +1,16 @@
 import css from "./Pending_Payment.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Pending_Payment = () => {
+    
     const user_id = localStorage.getItem("user_id");
+
+    const navigate=useNavigate();
+
+    const nevtopayement = () => 
+    {
+        navigate(`/user-account/user-payment`);
+    }
 
     return (
         <div className={css['pending_payment']}>
@@ -15,7 +23,9 @@ const Pending_Payment = () => {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia voluptate assumenda quidem dolorem eos velit in officia quas soluta doloremque. Iusto corporis !</p>
                 </div>
                 <div style={{height: "100%", width: "150px"}} className="d-flex justify-content-center align-items-center border-start">
-                    <Link to={`/user-account/user-payment/67d7a06eadf36c704ff3b286`}>Pay</Link>
+                    
+
+                    <input type="submit" onClick={nevtopayement()} value="Pay" className="btn btn-success" />
                 </div>
             </div>
         </div>

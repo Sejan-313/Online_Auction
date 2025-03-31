@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "https://checkout.razorpay.com/v1/checkout.js";
 
 import App from './App.jsx';
 import store from './role/store/index.js';
@@ -45,6 +46,7 @@ import UserDetails from './role/admin/pages/UserDetails.jsx';
 import SellerDetails from './role/admin/pages/SellerDetails.jsx';
 import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
 import RejectProduct from './role/admin/pages/RejectProduct.jsx';
+import Payement from './role/user/component/Payement.jsx';
 
 
 const router = createBrowserRouter([
@@ -68,9 +70,11 @@ const router = createBrowserRouter([
           { path: "bid-notifications", element: <Bid_Notification/> },
           { path: "update-profile", element: <Update_Profile/> },
           { path: "pending-payment", element: <Pending_Payment/> },
+          { path: "user-payment", element:<Payement/> },
         ],
       },
       {path:'user-basket',element:<Basket_Page/>},
+      
     ],
   },
 
