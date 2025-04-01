@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import styles from './Manage_Auctions.module.css';
+import css from './Manage_Auctions.module.css';
 
 const Manage_Auctions = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -14,7 +14,6 @@ const Manage_Auctions = () => {
 
     if (id) {
       fetchsellerdata(id);
-      console.log(id);
     } else {
       console.error("No user ID found in localStorage.");
     }
@@ -24,7 +23,6 @@ const Manage_Auctions = () => {
     try {
       const response = await axios.get(`${API_URL}/seller/auction/${id}`);
       setsellerdata(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching Auction data:", error);
       setmsg(true);
@@ -37,109 +35,67 @@ const Manage_Auctions = () => {
       await axios.delete(`${API_URL}/seller/${pid}`);
       fetchsellerdata(id);
     } catch (error) {
-      console.log(pid);
       console.error("Error deleting Auction:", error);
     }
   };
 
   return (
-    <>
-      <main className={styles.main}>
-        <section className="">
-          <div className="row">
-            <div className="col-md-11">
-              <h2 className={styles.title}>Auctions details</h2>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-11 p-3">
-              <input
-                type="text"
-                placeholder="Search"
-                id="myInput"
-                className={styles.searchInput}
-              />
-            </div>
-            <div className="col-md-1 p-3">
-              <button className={styles.addButton}>
-                <Link to="/seller/add-auction" style={{ color: "white" }}>
-                  Add
-                </Link>
-              </button>
-            </div>
-            <br />
-          </div>
-
-          <div className="row">
-            <div className="12">
-              <div className={styles.tableContainer}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Product Name</th>
-                      <th>Image</th>
-                      <th>Starting Price</th>
-                      <th>Increament Price</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Type</th>
-                      <th>Quantity</th>
-                      <th>UPDATE/Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody id="myTable">
-                    {msg ? (
-                      <tr>
-                        <td colSpan="9" className={styles.noDataMessage}>
-                          Data not found
-                        </td>
-                      </tr>
-                    ) : (
-                      sellerdata.map((item) => {
-                        return (
-                          <tr key={item._id}>
-                            <td>{item.product_name}</td>
-                            <td>
-                              <img
-                                src={`http://localhost:5000/uploads/seller/${item?.image}`}
-                                alt="Auction Image"
-                                style={{ width: "100px", height: "auto" }}
-                              />
-                            </td>
-                            <td>{item.starting_price}</td>
-                            <td>{item.increment_price}</td>
-                            <td>{item.start_date}</td>
-                            <td>{item.end_date}</td>
-                            <td>{item.product_type}</td>
-                            <td>{item.quantity}</td>
-                            <td>
-                              <Link to="update">
-                                <input
-                                  type="submit"
-                                  value="Update"
-                                  className={`${styles.updateButton} btn btn-info`} />
-                              </Link>
-                              <input
-                                type="submit"
-                                value="Delete"
-                                className={`${styles.deleteButton} btn btn-danger`}
-                                onClick={() => {
-                                  handleDelete(item._id);
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </>
+    <div className="p-5">
+      <h3 className='text-start w-100 mb-4 border-bottom'>Manage Auctions</h3>
+      <div className={css['auction-table']}>
+        <table className="w-100">
+          <thead className="border" style={{height: "50px"}}>
+          <tr>
+            <th></th>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Starting Price</th>
+            <th>Increment Price</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            {msg ? (
+              <tr>
+                <td colSpan="9" className={css.noDataMessage}> Data not found </td>
+              </tr>
+            ) : (
+            sellerdata.map((item, index) => {
+              return (
+                <tr key={item._id} className="border-top mt-5">
+                  <td className="text-center">{index+1}</td>
+                  <td><img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction Image" style={{ width: "100px", height: "100px", padding: "7px" }}/></td>
+                  <td>{item.product_name}</td>
+                  <td>{item.starting_price}</td>
+                  <td>{item.increment_price}</td>
+                  <td>{item.start_date}</td>
+                  <td>{item.end_date}</td>
+                  <td>{item.product_type}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.status}</td>
+                  <td>
+                  <Link to={`/seller/update-auction/${item._id}`}>
+                      <input type="submit" value="Update" className={`${css.updateButton} btn btn-outline-success`} />
+                  </Link>
+                  <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
+                    onClick={() => {
+                      handleDelete(item._id);
+                    }}
+                  />
+                  </td>
+                </tr>
+              );
+            })
+          )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

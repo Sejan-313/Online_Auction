@@ -10,7 +10,7 @@ const auctionSchema = new mongoose.Schema({
     start_date: { type: String, required: true },
     end_date: { type: String, required: true },
     image: { type: String, required: true },
-    status: { type: String, default: "Pending", enum: ["Active", "Pending", "Reject"], required: true },
+    status: { type: String, default: "Pending", enum: ["Active", "Pending", "Rejected"], required: true },
     seller_id: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
     current_bid: { type: Number, default: 0 },
     Rejection: { type: String, default: "" },

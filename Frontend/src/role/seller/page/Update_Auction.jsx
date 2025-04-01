@@ -1,11 +1,14 @@
-import { useState, useRef } from "react";
-import css from './page.module.css';
-import axios from "axios"; 
+import css from "./Update_Auction.module.css"
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const Add_Auction = () => {
+const Update_Auction = () => {
     const fileInputRef = useRef(null);
     const [errors, setErrors] = useState({});
+    const { id } = useParams();
     const [formData, setFormData] = useState({
+        _id: "",
         product_name: "",
         image: null,
         description: "",
@@ -17,53 +20,68 @@ const Add_Auction = () => {
         quantity: "",
     });
 
+    useEffect(() => {
+        const fetchAuctionDetails = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/seller/auction-details/${id}`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+
+                setFormData(response.data);
+            } catch (error) {
+                console.error("Error fetching auction details:", error);
+            }
+        };
+
+        fetchAuctionDetails();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: type === "file" ? files[0] : value,
+            [name]: type === "file" ? files[0] || prev.image : value, 
         }));
-        setErrors({ ...errors, [e.target.name]: "" });
-    };
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+    };    
 
     const validateForm = () => {
         let newErrors = {};
-        if (!formData.product_name.trim()) newErrors.product_name = "Product Name is required";
-        if (!formData.image) newErrors.image = "Upload an Image";
-        if (!formData.description.trim()) newErrors.description = "Description is required";
-        if (!formData.starting_price.trim()) newErrors.starting_price = "Starting Price is required";
-        if (!formData.increment_price.trim()) newErrors.increment_price = "Increment Price is required";
+        
+        if (!formData.product_name?.trim()) newErrors.product_name = "Product Name is required";
+        if (!formData.description?.trim()) newErrors.description = "Description is required";
+        if (!formData.starting_price || formData.starting_price.toString().trim() === '') newErrors.starting_price = "Starting Price is required";
+        if (!formData.increment_price || formData.increment_price.toString().trim() === '') newErrors.increment_price = "Increment Price is required";
         if (!formData.start_date) newErrors.start_date = "Select Start Date";
         if (!formData.end_date) newErrors.end_date = "Select End Date";
         if (!formData.product_type) newErrors.product_type = "Select Product Type";
-        if (!formData.quantity.trim()) newErrors.quantity = "Quantity is required";
+        if (!formData.quantity || formData.quantity.toString().trim() === '') newErrors.quantity = "Quantity is required";
         
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    };
+    };    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
-        if (validateForm()) 
-            {
-
+    
+        if (validateForm()) {
             const formDataObj = new FormData();
-            for (const key in formData) {
-                formDataObj.append(key, formData[key]);
-            }
-
-            formDataObj.append("status", "pending");
-            const seller_id = localStorage.getItem("seller_id")?.toString(); 
-            formDataObj.append("seller_id", seller_id);
-
+            
+            Object.entries(formData).forEach(([key, value]) => formDataObj.append(key, value));
+    
             try {
-                const res = await axios.post(`${import.meta.env.VITE_API_URL}/seller/add-auction`, formDataObj, { 
+                const res = await axios.put(`${import.meta.env.VITE_API_URL}/seller/update-auction/${formData._id}`, formDataObj, { 
                     headers: { 
                         "Content-Type": "multipart/form-data",
                         Authorization: `Bearer ${token}` 
                     } 
-                });                
+                });
+    
                 setFormData({
                     product_name: "",
                     image: null,
@@ -74,21 +92,23 @@ const Add_Auction = () => {
                     end_date: "",
                     product_type: "",
                     quantity: "",
-                });       
+                });
+    
                 if (fileInputRef.current) {
                     fileInputRef.current.value = "";
-                }     
+                }
+    
                 alert(res.data.message);
             } catch (error) {
                 alert(error.response?.data?.message || "Error occurred");
             }
         }
-      };
-
+    };
+    
     return (
         <div >
             <form className={css['Add_Auction']} onSubmit={handleSubmit}>
-                <h3 className='text-start w-100 mb-4 border-bottom'>Product</h3>
+                <h3 className='text-start w-100 mb-4 border-bottom'>Update Details</h3>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
                         <label className="form-label">Name</label>
@@ -150,12 +170,11 @@ const Add_Auction = () => {
                     </div>
                 </div>
                 <div className={css['Auction_Row_Btn']}>
-                    <button type="submit" className="btn btn-secondary w-100 text-start">Add Auction</button>
+                    <button type="submit" className="btn btn-secondary w-100 text-center">Add Auction</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default Add_Auction;
-
+export default Update_Auction

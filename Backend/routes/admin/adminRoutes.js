@@ -14,7 +14,7 @@ router.get("/all/seller", getsellrAll);
 router.get("/all/auction", get_Auction_All);
 router.put('/approve/:id', updateAuctionAprove);
 router.put('/rejectproduct/:id', updateAuctionRejectDescription);
-router.put('/auctionexpired/all',updateAuctionExpired);
+// router.put('/auctionexpired/all',updateAuctionExpired);
 
 
 

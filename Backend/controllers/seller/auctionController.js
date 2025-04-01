@@ -49,7 +49,7 @@ const getAuction = async (req, res) => {
       const seller_id= req.params.seller_id;
       const auction = await Auction.find({
         seller_id: seller_id,
-        status: { $in: ['Pending', 'Reject'] }
+        status: { $in: ['Pending', 'Rejected'] }
       })
       if (auction.length === 0) return res.status(404).json({ message: "Auction not  found " });
       res.status(200).json(auction);
@@ -62,7 +62,7 @@ const getAuction = async (req, res) => {
   const getAuctionreg = async (req, res) => {
     try {
       const seller_id= req.params.seller_id;
-      const auction = await Auction.find({ seller_id: seller_id, status: 'Reject'  })
+      const auction = await Auction.find({ seller_id: seller_id, status: 'Rejected'  })
       if (auction.length === 0) return res.status(404).json({ message: "Auction not  found " });
       res.status(200).json(auction);
     } catch (error) {
@@ -104,8 +104,6 @@ const updateAuctionAprove = async (req, res) => {
   }
 };
 
-
-
 const updateAuctionRejectDescription = async (req, res) => {
   try {
     const auction_id = req.params.id;
@@ -121,20 +119,104 @@ const updateAuctionRejectDescription = async (req, res) => {
   }
 };
 
-const updateAuctionExpired = async (req, res) => {
-  try {
+// <<<<<<< HEAD
+const updateAuction = async (req, res) => {
+  upload(req, res, async (err) => {  
+      if (err) return res.status(400).json({ error: err.message });
+// =======
+// const updateAuctionExpired = async (req, res) => {
+//   try {
        
-    const auction = await Auction.Update({ $set: { status: "Expired"} },
-  {new: true }
-  );            
-      res.status(200).json(auction);
+//     const auction = await Auction.Update({ $set: { status: "Expired"} },
+//   {new: true }
+//   );            
+//       res.status(200).json(auction);
+//   } catch (error) {
+//       res.status(500).json({ message: "Server Error" });
+//   }
+// };
+
+// >>>>>>> developer
+
+      try {
+          const { id } = req.params;
+
+          if (Object.keys(req.body).length === 0) {
+              return res.status(400).json({ message: "No data received in the request" });
+          }
+
+          const { product_name, description, starting_price, increment_price, quantity, product_type, start_date, end_date, status } = req.body;
+
+          const updateData = {
+              product_name,
+              description,
+              starting_price,
+              increment_price,
+              quantity,
+              product_type,
+              start_date,
+              end_date,
+              status: "Pending",
+          };
+
+          if (req.file) {
+              updateData.image = req.file.filename; 
+          }
+
+          const updatedAuction = await Auction.findByIdAndUpdate(id, updateData, {
+              new: true,
+              runValidators: true,
+          });
+
+          if (!updatedAuction) {
+              return res.status(404).json({ message: "Auction not found" });
+          }
+
+          res.status(200).json({ message: "Auction updated successfully", auction: updatedAuction });
+      } catch (error) {
+          res.status(500).json({ message: "Error updating auction", error: error.message });
+      }
+  });
+};
+
+const getAuctionsStatus = async (req, res) => {
+  try {
+      const { status, seller_id } = req.query;
+
+      if (!seller_id) {
+          return res.status(401).json({ message: "Unauthorized access" });
+      }
+
+      const query = { seller_id };
+      if (status && status !== "All") {
+          query.status = status;
+      }
+
+      const auctions = await Auction.find(query);
+      res.json(auctions);
   } catch (error) {
-      res.status(500).json({ message: "Server Error" });
+      res.status(500).json({ message: "Server Error", error });
   }
 };
 
+const getAuctionById = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const auction = await Auction.findById(id);
+      
+      if (!auction) {
+          return res.status(404).json({ message: "Auction not found" });
+      }
 
-  
+      res.status(200).json(auction);
+  } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+  }
+};  
   
 
-module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,updateAuctionExpired};
+// <<<<<<< HEAD
+module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,getAuctionsStatus,getAuctionById, updateAuction };
+// =======
+// module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getAuctionreg,updateAuctionExpired};
+// >>>>>>> developer
