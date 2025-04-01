@@ -1,6 +1,6 @@
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaGavel, FaHistory, FaBell, FaUserCog, FaMoneyBill, FaKey, FaCreditCard, FaFileInvoice, FaShoppingCart, FaBookmark } from "react-icons/fa";
+import { FaGavel, FaHistory, FaBell, FaUserCog, FaMoneyBill, FaFileInvoice, FaShoppingCart, FaTruck } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -25,7 +25,7 @@ const Account_Page_slidebar = () => {
 
     return (
         <div className="d-flex flex-column p-3 h-100 border">
-            <Nav className="flex-column p-3 vh-100">
+            <Nav className="flex-column align-items-start justify-content-start p-3 vh-100">
 
                 <h6 className="text-dark">Auctions</h6>
                 <Link to="ongoin-auctions" className="text-secondary nav-link d-flex align-items-center">
@@ -34,20 +34,25 @@ const Account_Page_slidebar = () => {
                 <Link to="bidding-history" className="text-secondary nav-link d-flex align-items-center">
                     <FaHistory className="me-2" /> Bidding History
                 </Link>
-                <Link to="bid-notifications" className="text-secondary nav-link d-flex align-items-center">
-                    <FaBell className="me-2" /> Bid Notifications
-                </Link>
 
                 <h6 className="text-dark mt-3">Payments</h6>
-                <Link to="transaction-history" className="text-secondary nav-link d-flex align-items-center">
+                {/* <Link to="transaction-history" className="text-secondary nav-link d-flex align-items-center">
                     <FaMoneyBill className="me-2" /> Transaction History
                 </Link>
                 <Link to="download-invoices" className="text-secondary nav-link d-flex align-items-center">
                     <FaFileInvoice className="me-2" /> Download Invoices
-                </Link>
+                </Link> */}
                 <Link to="pending-payment" className="text-secondary nav-link d-flex align-items-center">
                     <FaShoppingCart className="me-2" /> Pending Payments
                 </Link>
+
+                {/* <h6 className="text-dark mt-3">Orders</h6>
+                <Link to="order-status" className="text-secondary nav-link d-flex align-items-center">
+                    <FaTruck className="me-2" /> Status Tracking
+                </Link>
+                <Link to="delivery-history" className="text-secondary nav-link d-flex align-items-center">
+                    <FaHistory className="me-2" /> Delivery History
+                </Link> */}
 
                 <h6 className="text-dark mt-3">Settings</h6>
                 <Link to="" className="text-secondary nav-link d-flex align-items-center">
@@ -56,12 +61,12 @@ const Account_Page_slidebar = () => {
                 <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
                     <FaUserCog className="me-2" /> Update Profile
                 </Link>
-                <Link to="payment-method" className="text-secondary nav-link d-flex align-items-center">
-                    <FaCreditCard className="me-2" /> Payment Method
-                </Link>
+                {/* <Link to="bid-notifications" className="text-secondary nav-link d-flex align-items-center">
+                    <FaBell className="me-2" /> Notifications
+                </Link> */}
             </Nav>
             
-            <div className="mt-auto d-flex align-items-center">
+            <div className="mt-auto d-flex border-top align-items-center py-1">
                 <img 
                     src={user?.image ? `http://localhost:5000/uploads/user/${user.image}` : ""} 
                     className="rounded-circle me-2" 

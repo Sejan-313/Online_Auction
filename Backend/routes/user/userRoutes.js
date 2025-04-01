@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { register, login, getUser ,getUserById, updateUser, changePassword } = require("../../controllers/user/authController");
 const { submitContact } = require("../../controllers/user/contactController");
-const { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, place_Bid, getUserSavedProducts, checkSavedProduct, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify } = require("../../controllers/user/auctionController");
+const { get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, place_Bid, getUserSavedProducts, checkSavedProduct, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify } = require("../../controllers/user/auctionController");
 const { forgotPassword, verifyOTP, resetPassword } = require("../../controllers/user/forgotPasswordController");
 const authenticate = require("../../middlewares/authMiddleware");
 
@@ -35,6 +35,7 @@ router.post("/place-bid", authenticate, place_Bid);
 router.get("/user-bids", authenticate, getUserBiddedAuctions);
 router.get("/bidding-history", authenticate, getUserBiddingHistory);
 router.get("/get-payement",payement);
+router.get("/latest-bids/:auctionId", getLatestBids);
 
 //order router
 router.post("/order", order);

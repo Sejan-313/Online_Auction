@@ -49,14 +49,6 @@ const Header = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/">Home</Link>
                   </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="./categories.html" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                      Shop
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="product-page.html">Product Page</a></li>
-                    </ul>
-                  </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/about">About</Link>
                   </li>

@@ -20,6 +20,9 @@ const Auction_Page = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [timeLeft, setTimeLeft] = useState("");
 
+  const [latestBids, setLatestBids] = useState([]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +40,13 @@ const Auction_Page = () => {
             );
             setIsSaved(savedRes.saved);
           }
+
+
+          const { data: latestBidsData } = await axios.get(
+            `${import.meta.env.VITE_API_URL}/user/latest-bids/${id}`
+          );
+          setLatestBids(latestBidsData);
+
         }
 
         const { data: recData } = await axios.get(
@@ -55,25 +65,62 @@ const Auction_Page = () => {
       const now = new Date();
       setCurrentTime(now);
 
+  //     const hours = now.getHours();
+  //     if (hours >= 16 || hours < 9) {
+  //       setIsAuctionActive(false);
+  //       setError("Auction is active from 9:00 AM to 4:00 PM.");
+
+  //       const nextAuctionStart = new Date();
+  //       nextAuctionStart.setHours(10, 0, 0, 0);
+
+  //       if (hours >= 17) {
+  //         nextAuctionStart.setDate(nextAuctionStart.getDate() + 1);
+  //       }
+
+  //       const timeDiff = nextAuctionStart - now;
+  //       const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+  //       const minutesLeft = Math.floor(
+  //         (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
+  //       );
+  //       const secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+  //       setTimeLeft(
+  //         `Auction starts in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`
+  //       );
+  //     } else {
+  //       setIsAuctionActive(true);
+  //       setError("");
+  //       setTimeLeft("");
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+
+
+  
       const hours = now.getHours();
-      if (hours >= 16 || hours < 9) {
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+  
+      if (hours < 9 || hours >= 16) {
         setIsAuctionActive(false);
         setError("Auction is active from 9:00 AM to 4:00 PM.");
-
+  
+        // Calculate next auction start time (9:00 AM)
         const nextAuctionStart = new Date();
-        nextAuctionStart.setHours(10, 0, 0, 0);
-
-        if (hours >= 17) {
+        nextAuctionStart.setHours(9, 0, 0, 0);
+  
+        if (hours >= 16) {
           nextAuctionStart.setDate(nextAuctionStart.getDate() + 1);
         }
-
+  
         const timeDiff = nextAuctionStart - now;
         const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
-        const minutesLeft = Math.floor(
-          (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
-        );
+        const minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
         const secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
+  
         setTimeLeft(
           `Auction starts in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`
         );
@@ -81,12 +128,12 @@ const Auction_Page = () => {
         setIsAuctionActive(true);
         setError("");
         setTimeLeft("");
-        clearInterval(interval);
       }
     }, 1000);
-
+  
     return () => clearInterval(interval);
-  }, []);
+  }, []);  
+
 
   const handleSaveProduct = async () => {
     try {
@@ -115,6 +162,9 @@ const Auction_Page = () => {
       setError(`Minimum bid increment is ₹${product.increment_price}.`);
       return false;
     }
+
+
+
     setError("");
     return true;
   };
@@ -128,6 +178,8 @@ const Auction_Page = () => {
         return alert("Login required to place a bid!");
       }
       setLoading(true);
+
+
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/user/place-bid`,
         {
@@ -136,16 +188,24 @@ const Auction_Page = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setProduct((prev) => ({ ...prev, current_bid: data.current_bid }));
       alert(data.message);
       setBidAmount(0);
       setCurrentBidAmount("");
+
+  
+    //   fetchData(); 
+
     } catch (error) {
       alert(error.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
+
+  
+
 
   return (
     <div className="container-fluid p-5">
@@ -206,35 +266,43 @@ const Auction_Page = () => {
                   <strong>Status:</strong> {product.status}
                 </p>
                 <p>
-                  <strong>Current Bid:</strong>{" "}
-                  {`₹${product.starting_price + product.current_bid}`}
+                  <strong>Current Bid:</strong> {`₹${product.current_bid}`}
                 </p>
-                <div style={{ height: "70px" }}>
-                  <input
-                    type="text"
-                    className={`input-group ${
-                      error ? "border border-danger" : ""
-                    }`}
-                    value={currentBidAmount}
-                    placeholder="Enter Your Bidding Amount"
-                    onChange={(e) => setCurrentBidAmount(e.target.value)}
-                    disabled={!isAuctionActive}
-                  />
-                  {error && <span className="text-danger">{error}</span>}
+                <div style={{ height: "70px" }} className="border-bottom mb-2">
+                  {product.status === "Inactive" ? (
+                    <span className="text-danger">
+                      Bidding is temporarily paused.
+                    </span>
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        style={{ height: "40px" }}
+                        className={`input-group ${
+                          error ? "border border-danger" : ""
+                        }`}
+                        value={currentBidAmount}
+                        placeholder="Enter Your Bidding Amount"
+                        onChange={(e) => setCurrentBidAmount(e.target.value)}
+                        disabled={!isAuctionActive}
+                      />
+                      {error && <span className="text-danger">{error}</span>}
+                    </>
+                  )}
                 </div>
-                <div className={styles.buttonContainer}>
-                <button
-                  className={`${styles.btn} btn btn-secondary w-100`}
-                  disabled={!isAuctionActive || loading}
-                  onClick={handleBid}
-                >
-                  {loading
-                    ? "Placing Bid..."
-                    : product.status !== "Active"
-                    ? "Bidding Not Allowed"
-                    : `+ ₹${bidAmount}`}
-                </button>
-                </div>
+ <div className={styles.buttonContainer}>
+ <button
+   className={`${styles.btn} btn btn-secondary w-100`}
+   disabled={!isAuctionActive || loading}
+   onClick={handleBid}
+ >
+   {loading
+     ? "Placing Bid..."
+     : product.status !== "Active"
+     ? "Bidding Not Allowed"
+     : `+ ₹${bidAmount}`}
+ </button>
+ </div>
               </div>
             </div>
           ) : (
@@ -242,6 +310,48 @@ const Auction_Page = () => {
           )}
         </div>
       </div>
+      <div className="mb-1" style={{ height: "300px"}}>
+        <h5 className="text-muted">Latest Bids</h5>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Auction</th>
+              <th>Status</th>
+              <th>User</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Bid Amount</th>
+              <th>Date / Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {latestBids.length > 0 ? (
+              latestBids.map((bid) =>
+                bid.users.map((user) =>
+                  user.bids.slice(-1).map((b, index) => (
+                    <tr key={index}>
+                      <td>{bid.auction_id.product_name}</td>
+                      <td>{bid.auction_id.status}</td>
+                      <td>{user.user_id.fullName}</td>
+                      <td>{user.user_id.email}</td>
+                      <td>{user.user_id.mobile}</td>
+                      <td>₹{b.amount}</td>
+                      <td>{new Date(b.bid_time).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+                    </tr>
+                  ))
+                )
+              )
+            ) : (
+              <tr>
+                <td colSpan="10" className="text-center">
+                  No bids yet
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       <h5 className="text-muted">Recommend</h5>
       <div
         className={`d-flex justify-content-evenly gap-3 ${css["Auction_Product_Recommend"]}`}
@@ -275,5 +385,6 @@ const Auction_Page = () => {
     </div>
   );
 };
+
 
 export default Auction_Page;

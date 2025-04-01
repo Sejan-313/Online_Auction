@@ -8,14 +8,13 @@ const AuctionStatus = () => {
 
   const fetchAuctions = async (status) => {
     const token = localStorage.getItem("token");
-    const seller_id = localStorage.getItem("seller_id");
     if (!token) return; 
   
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/seller/auctions-status`,
+        `${import.meta.env.VITE_API_URL}/admin/auctions-status`,
         {
-          params: { status, seller_id },
+          params: { status },
           headers: { Authorization: `Bearer ${token}` },
         }
       );

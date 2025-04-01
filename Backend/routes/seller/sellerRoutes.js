@@ -1,5 +1,5 @@
 const express = require("express");
-const { createAuction,getAuction,deleteAuction,getAuctionreg,getAuctionsStatus,getAuctionById, updateAuction } = require("../../controllers/seller/auctionController");
+const { createAuction,getAuction,deleteAuction,getRejectedNotifications,getAuctionsStatus,getAuctionById, updateAuction } = require("../../controllers/seller/auctionController");
 const authenticate = require("../../middlewares/authMiddleware");
 const { register, login, getUserById, updateUser, changePassword} = require("../../controllers/seller/authController");
 const { forgotPassword, verifyOTP, resetPassword } = require("../../controllers/seller/forgotPasswordController");
@@ -20,7 +20,7 @@ router.get("/auction-details/:id", authenticate, getAuctionById);
 router.put("/update-auction/:id", authenticate, updateAuction);
 
 router.get("/auction/:seller_id", getAuction);
-router.get("/auctionreg/:seller_id", getAuctionreg); 
+router.get("/auctionreg/:seller_id", getRejectedNotifications); 
 
 
 router.delete("/:id",deleteAuction);

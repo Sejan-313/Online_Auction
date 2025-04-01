@@ -88,51 +88,51 @@ const Add_Auction = () => {
     return (
         <div >
             <form className={css['Add_Auction']} onSubmit={handleSubmit}>
-                <h3 className='text-start w-100 mb-4 border-bottom'>Product</h3>
+                <h3 className='text-start w-100 mb-4 border-bottom border-white text-white'>Product</h3>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
-                        <label className="form-label">Name</label>
+                        <label className="form-label text-white">Name</label>
                         <input type="text" name="product_name" placeholder="Enter Name" className={`form-control ${errors.product_name ? "border-danger" : ""}`} value={formData.product_name} onChange={handleChange} />
                         {errors.product_name && <small className="text-danger">{errors.product_name}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">Image</label>
+                        <label className="form-label text-white">Image</label>
                         <input type="file" name="image" className={`form-control ${errors.image ? "border-danger" : ""}`} accept="image/*" onChange={handleChange} ref={fileInputRef}/>
                         {errors.image && <small className="text-danger">{errors.image}</small>}
                     </div>
                 </div>
                 <div className={css['Auction_Row2']}>
-                    <label className="form-label">Description</label>
+                    <label className="form-label text-white">Description</label>
                     <textarea name="description" placeholder="Enter Description" className={`form-control ${errors.description ? "border-danger" : ""} h-75`} value={formData.description} onChange={handleChange} ></textarea>
                     {errors.description && <small className="text-danger">{errors.description}</small>}
                 </div>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
-                        <label className="form-label">Starting Price</label>
+                        <label className="form-label text-white">Starting Price</label>
                         <input type="text" name="starting_price" placeholder="Enter Price" className={`form-control ${errors.starting_price ? "border-danger" : ""}`} value={formData.starting_price} onChange={handleChange} />
                         {errors.starting_price && <small className="text-danger">{errors.starting_price}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">Increment Price</label>
+                        <label className="form-label text-white">Increment Price</label>
                         <input type="text" name="increment_price" placeholder="Enter Price" className={`form-control ${errors.increment_price ? "border-danger" : ""}`} value={formData.increment_price} onChange={handleChange} />
                         {errors.increment_price && <small className="text-danger">{errors.increment_price}</small>}
                     </div>
                 </div>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
-                        <label className="form-label">Start Date</label>
+                        <label className="form-label text-white">Start Date</label>
                         <input type="date" name="start_date" className={`form-control ${errors.start_date ? "border-danger" : ""}`} value={formData.start_date} onChange={handleChange} min={new Date().toISOString().split("T")[0]} />
                         {errors.start_date && <small className="text-danger">{errors.start_date}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">End Date</label>
+                        <label className="form-label text-white">End Date</label>
                         <input type="date" name="end_date" className={`form-control ${errors.end_date ? "border-danger" : ""}`} value={formData.end_date} onChange={handleChange} min={new Date().toISOString().split("T")[0]} />
                         {errors.end_date && <small className="text-danger">{errors.end_date}</small>}
                     </div>
                 </div>
                 <div className={css['Auction_Row']}>
                     <div className="w-100">
-                        <label className="form-label">Type</label>
+                        <label className="form-label text-white">Type</label>
                         <select name="product_type" className={`form-select ${errors.product_type ? "border-danger" : ""}`} value={formData.product_type} onChange={handleChange}>
                             <option value="" className='text-secondary'>Type</option>
                             <option value="electronics">Electronics</option>
@@ -144,13 +144,13 @@ const Add_Auction = () => {
                         {errors.product_type && <small className="text-danger">{errors.product_type}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">Quantity</label>
+                        <label className="form-label text-white">Quantity</label>
                         <input type="number" name="quantity" placeholder="Enter Quantity" className={`form-control ${errors.quantity ? "border-danger" : ""}`} value={formData.quantity} onChange={handleChange} />
                         {errors.quantity && <small className="text-danger">{errors.quantity}</small>}
                     </div>
                 </div>
                 <div className={css['Auction_Row_Btn']}>
-                    <button type="submit" className="btn btn-secondary w-100 text-start">Add Auction</button>
+                    <button type="submit" className="btn btn-secondary w-50 border border-white" style={{background: "transparent"}}>Add Auction</button>
                 </div>
             </form>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, PieChart, Pie, LineChart, Line } from "recharts";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const staticAuctions = [
     { _id: 1, product_name: "Laptop", starting_price: 500, current_bid: 700, status: "Active", earnings: 700 },
@@ -28,17 +28,23 @@ const Dashboard = () => {
     return (
         <div className="h-100" style={{overflow: "hidden"}}>
             <div className="w-75 mx-auto d-flex justify-content-between mt-5">
-                    <div className="p-2 d-flex justify-content-evenly text-white align-items-center w-25">
-                        <h5>Total Auctions :</h5>
-                        <h5 className="text-white">{totalAuctions}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Total Auctions :</h5>
+                            <h5 className="text-white">{totalAuctions}</h5>
+                        </div>
                     </div>
-                    <div className="p-2 d-flex justify-content-evenly text-white align-items-center w-25">
-                        <h5>Completed Orders :</h5>
-                        <h5 className="text-white">{completedOrders}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Completed Orders :</h5>
+                            <h5 className="text-white">{completedOrders}</h5>
+                        </div>
                     </div>
-                    <div className="p-2 d-flex justify-content-evenly text-white align-items-center w-25">
-                        <h5>Total Earnings :</h5>
-                        <h5 className="text-white">₹{totalEarnings}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Total Earnings :</h5>
+                            <h5 className="text-white">₹{totalEarnings}</h5>
+                        </div>
                     </div>
             </div>
 
