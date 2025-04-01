@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(to right, #4A90E2 10%, #64A1FF 40%, #85CFFE 90%);
 }
 
 .login {
@@ -27,7 +28,7 @@
 
 .signup {
     height: 800px;
-    width: 1000px;
+    width: 700px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

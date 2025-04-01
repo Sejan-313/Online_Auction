@@ -25,7 +25,7 @@ const Account_Page_slidebar = () => {
 
     return (
         <div className="d-flex flex-column p-3 h-100 border">
-            <Nav className="flex-column align-items-start justify-content-evenly p-3 vh-100">
+            <Nav className="flex-column align-items-start justify-content-start p-3 vh-100">
 
                 <h6 className="text-dark">Auctions</h6>
                 <Link to="ongoin-auctions" className="text-secondary nav-link d-flex align-items-center">
@@ -36,23 +36,23 @@ const Account_Page_slidebar = () => {
                 </Link>
 
                 <h6 className="text-dark mt-3">Payments</h6>
-                <Link to="transaction-history" className="text-secondary nav-link d-flex align-items-center">
+                {/* <Link to="transaction-history" className="text-secondary nav-link d-flex align-items-center">
                     <FaMoneyBill className="me-2" /> Transaction History
                 </Link>
                 <Link to="download-invoices" className="text-secondary nav-link d-flex align-items-center">
                     <FaFileInvoice className="me-2" /> Download Invoices
-                </Link>
+                </Link> */}
                 <Link to="pending-payment" className="text-secondary nav-link d-flex align-items-center">
                     <FaShoppingCart className="me-2" /> Pending Payments
                 </Link>
 
-                <h6 className="text-dark mt-3">Orders</h6>
+                {/* <h6 className="text-dark mt-3">Orders</h6>
                 <Link to="order-status" className="text-secondary nav-link d-flex align-items-center">
                     <FaTruck className="me-2" /> Status Tracking
                 </Link>
                 <Link to="delivery-history" className="text-secondary nav-link d-flex align-items-center">
                     <FaHistory className="me-2" /> Delivery History
-                </Link>
+                </Link> */}
 
                 <h6 className="text-dark mt-3">Settings</h6>
                 <Link to="" className="text-secondary nav-link d-flex align-items-center">
@@ -61,9 +61,9 @@ const Account_Page_slidebar = () => {
                 <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
                     <FaUserCog className="me-2" /> Update Profile
                 </Link>
-                <Link to="bid-notifications" className="text-secondary nav-link d-flex align-items-center">
+                {/* <Link to="bid-notifications" className="text-secondary nav-link d-flex align-items-center">
                     <FaBell className="me-2" /> Notifications
-                </Link>
+                </Link> */}
             </Nav>
             
             <div className="mt-auto d-flex border-top align-items-center py-1">

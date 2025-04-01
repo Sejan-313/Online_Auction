@@ -4,12 +4,18 @@
     overflow: hidden;
     display: flex;
     justify-content: space-between;
+    background: linear-gradient(to right, #4A90E2 10%, #64A1FF 40%, #85CFFE 90%);
+    background-size: cover;
+    background-position: center;
 }
 
 .container_col {
-    width: 322px;
+    width: 320px;
+    min-width: 280px;
 }
 
 .container_col2 {
+    flex-grow: 1;
     width: 100%;
+    overflow: auto;
 }

@@ -149,52 +149,52 @@ const Update_Profile = () => {
     return (
         <div className={`${css.container} p-5`}>
             <div className="d-flex justify-content-end">
-                <button onClick={() => setActiveTab(activeTab === "update" ? "password" : "update")} className="btn btn-link">
+                <button onClick={() => setActiveTab(activeTab === "update" ? "password" : "update")} className="btn btn-link text-white">
                     {activeTab === "update" ? "Change Password" : "Update Details"}
                 </button>
             </div>
 
             {activeTab === "update" && (
                 <div>
-                <h5 className="text-muted mb-4 border-bottom">Update Details</h5>
+                <h5 className="mb-4 border-bottom border-white text-white">Update Details</h5>
                 <div>
                     <div className={`${css.signup_form_field} d-flex gap-3`}>
                         <div className="w-100">
-                            <label className="form-label">Full Name</label>
+                            <label className="form-label text-white">Full Name</label>
                             <input type="text" name="fullName" placeholder="enter fullName" className={`form-control ${errors.fullName ? "border-danger" : ""}`} value={updateDetails.fullName} onChange={handleUpdateChange} />
                             {errors.fullName && <small className="text-danger">{errors.fullName}</small>}
                         </div>
                         <div className="w-100">
-                            <label className="form-label">Email</label>
+                            <label className="form-label text-white">Email</label>
                             <input type="email" name="email" placeholder="enter email" className={`form-control ${errors.email ? "border-danger" : ""}`} value={updateDetails.email} onChange={handleUpdateChange} />
                             {errors.email && <small className="text-danger">{errors.email}</small>}
                         </div>
                     </div>    
                     <div className={css.signup_form_field_textarea}>
-                        <label className="form-label">Address</label>
+                        <label className="form-label text-white">Address</label>
                         <textarea name="address" placeholder="enter address" className={`form-control h-75 ${errors.address ? "border-danger" : ""}`} value={updateDetails.address} onChange={handleUpdateChange}></textarea>
                         {errors.address && <small className="text-danger">{errors.address}</small>}
                     </div> 
                     <div className={`${css.signup_form_field} d-flex gap-3`}>
                         <div className="w-100">
-                            <label className="form-label">City</label>
+                            <label className="form-label text-white">City</label>
                             <input type="text" name="city" placeholder="enter city" className={`form-control ${errors.city ? "border-danger" : ""}`} value={updateDetails.city} onChange={handleUpdateChange} />
                             {errors.city && <small className="text-danger">{errors.city}</small>}
                         </div>
                         <div className="w-100">
-                            <label className="form-label">Pincode</label>
+                            <label className="form-label text-white">Pincode</label>
                             <input type="text" name="pincode" placeholder="enter pincode" className={`form-control ${errors.pincode ? "border-danger" : ""}`} value={updateDetails.pincode} onChange={handleUpdateChange} />
                             {errors.pincode && <small className="text-danger">{errors.pincode}</small>}
                         </div>
                     </div>
                     <div className={`${css.signup_form_field} d-flex gap-3`}>
                         <div className="w-100">
-                            <label className="form-label">Birthdate</label>
+                            <label className="form-label text-white">Birthdate</label>
                             <input type="date" name="birthdate" className={`form-control ${errors.birthdate ? "border-danger" : ""}`} value={updateDetails.birthdate} onChange={handleUpdateChange} max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split("T")[0]} />
                             {errors.birthdate && <small className="text-danger">{errors.birthdate}</small>}
                         </div>
                         <div className="w-100">
-                            <label className="form-label">Gender</label>
+                            <label className="form-label text-white">Gender</label>
                             <div className={`form-control ${errors.gender ? "border-danger" : ""} border rounded p-2`}>
                                 <input type="radio" name="gender" value="Male" onChange={handleUpdateChange} checked={updateDetails.gender === "Male"} /> Male
                                 <input type="radio" name="gender" value="Female" className="ms-3" onChange={handleUpdateChange} checked={updateDetails.gender === "Female"} /> Female
@@ -204,41 +204,45 @@ const Update_Profile = () => {
                     </div>
                     <div className={`${css.signup_form_field} d-flex gap-3`}>
                         <div className="w-100">
-                            <label className="form-label">Mobile</label>
+                            <label className="form-label text-white">Mobile</label>
                             <input type="text" name="mobile" placeholder="enter mobile" className={`form-control ${errors.mobile ? "border-danger" : ""}`} value={updateDetails.mobile} onChange={handleUpdateChange} />
                             {errors.mobile && <small className="text-danger">{errors.mobile}</small>}
                         </div>
                         <div className="w-100">
-                            <label className="form-label">Profile Image</label>
+                            <label className="form-label text-white">Profile Image</label>
                             <input type="file" name="image" className={`form-control ${errors.image ? "border-danger" : ""}`} accept="image/*" onChange={handleUpdateChange} ref={fileInputRef} />
                             {errors.image && <small className="text-danger">{errors.image}</small>}
                         </div>
                     </div>
-                    <button className="btn btn-secondary w-100 mt-1" onClick={handleUpdateSubmit}>update</button>
+                    <div className="mt-1 d-flex justify-content-center">
+                        <button className="btn text-white border border-white w-50" onClick={handleUpdateSubmit}>update</button>
+                    </div>
                 </div>
                 </div>
             )}
             {activeTab === "password" && (
                 <div>
-                <h5 className="text-muted mb-4 border-bottom">Change Password</h5>
+                <h5 className="mb-4 border-bottom border-white text-white">Change Password</h5>
                 <div className={`${css.signup_form_field} d-flex gap-3`}>
                     <div className="w-100">
-                        <label className="form-label">Old</label>
+                        <label className="form-label text-white">Old</label>
                         <input type="password" name="old_password" placeholder="enter password" className={`form-control ${errors.old_password ? "border-danger" : ""}`} value={changePassword.old_password} onChange={handlePasswordChange} />
                         {errors.old_password && <small className="text-danger">{errors.old_password}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">New</label>
+                        <label className="form-label text-white">New</label>
                         <input type="password" name="new_password" placeholder="enter password" className={`form-control ${errors.new_password ? "border-danger" : ""}`} value={changePassword.new_password} onChange={handlePasswordChange} />
                         {errors.new_password && <small className="text-danger">{errors.new_password}</small>}
                     </div>
                     <div className="w-100">
-                        <label className="form-label">Confirm</label>
+                        <label className="form-label text-white">Confirm</label>
                         <input type="password" name="confirm_Password" placeholder="enter new Password" className={`form-control ${errors.confirm_Password ? "border-danger" : ""}`} value={changePassword.confirm_Password} onChange={handlePasswordChange} />
                         {errors.confirm_Password && <small className="text-danger">{errors.confirm_Password}</small>}
                     </div>
                 </div>
-                <button className="btn btn-secondary w-100 mt-1" onClick={handlePasswordSubmit}>change</button>
+                <div className="mt-1 d-flex justify-content-center w-100">
+                    <button className="btn text-white border border-white w-50" onClick={handlePasswordSubmit}>change</button>
+                </div>
             </div>
             )}
         </div>

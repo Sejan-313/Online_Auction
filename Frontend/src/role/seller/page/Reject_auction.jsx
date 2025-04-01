@@ -32,24 +32,23 @@ const Reject_auction = () => {
 
   return (
     <div className="p-5">
-      <h3 className='text-start w-100 mb-4 border-bottom'>Rejected Auctions</h3>
-      <div className=""></div>
+      <h3 className='text-start w-100 mb-4 border-bottom border-white text-white'>Rejected Auctions</h3>
       <div className={css['auction-table']}>
         {msg ? ( 
-          <div className={css.noDataMessage}>Data not found</div>
+          <div className={`${css.noDataMessage} text-white`}>Data not found</div>
         ) : (
           sellerdata.map((item) => {
             return (
-              <div className={`${css['auction-container']} d-flex justify-content-between mb-3 border-top`}>
+              <div className={`${css['auction-container']} d-flex justify-content-between mb-3 border-top border-white`}>
                 <div style={{width: "150px", height: "100%"}} className="d-flex justify-content-center p-2">
                   <img src={`http://localhost:5000/uploads/seller/${item?.auctionId?.image}`} style={{height: "100%", width: "90%"}} alt="" />
                 </div>
-                <div style={{overflow: "auto"}} className="w-100 py-1"> 
+                <div style={{overflow: "auto"}} className="w-100 py-1 text-white"> 
                   {item?.auctionId?.product_name}
-                  <p className="text-dark">{item.message}</p> 
+                  <p>{item.message}</p> 
                 </div>
-                <div className="border-start ms-2"></div>
-                <div style={{width: "150px", height: "100%"}} className="d-flex align-items-center justify-content-center">
+                <div className="border-start border-white ms-2"></div>
+                <div style={{width: "150px", height: "100%"}} className="d-flex align-items-center justify-content-center text-white">
                   {new Date(item?.createdAt).toLocaleDateString("en-GB")}<br/>
                   {new Date(item?.createdAt).toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: true })}
                 </div>

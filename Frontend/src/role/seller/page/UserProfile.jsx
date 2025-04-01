@@ -36,38 +36,38 @@ const UserProfile = () =>
         </div>
         <div className="w-50">
                 <div class="about-text go-to">
-                    <h3 class="dark-color mb-4 border-bottom">{userdata.fullName}</h3>
+                    <h3 class="text-white mb-4 border-bottom border-white">{userdata.fullName}</h3>
                     <div class="row about-list">
                         <div class="col-md-6">
                             <div class="media">
-                                <label>Birthday</label>
-                                <p>{new Date(userdata.birthdate).toLocaleDateString('en-GB')}</p>
+                                <label className="text-white">Birthday</label>
+                                <p className="text-white">{new Date(userdata.birthdate).toLocaleDateString('en-GB')}</p>
                             </div>
                             <div class="media">
-                                <label>Gender</label>
-                                <p>{userdata.gender}</p>
+                                <label className="text-white">Gender</label>
+                                <p className="text-white">{userdata.gender}</p>
                             </div>
                             <div class="media">
-                                <label>Address </label>
-                                <p> {userdata.address}</p>
+                                <label className="text-white">Address </label>
+                                <p className="text-white"> {userdata.address}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
-                                <label>E-mail</label>
-                                <p>{userdata.email}</p>
+                                <label className="text-white">E-mail</label>
+                                <p className="text-white">{userdata.email}</p>
                             </div>
                             <div class="media">
-                                <label>Phone</label>
-                                <p>{userdata.mobile}</p>
+                                <label className="text-white">Phone</label>
+                                <p className="text-white">{userdata.mobile}</p>
                             </div>
                             <div class="media">
-                                <label>City</label>
-                                <p>{userdata.city}</p>
+                                <label className="text-white">City</label>
+                                <p className="text-white">{userdata.city}</p>
                             </div>
                             <div class="media">
-                                <label>Pincode</label>
-                                <p>{userdata.pincode}</p>
+                                <label className="text-white">Pincode</label>
+                                <p className="text-white">{userdata.pincode}</p>
                             </div>
                         </div>
                     </div>

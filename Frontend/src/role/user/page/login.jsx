@@ -77,12 +77,12 @@ export default function Login() {
          <>
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border bg-white px-2`}>
-                    <div className={`${css.login_form_container} border-bottom d-flex flex-column justify-content-evenly`}>
-                        <h3 className="text-center mb-3 font-weight-bold text-secondary">Login</h3>
+                <div className={`${css.login_form} border border-white px-2`}>
+                    <div className={`${css.login_form_container} border-bottom border-white d-flex flex-column justify-content-evenly`}>
+                        <h3 className="text-center mb-3 font-weight-bold text-white">Login</h3>
                         <form onSubmit={handleSubmit}>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label">Email</label>
+                                <label className="form-label text-white">Email</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -94,7 +94,7 @@ export default function Login() {
                                 {errors.email && <small className="text-danger">{errors.email}</small>}
                             </div>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label">Password</label>
+                                <label className="form-label text-white">Password</label>
                                 <input
                                     type="password"
                                     name="password"
@@ -106,7 +106,7 @@ export default function Login() {
                                 {errors.password && <small className="text-danger">{errors.password}</small>}
                             </div>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label">Role</label>
+                                <label className="form-label text-white">Role</label>
                                 <select
                                     name="role"
                                     className={`form-select ${errors.role ? "border-danger" : ""}`}
@@ -119,15 +119,15 @@ export default function Login() {
                                 </select>
                                 {errors.role && <small className="text-danger">{errors.role}</small>}
                             </div>
-                            <button type="submit" className="w-100 btn btn-secondary"> Login </button>
+                            <button type="submit" className="w-100 btn border-white text-white"> Login </button>
                         </form>
                     </div>
-                    <Link to="/forgot-password" className={`text-primary ${css['forgot_password_link']}`}>Forgot password?</Link>
+                    <Link to="/forgot-password" className={`text-white ${css['forgot_password_link']}`}>Forgot password?</Link>
                 </div>
-                <div className={`${css.login_link} border p-3 bg-white text-center`}>
-                    <p className="text-black"> Don't have an account?  
-                        <Link to="/signup_user" className="text-primary"> User</Link> |  
-                        <Link to="/signup_seller" className="text-primary"> Seller</Link>
+                <div className={`${css.login_link} border border-white p-3 text-center`}>
+                    <p className="text-white"> Don't have an account?  
+                        <Link to="/signup_user" className="text-white"> User</Link> |  
+                        <Link to="/signup_seller" className="text-white"> Seller</Link>
                     </p>
                 </div>
             </div>

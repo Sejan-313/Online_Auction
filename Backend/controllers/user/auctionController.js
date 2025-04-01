@@ -1,6 +1,13 @@
+const crypto=require('crypto')
 const Auction = require("../../models/seller/auctionModel");
 const Save_Auction = require("../../models/user/save_auctionModel");
 const Bid = require("../../models/user/bidModel");
+
+const Razorpay=require('razorpay')
+require("dotenv").config();
+
+
+
 
 const get_Auction = async (req, res) => {
     try {
@@ -161,6 +168,120 @@ const getUserBiddingHistory = async (req, res) => {
     }
 };
 
+const getLatestBids = async (req, res) => {
+    try {
+        const { auctionId } = req.params;
 
-module.exports = { get_Auction, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All, getUserBiddedAuctions, getUserBiddingHistory };
+        if (!auctionId) {
+            return res.status(400).json({ error: "Auction ID is required" });
+        }
+
+        const latestBids = await Bid.find({ auction_id: auctionId }) 
+            .sort({ createdAt: -1 }) 
+            .limit(3)
+            .populate("auction_id", "product_name status current_bid")
+            .populate("users.user_id", "fullName email mobile address")
+            .lean();
+
+        res.status(200).json(latestBids);
+    } catch (error) {
+        res.status(500).json({ error: "Error fetching latest bids" });
+    }
+};
+
+const payement = async (req, res) => {
+    res.json("Payement Details");
+};
+
+const order = async (req, res) => {
+    const {amount} = req.body;
+    const razorpayInstance = new Razorpay ({
+      key_id:process.env.RAZORPAY_KEY_ID,
+      key_secret:process.env.RAZORPAY_SECERET
+    })
+    
+    try{
+
+        const options={
+            amount:Number(amount),
+            currency:"INR",
+            receipt:crypto.randomBytes(10).toString("hex"),
+            
+        }
+        razorpayInstance.orders.create(options,(error,order)=>{
+            if(error){
+                console.log(error);
+                return res.status(500).json({message:"Something went Wrong!!"});
+            }
+
+           res.status(200).json({data:order});
+           console.log(order);
+           
+        })
+
+    }
+    catch(error)
+    {
+
+        res.status(500).json({message:"server error!"});
+        console.log(error);
+        
+    }
+};
+
+const verify = async (req, res) => {
+    const { razorpay_payement_id,razorpay_signature, razorpay_order_id} = req.body;
+   
+    console.log(req.body);
+
+
+    
+    
+    try{
+
+        const sign= razorpay_order_id + "|" + razorpay_payement_id;
+
+
+        const expectedSign=crypto.createHmac("sej30",process.env.RAZORPAY_SECERET)
+        .update(sign.toString())
+        .digest("hex");
+
+
+        const isAuthentic=expectedSign===razorpay_signature;
+
+        
+
+        if(isAuthentic)
+        {
+            
+            const payement = new payement({
+                razorpay_order_id,
+                razorpay_payement_id,
+                razorpay_signature,
+            })
+
+            await payement.save();
+
+            res.json({
+                message:"Payement Successfull"
+            })
+        }
+
+
+     
+
+    }
+    catch(error)
+    {
+
+        res.status(500).json({message:"Internal server error!"});
+        console.log(error);
+        
+    }
+};
+
+
+
+
+module.exports = { get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify };
 

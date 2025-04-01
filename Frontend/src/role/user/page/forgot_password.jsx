@@ -30,14 +30,14 @@ export default function Forgot_Password() {
     }, [step, timer]);
 
 const handleOtpChange = (e, index) => {
-    const value = e.target.value.replace(/\D/, ""); // Only allow numbers
+    const value = e.target.value.replace(/\D/, ""); 
     if (!value) return;
     
     let newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Move focus to the next input
+ 
     if (index < 5) document.querySelectorAll(".otp-input")[index + 1].focus();
 };
 
@@ -132,33 +132,33 @@ const handleOtpKeyDown = (e, index) => {
     return (
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border bg-white px-2`}>
+                <div className={`${css.login_form} border border-white px-2`}>
                     {step === 1 && (
                         <div className={`${css['forgot_password_container']} border-bottom d-flex flex-column justify-content-evenly`}>
-                            <h3 className="text-center mb-3 font-weight-bold text-secondary">Forgot Password</h3>
+                            <h3 className="text-center mb-3 font-weight-bold text-white">Forgot Password</h3>
                             <form onSubmit={handleSubmit}>
                                 <div className={css['login_form_field']}>
-                                    <label className="form-label">Email</label>
+                                    <label className="form-label text-white">Email</label>
                                     <input type="email" name="email" className={`form-control ${errors.email ? "border-danger" : ""}`} placeholder="Enter email" value={formData.email} onChange={handleChange} />
                                     {errors.email && <small className="text-danger">{errors.email}</small>}
                                 </div>
                                 <div className={css['login_form_field']}>
-                                    <label className="form-label">Role</label>
+                                    <label className="form-label text-white">Role</label>
                                     <select name="role" className="form-select" value={formData.role} onChange={handleChange}>
                                         <option value="user">User</option>
                                         <option value="seller">Seller</option>
                                     </select>
                                 </div>
-                                <button type="submit" className="w-100 btn btn-secondary">{isSending ? "Sending..." : "Send OTP"}</button>
+                                <button type="submit" className="w-100 btn border border-white text-white">{isSending ? "Sending..." : "Send OTP"}</button>
                             </form>
                         </div>
                     )}
 
                     {step === 2 && (
-                        <div className={`${css['forgot_password_container']} border-bottom d-flex flex-column justify-content-evenly`}>
-                            <h3 className="text-center mb-3 font-weight-bold text-secondary">OTP Verification</h3>
+                        <div className={`${css['forgot_password_container']} border-bottom border-white d-flex flex-column justify-content-evenly`}>
+                            <h3 className="text-center mb-3 font-weight-bold text-white">OTP Verification</h3>
                             <div>
-                                <p className="text-center text-muted">Enter the 4-digit OTP sent to your email.</p>
+                                <p className="text-center text-white">Enter the 4-digit OTP sent to your email.</p>
                                 <form onSubmit={handleSubmit}>
                                     {/* OTP Input Boxes */}
                                     <div className="d-flex justify-content-center mb-2">
@@ -178,11 +178,11 @@ const handleOtpKeyDown = (e, index) => {
 
                                     <div className="text-start mb-3">
                                         {timer > 0 ? (
-                                            <small className="text-muted">
+                                            <small className="text-white">
                                                 Resend OTP in <strong>{timer}s</strong>
                                             </small>
                                         ) : (
-                                            <button type="button" className="btn btn-link p-0" onClick={resendOtp}>
+                                            <button type="button" className="btn text-white btn-link p-0" onClick={resendOtp}>
                                                 {isSending ? "Sending..." : "Resend Code"}
                                             </button>
                                         )}
@@ -190,8 +190,8 @@ const handleOtpKeyDown = (e, index) => {
 
                                     {/* Buttons */}
                                     <div className="d-flex justify-content-between">
-                                        <button type="button" className="btn btn-link" onClick={() => setStep(1)}>Cancel</button>
-                                        <button type="submit" className="btn btn-secondary w-75">Verify</button>
+                                        <button type="button" className="btn text-white btn-link" onClick={() => setStep(1)}>Cancel</button>
+                                        <button type="submit" className="btn border border-white text-white w-75">Verify</button>
                                     </div>
                                 </form>
                             </div>
@@ -199,30 +199,30 @@ const handleOtpKeyDown = (e, index) => {
                     )}
 
                     {step === 3 && (
-                        <div className={`${css['forgot_password_container']} border-bottom d-flex flex-column justify-content-evenly`}>
-                            <h3 className="text-center mb-3 font-weight-bold text-secondary">New Password</h3>
+                        <div className={`${css['forgot_password_container']} border-bottom border-white d-flex flex-column justify-content-evenly`}>
+                            <h3 className="text-center mb-3 font-weight-bold text-white">New Password</h3>
                             <form onSubmit={handleSubmit}>
                                 <div className={css['login_form_field']}>
-                                    <label className="form-label">Password</label>
+                                    <label className="form-label text-white">Password</label>
                                     <input type="password" name="password" className={`form-control ${errors.password ? "border-danger" : ""}`} placeholder="Enter new password" value={formData.password} onChange={handleChange} />
                                     {errors.password && <small className="text-danger">{errors.password}</small>}
                                 </div>
                                 <div className={css['login_form_field']}>
-                                    <label className="form-label">Confirm Password</label>
+                                    <label className="form-label text-white">Confirm Password</label>
                                     <input type="password" name="confirmPassword" className={`form-control ${errors.confirmPassword ? "border-danger" : ""}`} placeholder="Confirm password" value={formData.confirmPassword} onChange={handleChange} />
                                     {errors.confirmPassword && <small className="text-danger">{errors.confirmPassword}</small>}
                                 </div>
-                                <button type="submit" className="w-100 btn btn-secondary">Update</button>
+                                <button type="submit" className="w-100 btn border border-white text-white">Update</button>
                             </form>
                         </div>
                     )}
 
-                    <Link to="/login" className={`${css['forgot_password_link']}`}>Back to login</Link>
+                    <Link to="/login" className={`${css['forgot_password_link']} text-white`}>Back to login</Link>
                 </div>
-                <div className={`${css.login_link} border p-3 bg-white text-center`}>
-                    <p className="text-black"> Don't have an account?  
-                        <Link to="/signup_user" className="text-primary"> User</Link> |  
-                        <Link to="/signup_seller" className="text-primary"> Seller</Link>
+                <div className={`${css.login_link} border p-3 border-white text-center`}>
+                    <p className="text-white"> Don't have an account?  
+                        <Link to="/signup_user" className="text-white"> User</Link> |  
+                        <Link to="/signup_seller" className="text-white"> Seller</Link>
                     </p>
                 </div>
             </div>

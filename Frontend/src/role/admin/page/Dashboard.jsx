@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, PieChart, Pie, LineChart, Line } from "recharts";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const staticAuctions = [
     { _id: 1, product_name: "Laptop", starting_price: 500, current_bid: 700, status: "Active", earnings: 700 },
@@ -26,27 +26,33 @@ const chartData = Object.keys(auctionStats).map(status => ({
 
 const Dashboard = () => {
     return (
-        <div className="h-100">
+        <div className="h-100" style={{overflow: "hidden"}}>
             <div className="w-75 mx-auto d-flex justify-content-between mt-5">
-                    <div className="border rounded p-2 d-flex justify-content-evenly align-items-center w-25">
-                        <h5>Total Auctions</h5>
-                        <h5 className="text-muted">{totalAuctions}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Total Auctions :</h5>
+                            <h5 className="text-white">{totalAuctions}</h5>
+                        </div>
                     </div>
-                    <div className="border rounded p-2 d-flex justify-content-evenly align-items-center w-25">
-                        <h5>Completed Orders</h5>
-                        <h5 className="text-muted">{completedOrders}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Completed Orders :</h5>
+                            <h5 className="text-white">{completedOrders}</h5>
+                        </div>
                     </div>
-                    <div className="border rounded p-2 d-flex justify-content-evenly align-items-center w-25">
-                        <h5>Total Earnings</h5>
-                        <h5 className="text-muted">₹{totalEarnings}</h5>
+                    <div className=" rounded p-2 d-flex justify-content-center align-items-center w-25">
+                        <div className="d-flex gap-3">
+                            <h5 className="text-white">Total Earnings :</h5>
+                            <h5 className="text-white">₹{totalEarnings}</h5>
+                        </div>
                     </div>
             </div>
 
             <div style={{height: "867px"}}>
                 <div className="h-100 p-3">
 
-                  <div className="border-top border-bottom w-100 h-50 d-flex justify-content-evenly align-items-center flex-column">
-                    <h5 className="text-center">Earnings Trend</h5>
+                  <div className="border-top border-bottom border-white w-100 h-50 d-flex justify-content-evenly align-items-center flex-column">
+                    <h5 className="text-center text-white">Earnings Trend</h5>
                     <ResponsiveContainer width="100%" height={250}>
                         <LineChart data={staticAuctions}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -61,7 +67,7 @@ const Dashboard = () => {
                   <div className="w-100 d-flex h-50 gap-3">
 
                     <div className="h-100 w-25 d-flex justify-content-evenly align-items-center flex-column">
-                        <h5 className="text-center">Status Overview</h5>
+                        <h5 className="text-center text-white">Status Overview</h5>
                         <ResponsiveContainer width="100%" height={250}>
                             <BarChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -72,9 +78,9 @@ const Dashboard = () => {
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
-                    <div className="h-100 border"></div>
+                    <div className="h-100 border border-white"></div>
                     <div className="w-25 h-100 d-flex justify-content-evenly align-items-center flex-column">
-                      <h5 className="text-center">Distribution</h5>
+                      <h5 className="text-center text-white">Distribution</h5>
                       <ResponsiveContainer width="100%" height={250}>
                           <PieChart>
                               <Pie data={chartData} dataKey="count" nameKey="name" fill="#28a745" label />
@@ -82,7 +88,7 @@ const Dashboard = () => {
                           </PieChart>
                       </ResponsiveContainer>
                     </div>
-                    <div className="h-100 border"></div>
+                    <div className="h-100 border border-white"></div>
 
                   </div>
 

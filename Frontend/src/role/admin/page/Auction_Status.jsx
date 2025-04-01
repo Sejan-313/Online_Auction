@@ -39,38 +39,38 @@ const AuctionStatus = () => {
         {["All", "Active", "Inactive", "Pending", "Rejected", "Approved", "Completed"].map((status) => (
           <button
             key={status}
-            style={{border: "none", width: "100px", height: "40px", backgroundColor: "white"}}
-            className={filter === status ? "text-primary" : "text-muted"}
+            style={{border: "none", width: "100px", height: "40px", backgroundColor: "transparent"}}
+            className={filter === status ? "text-primary bg-white" : "text-white"}
             onClick={() => handleFilterChange(status)}
           >
             {status}
           </button>
         ))}
       </div>
-      <div className="border-bottom mb-3"></div>
+      <div className="border-bottom border-white mb-3"></div>
       <div className={css['auction-table']}>
         <table className="w-100">
-          <thead className="border">
+          <thead className="border border-white">
             <tr>
-              <th>Product Name</th>
-              <th>Status</th>
-              <th>Quantity</th>
-              <th>Starting Price</th>
-              <th>Current Bid</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th className="text-white">Product Name</th>
+              <th className="text-white">Status</th>
+              <th className="text-white">Quantity</th>
+              <th className="text-white">Starting Price</th>
+              <th className="text-white">Current Bid</th>
+              <th className="text-white">Start Date</th>
+              <th className="text-white">End Date</th>
             </tr>
           </thead>
           <tbody>
             {auctionData.map((item) => (
-              <tr key={item._id} className="border-top">
-                <td>{item.product_name}</td>
-                <td>{item.status}</td>
-                <td>{item.quantity}</td>
-                <td>{item.starting_price}</td>
-                <td>{item.current_bid}</td>
-                <td>{item.start_date}</td>
-                <td>{item.end_date}</td>
+              <tr key={item._id} className="border-top border-white">
+                <td className="text-white">{item.product_name}</td>
+                <td className="text-white">{item.status}</td>
+                <td className="text-white">{item.quantity}</td>
+                <td className="text-white">{item.starting_price}</td>
+                <td className="text-white">{item.current_bid}</td>
+                <td className="text-white">{item.start_date}</td>
+                <td className="text-white">{item.end_date}</td>
               </tr>
             ))}
           </tbody>
