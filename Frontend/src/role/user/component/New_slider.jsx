@@ -5,28 +5,28 @@ const New_slider = () => {
   // Initial slider images array
   const initialItems = [
     {
-      id: 1,
-      name: "Switzerland",
-      img: "https://i.ibb.co/qCkd9jS/img1.jpg",
-      des: "X-Dev, Transforming code into visual poetry..!",
-    },
-    {
       id: 2,
-      name: "Finland",
-      img: "https://i.ibb.co/jrRb11q/img2.jpg",
-      des: "X-Dev, Transforming code into visual poetry..!",
+      name: "Furniture",
+      img: "img/Table_Set.jpg",
+      des: "Our Furniture is besttt!!",
     },
     {
       id: 3,
-      name: "Iceland",
-      img: "https://i.ibb.co/NSwVv8D/img3.jpg",
-      des: "X-Dev, Transforming code into visual poetry..!",
+      name: "Electronic Items",
+      img: "img/Big_Screen_Led.jpg",
+      des: "We have next level electronic items..!",
     },
     {
       id: 4,
-      name: "Australia",
-      img: "https://i.ibb.co/Bq4Q0M8/img4.jpg",
-      des: "X-Dev, Transforming code into visual poetry..!",
+      name: "Jwellery",
+      img: "img/Fancy_Necklesh.jpg",
+      des: " Enjoy our jwellery..!",
+    },
+    {
+      id: 1,
+      name: "Automobile",
+      img: "img/Mercidis.jpg",
+      des: "GO and bid on supperb automobile collectionn..!",
     },
     {
       id: 5,

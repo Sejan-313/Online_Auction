@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "https://checkout.razorpay.com/v1/checkout.js";
+// import "https://checkout.razorpay.com/v1/checkout.js";
 // import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 // import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 

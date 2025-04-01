@@ -36,7 +36,8 @@ const Header = () => {
             
             <div className="">
                 <a href="./index.html">
-                  <img src="img/logo.png" alt=""/>
+                  {/* <img src="img/logo.png" alt=""/> */}
+                  Best Platform
                 </a>
             </div>
 
