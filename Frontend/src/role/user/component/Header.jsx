@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { GoPerson } from "react-icons/go";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
+import styles from './Slider.module.css';
+
 
 const Header = () => {
   const navigate = useNavigate(); 
@@ -28,7 +30,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="header-section d-flex justify-content-center align-items-center">
+      <header className={`${styles.header} header-section d-flex justify-content-center align-items-center`}>
         <div className="container-fluid">
           <div className="d-flex justify-content-between align-items-center">
             
@@ -38,7 +40,7 @@ const Header = () => {
                 </a>
             </div>
 
-            <nav className="navbar navbar-expand-lg">
+            <nav className={`${styles.header} navbar navbar-expand-lg text-white `}>
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span className="navbar-toggler-icon"></span>
               </button>
