@@ -59,26 +59,28 @@ const Auction_Page = () => {
     const interval = setInterval(() => {
       const now = new Date();
       setCurrentTime(now);
-
+  
       const hours = now.getHours();
-      if (hours >= 23 || hours < 16) {
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+  
+      if (hours < 9 || hours >= 16) {
         setIsAuctionActive(false);
         setError("Auction is active from 9:00 AM to 4:00 PM.");
-
+  
+        // Calculate next auction start time (9:00 AM)
         const nextAuctionStart = new Date();
-        nextAuctionStart.setHours(10, 0, 0, 0);
-
-        if (hours >= 17) {
+        nextAuctionStart.setHours(9, 0, 0, 0);
+  
+        if (hours >= 16) {
           nextAuctionStart.setDate(nextAuctionStart.getDate() + 1);
         }
-
+  
         const timeDiff = nextAuctionStart - now;
         const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
-        const minutesLeft = Math.floor(
-          (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
-        );
+        const minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
         const secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
+  
         setTimeLeft(
           `Auction starts in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`
         );
@@ -86,12 +88,11 @@ const Auction_Page = () => {
         setIsAuctionActive(true);
         setError("");
         setTimeLeft("");
-        clearInterval(interval);
       }
     }, 1000);
-
+  
     return () => clearInterval(interval);
-  }, []);
+  }, []);  
 
   const handleSaveProduct = async () => {
     try {
