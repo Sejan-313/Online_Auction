@@ -30,6 +30,7 @@ const Manage_Auctions = () => {
   };
 
   const handleDelete = async (pid) => {
+    if (!window.confirm("Are you sure you want to delete this auction?")) return;
     try {
       const id = localStorage.getItem("seller_id");
       await axios.delete(`${API_URL}/seller/${pid}`);
@@ -40,8 +41,8 @@ const Manage_Auctions = () => {
   };
 
   return (
-    <div className="p-5">
-      <h3 className='text-start w-100 mb-4 border-bottom'>Manage Auctions</h3>
+     <div className="p-5">
+     <h3 className='text-start w-100 mb-4 border-bottom'>Manage Auctions</h3>
       <div className={css['auction-table']}>
         <table className="w-100">
           <thead className="border" style={{height: "50px"}}>

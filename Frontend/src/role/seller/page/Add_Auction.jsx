@@ -150,7 +150,7 @@ const Add_Auction = () => {
                     </div>
                 </div>
                 <div className={css['Auction_Row_Btn']}>
-                    <button type="submit" className="btn btn-secondary w-100 text-start">Add Auction</button>
+                    <button type="submit" className="btn btn-secondary w-100">Add Auction</button>
                 </div>
             </form>
         </div>

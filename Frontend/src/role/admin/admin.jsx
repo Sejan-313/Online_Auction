@@ -1,31 +1,25 @@
-import { Outlet } from "react-router-dom";
-import SideBar from "./components/SideBar";
-import AHeader from "./components/AHeader";
-import AFooter from "./components/AFooter";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Outlet } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import css from "./admin.module.css";
+import Sidebar from "./component/Sidebar";
 
-const Admin = () => 
-{
-  const navigate = useNavigate();
+export default function Seller() {
+    const navigate = useNavigate();
 
-  useEffect(() => {
-      const token = localStorage.getItem("token");
-      const role = localStorage.getItem("role");
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const role = localStorage.getItem("role");
 
-      if (!token || role !== "admin") {
-          navigate("/login");
-      }
-  }, [navigate]);
+        if (!token || role !== "admin") {
+            navigate("/login");
+        }
+    }, [navigate]);
 
-  return (
-    <>
-      <AHeader></AHeader>
-      <SideBar></SideBar>
-      <Outlet></Outlet>
-      <AFooter></AFooter>
-    </>
-  )
+    return (
+        <div className={css['seller_container']}>
+            <div className={css['container_col']}><Sidebar /></div>
+            <div className={css['container_col2']}><Outlet /></div>
+        </div>
+    );
 }
-
-export default Admin;

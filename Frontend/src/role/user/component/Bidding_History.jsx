@@ -25,14 +25,14 @@ const BiddingHistory = () => {
             <table className="w-100">
                 <thead>
                     <tr className="bg-gray-200 text-left">
-                        <th className="border-bottom p-2"></th>
-                        <th className="border-bottom p-2">Product</th>
-                        <th className="border-bottom p-2">Bid Amount</th>
-                        <th className="border-bottom p-2">Last Bid</th>
-                        <th className="border-bottom p-2">Bid Count</th>
-                        <th className="border-bottom p-2">Status</th>
-                        <th className="border-bottom p-2">Bid Date</th>
-                        <th className="border-bottom p-2">Bid Time</th>
+                        <th className="border-bottom p-2 text-center">#</th>
+                        <th className="border-bottom p-2 text-center">Product</th>
+                        <th className="border-bottom p-2 text-center">Bid Amount</th>
+                        <th className="border-bottom p-2 text-center">Last Bid</th>
+                        <th className="border-bottom p-2 text-center">Bid Count</th>
+                        {/* <th className="border-bottom p-2 text-center">Status</th> */}
+                        <th className="border-bottom p-2 text-center">Bid Date</th>
+                        <th className="border-bottom p-2 text-center">Bid Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@ const BiddingHistory = () => {
                                 <td className="border-bottom p-4">₹{bid.amount}</td>
                                 <td className="border-bottom p-4">₹{bid.lastBid}</td>
                                 <td className="border-bottom p-4">{bid.bidCount}</td>
-                                <td className="border-bottom p-4">{bid.status}</td>
+                                {/* <td className="border-bottom p-4">{bid.status}</td> */}
                                 <td className="border-bottom p-4">{bid.bidDate}</td>
                                 <td className="border-bottom p-4">{bid.bidTime}</td>
                             </tr>

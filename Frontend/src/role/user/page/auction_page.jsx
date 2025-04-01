@@ -51,7 +51,7 @@ const Auction_Page = () => {
             setCurrentTime(now);
     
             const hours = now.getHours();
-            if (hours >= 16 || hours < 9) {
+            if (hours >= 23 || hours < 16) {
                 setIsAuctionActive(false);
                 setError("Auction is active from 9:00 AM to 4:00 PM.");
 
@@ -106,9 +106,11 @@ const Auction_Page = () => {
             setError(`Minimum bid increment is ₹${product.increment_price}.`);
             return false;
         }
+        
         setError("");
         return true;
     };
+    
     
     const handleBid = async () => {
         if (!validateBid()) return;
@@ -164,25 +166,35 @@ const Auction_Page = () => {
                             <p><strong>Start Date:</strong> {product.start_date}</p>
                             <p><strong>End Date:</strong> {product.end_date}</p>
                             <p><strong>Status:</strong> {product.status}</p>
-                            <p><strong>Current Bid:</strong> {`₹${product.starting_price + product.current_bid}`}</p>
-                            <div style={{ height: "70px" }}>
-                                <input 
-                                    type="text" 
-                                    className={`input-group ${error ? 'border border-danger' : ''}`}
-                                    value={currentBidAmount}
-                                    placeholder="Enter Your Bidding Amount" 
-                                    onChange={(e) => setCurrentBidAmount(e.target.value)}
-                                    disabled={!isAuctionActive}
-                                />
-                                {error && <span className="text-danger">{error}</span>}
+                            <p><strong>Current Bid:</strong> {`₹${product.current_bid}`}</p>
+                            <div style={{ height: "70px" }} className="border-bottom mb-2">
+                                {product.status === "Inactive" ? (
+                                    <span className="text-danger">Bidding is temporarily paused.</span>
+                                ) : (
+                                    <>
+                                        <input 
+                                            type="text" 
+                                            style={{ height: "40px" }}
+                                            className={`input-group ${error ? 'border border-danger' : ''}`}
+                                            value={currentBidAmount}
+                                            placeholder="Enter Your Bidding Amount" 
+                                            onChange={(e) => setCurrentBidAmount(e.target.value)}
+                                            disabled={!isAuctionActive}
+                                        />
+                                        {error && <span className="text-danger">{error}</span>}
+                                    </>
+                                )}
                             </div>
-                            <button 
-                                className="btn btn-secondary w-100" 
-                                disabled={!isAuctionActive || loading} 
-                                onClick={handleBid}
-                            >
-                                {loading ? "Placing Bid..." : product.status !== "Active" ? "Bidding Not Allowed" : `+ ₹${bidAmount}`}
-                            </button>
+
+                            {product.status !== "Inactive" && (
+                                <button 
+                                    className="btn btn-secondary w-100" 
+                                    disabled={!isAuctionActive || loading} 
+                                    onClick={handleBid}
+                                >
+                                    {loading ? "Placing Bid..." : `+ ₹${bidAmount}`}
+                                </button>
+                            )}
                         </div>
                     </div>
                 ) : (<p>Loading...</p>)}

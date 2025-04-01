@@ -122,7 +122,7 @@ export default function Login() {
                             <button type="submit" className="w-100 btn btn-secondary"> Login </button>
                         </form>
                     </div>
-                    <Link to="/forgot-password" className={css['forgot_password_link']}>Forgot password?</Link>
+                    <Link to="/forgot-password" className={`text-primary ${css['forgot_password_link']}`}>Forgot password?</Link>
                 </div>
                 <div className={`${css.login_link} border p-3 bg-white text-center`}>
                     <p className="text-black"> Don't have an account?  

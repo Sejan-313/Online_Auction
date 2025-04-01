@@ -4,7 +4,7 @@ const Bid = require("../../models/user/bidModel");
 
 const get_Auction = async (req, res) => {
     try {
-        const auction = await Auction.find({ status: "Active" }).sort({ createdAt: -1 });
+        const auction = await Auction.find({ status: { $in: ["Active", "Inactive"] } }).sort({ createdAt: -1 });
         res.json(auction);
     } catch (error) {
         res.status(500).json({ message: "Server Error" });
@@ -35,7 +35,7 @@ const get_AuctionById = async (req, res) => {
 const get_RecommendAuction = async (req, res) => {
     try {
         const auction = await Auction.aggregate([
-            { $match: { status: "Active" } }, 
+            { $match: { status: { $in: ["Active", "Inactive"] } } }, 
             { $sample: { size: 4 } }  
         ]);
         res.json(auction);
@@ -56,9 +56,9 @@ const toggleSave = async (req, res) => {
         } else {
             const index = savedAuction.products.findIndex(p => p.product_id.toString() === product_id);
             if (index !== -1) {
-                savedAuction.products.splice(index, 1); // Remove if already saved
+                savedAuction.products.splice(index, 1); 
             } else {
-                savedAuction.products.push({ product_id }); // Add new saved product
+                savedAuction.products.push({ product_id });
             }
         }
 
@@ -109,10 +109,6 @@ const place_Bid = async (req, res) => {
         const auction = await Auction.findById(product_id);
         if (!auction) return res.status(404).json({ error: "Auction not found" });
 
-            // if (bid_amount < auction.current_bid + auction.increment_price) {
-            //     return res.status(400).json({ error: "Bid must be higher than the current bid + increment price" });
-            // }
-
         let bid = await Bid.findOne({ auction_id: product_id });
 
         if (!bid) {
@@ -153,7 +149,6 @@ const getUserBiddingHistory = async (req, res) => {
                     amount: userBid.amount,
                     lastBid: index > 0 ? bidsArray[index - 1]?.amount || 0 : 0,
                     bidCount: bidsArray.length,
-                    status: "Winning",
                     bidDate: new Date(userBid.bid_time).toLocaleDateString("en-GB"), 
                     bidTime: new Date(userBid.bid_time).toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"})
                 });

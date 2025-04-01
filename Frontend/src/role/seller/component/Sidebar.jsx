@@ -1,13 +1,10 @@
 import { Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { IoBan } from "react-icons/io5";
-import { IoPersonSharp } from "react-icons/io5";
-import {FaTachometerAlt, FaClipboardList, FaPlus, FaList, FaEdit, FaTrash, FaGavel, FaShoppingCart, FaMoneyBill, FaChartBar, FaUserCog, FaSignOutAlt } from "react-icons/fa";
-import { FaTrophy, FaCreditCard, FaShippingFast, FaInfoCircle, FaBell } from "react-icons/fa";
+import { IoBan, IoPersonSharp } from "react-icons/io5";
+import { FaTachometerAlt, FaClipboardList, FaPlus, FaList, FaTrophy, FaShippingFast, FaInfoCircle, FaMoneyBill, FaCreditCard, FaUserCog, FaSignOutAlt, FaBell, FaTruckMoving } from "react-icons/fa";
 
 const Sidebar = () => {
-
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const logout = () => {
         localStorage.removeItem("email");
         localStorage.removeItem("fullName");
@@ -21,7 +18,7 @@ const Sidebar = () => {
         <div className="d-flex flex-column border-end p-3 h-100">
             <h4 className="text-primary mb-4">Seller<span className="text-secondary">Panel</span></h4>
             
-            <Nav className="flex-column p-3 vh-100">
+            <Nav className="flex-column align-items-start justify-content-evenly p-3 vh-100">
                 <h6 className="text-dark">Main</h6>
                 <Link to="dashboard" className="text-secondary nav-link d-flex align-items-center">
                     <FaTachometerAlt className="me-2" /> Dashboard
@@ -41,7 +38,7 @@ const Sidebar = () => {
                     <IoBan className="me-2" /> Rejected Auctions
                 </Link>
                 
-                <h6 className="text-dark mt-3">Orders</h6>
+                <h6 className="text-dark mt-3">Orders & Delivery</h6>
                 <Link to="winning-bids" className="text-secondary nav-link d-flex align-items-center">
                     <FaTrophy className="me-2" /> Winning Bids
                 </Link>
@@ -51,8 +48,11 @@ const Sidebar = () => {
                 <Link to="order-details" className="text-secondary nav-link d-flex align-items-center">
                     <FaInfoCircle className="me-2" /> Order Details
                 </Link>
-                <Link to="notifications" className="text-secondary nav-link d-flex align-items-center">
-                    <FaBell className="me-2" /> Notifications
+                <Link to="manage-deliveries" className="text-secondary nav-link d-flex align-items-center">
+                    <FaTruckMoving className="me-2" /> Manage Deliveries
+                </Link>
+                <Link to="delivery-history" className="text-secondary nav-link d-flex align-items-center">
+                    <FaClipboardList className="me-2" /> Delivery History
                 </Link>
 
                 <h6 className="text-dark mt-3">Payments</h6>
@@ -65,7 +65,10 @@ const Sidebar = () => {
                     <IoPersonSharp className="me-2" /> Profile
                 </Link>
                 <Link to="update-profile" className="text-secondary nav-link d-flex align-items-center">
-                    <FaUserCog size={18} className="me-2" /> Update Profile
+                    <FaUserCog className="me-2" /> Update Profile
+                </Link>
+                <Link to="notifications" className="text-secondary nav-link d-flex align-items-center">
+                    <FaBell className="me-2" /> Notifications
                 </Link>
             </Nav>
 

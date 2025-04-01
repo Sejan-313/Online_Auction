@@ -23,7 +23,7 @@ const Reject_auction = () => {
   const fetchsellerdata = async (id) => {
     try {
       const response = await axios.get(`${API_URL}/seller/auctionreg/${id}`);
-      setsellerdata(response.data); 
+      setsellerdata(response.data);
     } catch (error) {
       console.error("Error fetching Auction data:", error);
       setmsg(true);
@@ -42,13 +42,17 @@ const Reject_auction = () => {
             return (
               <div className={`${css['auction-container']} d-flex justify-content-between mb-3 border-top`}>
                 <div style={{width: "150px", height: "100%"}} className="d-flex justify-content-center p-2">
-                  <img src={`http://localhost:5000/uploads/seller/${item?.image}`} style={{height: "100%", width: "90%"}} alt="" /></div>
+                  <img src={`http://localhost:5000/uploads/seller/${item?.auctionId?.image}`} style={{height: "100%", width: "90%"}} alt="" />
+                </div>
                 <div style={{overflow: "auto"}} className="w-100 py-1"> 
-                  {item?.product_name}
-                  <p className="text-dark">{item.Rejection}</p> 
+                  {item?.auctionId?.product_name}
+                  <p className="text-dark">{item.message}</p> 
                 </div>
                 <div className="border-start ms-2"></div>
-                <div style={{width: "150px", height: "100%"}} className="d-flex align-items-center justify-content-center"><Link to={`/seller/update-auction/${item._id}`}>Edit</Link></div>
+                <div style={{width: "150px", height: "100%"}} className="d-flex align-items-center justify-content-center">
+                  {new Date(item?.createdAt).toLocaleDateString("en-GB")}<br/>
+                  {new Date(item?.createdAt).toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: true })}
+                </div>
               </div>
             );
           })

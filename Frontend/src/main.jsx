@@ -39,12 +39,14 @@ import Update_Profile_seller from './role/seller/page/Update_Profile.jsx';
 import Profile_Seller from "./role/seller/page/UserProfile.jsx"
 import Auction_Status from './role/seller/page/Auction_Status.jsx';
 
-import AHome from './role/admin/components/AHome.jsx';
 import Admin from './role/admin/admin.jsx';
-import UserDetails from './role/admin/pages/UserDetails.jsx';
-import SellerDetails from './role/admin/pages/SellerDetails.jsx';
-import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
-import RejectProduct from './role/admin/pages/RejectProduct.jsx';
+import Admin_Dashboard from './role/admin/page/Dashboard.jsx';
+import Admin_AuctionStatus from './role/admin/page/Auction_Status.jsx';
+import Admin_Manage_Auctions from "./role/admin/page/Manage_Auctions.jsx";
+import Admin_UserAccount from "./role/admin/page/User_Account.jsx";
+import Admin_SellerAccount from "./role/admin/page/Seller_Account.jsx";
+import Admin_PendingAuction from "./role/admin/page/Pending_Auction.jsx";
+import Admin_CompleteAuction from "./role/admin/page/Complete_Auction.jsx";
 
 
 const router = createBrowserRouter([
@@ -98,13 +100,13 @@ const router = createBrowserRouter([
     path: "admin", 
     element: <Admin/>, 
     children: [
-      { index:true, element: <AHome></AHome> },
-      { path: "home", element: <AHome></AHome> },
-      { path: "reg_user_data", element: <UserDetails/>},
-      { path: "reg_seller_data", element: <SellerDetails/>},
-      { path: "auctiondata", element: <AuctionDetails/> },
-      { path: "reject", element: <RejectProduct />},
-   
+      { index:true, element: <Admin_Dashboard/> },
+      { path: "auction-status", element: <Admin_AuctionStatus/> },
+      { path: "auction-manage", element: <Admin_Manage_Auctions/>},
+      { path: "user-account", element: <Admin_UserAccount/>},
+      { path: "seller-account", element: <Admin_SellerAccount/> },
+      { path: "pending-auctions", element: <Admin_PendingAuction />},
+      { path: "complete-auctions", element: <Admin_CompleteAuction />},
     ],
   },
 ]);
