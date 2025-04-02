@@ -34,7 +34,7 @@ const Header = () => {
         <div className="container-fluid">
           <div className="d-flex justify-content-between align-items-center">
             
-            <div className="">
+            <div className="text-white">
                 <a href="./index.html">
                   {/* <img src="img/logo.png" alt=""/> */}
                   Best Platform
@@ -64,11 +64,11 @@ const Header = () => {
             </nav>
 
             <div className="d-flex align-items-center gap-4">
-              <IoIosSearch className="text-muted" size={27} />
+              {/* <IoIosSearch className="text-muted" size={27} /> */}
               {data.token && data.role === "user" && (
                 <>
-                  <Link to="/user-basket" className="text-dark"> <HiOutlineShoppingBag className="text-muted" size={25} /> </Link>
-                  <Link to="/user-account" className="text-dark"> <GoPerson className="text-muted" size={25} /> </Link>
+                  <Link to="/user-basket" className="text-white"> <HiOutlineShoppingBag className="text-muted" size={25} /> </Link>
+                  <Link to="/user-account" className="text-white"> <GoPerson className="text-muted" size={25} /> </Link>
                 </>
               )}
             </div>
@@ -76,13 +76,13 @@ const Header = () => {
             <div className="user-access d-flex align-items-center">
               {data.role !== "user" ? (
                 <div className="d-flex align-items-center gap-2">
-                  <Link to="/signup_user" className="text-muted">Sign up</Link>
-                  <span className="text-muted">/</span>
-                  <Link to="/login" className="text-muted">Login</Link>
+                  <Link to="/signup_user" className="text-white">Sign up</Link>
+                  <span className="text-white">/</span>
+                  <Link to="/login" className="text-white">Login</Link>
                 </div>
               ) : (
                 <div className="d-flex align-items-center gap-3">
-                  <span className="text-muted">Welcome {data.fullName}</span>
+                  <span className="text-white">Welcome {data.fullName}</span>
                   <button className="btn btn-outline-danger btn-sm" onClick={logout}>Logout</button>
                 </div>
               )}
