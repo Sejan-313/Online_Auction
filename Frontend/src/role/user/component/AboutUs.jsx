@@ -1,29 +1,30 @@
 import React from 'react';
-import Rules from './Rules'; // Assuming you've saved the Rules component in a separate file
+
+import styles from './Aboutus.module.css';  
 
 const AboutUs = () => {
     return (
-        <div className="about-us-container">
-            <div className="about-us-section">
-                <h1 className="about-us-title">About Us</h1>
-                <p className="about-us-description">
-                    Welcome to our online auction platform! We aim to provide a seamless and engaging bidding experience 
-                    where users can bid on a variety of products. Our platform is designed to ensure transparency, fairness, 
-                    and a user-friendly interface for both sellers and buyers.
-                </p>
-                <p className="about-us-description">
-                    Our team is dedicated to bringing you the best products at competitive prices. Whether you're a seasoned 
-                    bidder or new to the auction world, we are here to support you throughout your journey. We believe in the 
-                    power of community, and that's why we encourage feedback and open communication on our platform.
-                </p>
-                <p className="about-us-description">
-                    Join us and start bidding today! Discover unique products, engage with sellers, and participate in exciting 
-                    auctions from the comfort of your home.
-                </p>
-            </div>
-
-            <div className="rules-section">
-                <Rules />
+        <div className={styles.section}>
+            <div className={styles.container}>
+                <div className={styles.containerSection}>
+                    <div className={styles.title}>
+                        <h1>About us</h1>
+                    </div>
+                    <div className={styles.content}>
+                        <h3>Content</h3>
+                        <p>
+                            Welcome to our online auction platform! We aim to provide a seamless and engaging bidding experience 
+                            where users can bid on a variety of products. Our platform is designed to ensure transparency, fairness, 
+                            and a user-friendly interface for both sellers and buyers.
+                        </p>
+                        <div className={styles.button}>
+                            <a href="#">Read more</a>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.imageSection}>
+                    <img src="" alt="About Us" />
+                </div>
             </div>
         </div>
     );
