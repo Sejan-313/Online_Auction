@@ -36,43 +36,43 @@ const Complete_Auction = () => {
 
   return (
     <div className="p-5">
-      <h3 className='text-start w-100 mb-4 border-bottom border-white text-white'>Complete Auction</h3>
+      <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>Complete Auction</h3>
       <div className={css['auction-table']}>
         <table className="w-100">
-          <thead className="border border-white" style={{height: "50px"}}>
+          <thead className="border" style={{height: "50px"}}>
           <tr>
-              <th className="text-white">#</th>
-              <th className="text-white">Auction Name</th>
-              <th className="text-white">Starting Price</th>
-              <th className="text-white">Auction Type</th>
-              <th className="text-white">Winner Name</th>
-              <th className="text-white">Email</th>
-              <th className="text-white">City</th>
-              <th className="text-white">Gender</th>
-              <th className="text-white">Final Amount</th>
-              <th className="text-white">Payment</th>
-              <th className="text-white">Action</th>
+              <th>#</th>
+              <th>Auction Name</th>
+              <th>Starting Price</th>
+              <th>Auction Type</th>
+              <th>Winner Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Gender</th>
+              <th>Final Amount</th>
+              <th>Payment</th>
+              <th>Action</th>
           </tr>
           </thead>
           <tbody>
             {msg ? (
               <tr>
-                <td colSpan="9" className={`text-white ${css.noDataMessage}`}> Data not found </td>
+                <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}> Data not found </td>
               </tr>
             ) : (
             sellerdata.map((item, index) => {
               return (
-                <tr key={item._id} className="border-top border-white mt-5">
-                  <td className="text-white">{index+1}</td>
-                  <td className="text-white">{item?.auctionId?.product_name}</td>
-                  <td className="text-white">{item?.auctionId?.starting_price}</td>
-                  <td className="text-white">{item?.auctionId?.product_type}</td>
-                  <td className="text-white">{item?.winnerId?.fullName}</td>
-                  <td className="text-white">{item?.winnerId?.email}</td>
-                  <td className="text-white">{item?.winnerId?.city}</td>
-                  <td className="text-white">{item?.winnerId?.gender}</td>
-                  <td className="text-white">{item?.finalAmount}</td>
-                  <td className="text-white">{item?.paymentStatus}</td>
+                <tr key={item._id} className="text-secondary border-top mt-5">
+                  <td className="text-secondary">{index+1}</td>
+                  <td className="text-secondary">{item?.auctionId?.product_name}</td>
+                  <td className="text-secondary">{item?.auctionId?.starting_price}</td>
+                  <td className="text-secondary">{item?.auctionId?.product_type}</td>
+                  <td className="text-secondary">{item?.winnerId?.fullName}</td>
+                  <td className="text-secondary">{item?.winnerId?.email}</td>
+                  <td className="text-secondary">{item?.winnerId?.city}</td>
+                  <td className="text-secondary">{item?.winnerId?.gender}</td>
+                  <td className="text-secondary">{item?.finalAmount}</td>
+                  <td className="text-secondary">{item?.paymentStatus}</td>
                   <td>
                     <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`} onClick={() => handleDelete(item._id)}/>
                   </td>
