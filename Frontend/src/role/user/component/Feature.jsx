@@ -1,7 +1,7 @@
 const Feature = () =>
 {
     return <>
-     <section className="features-section spad">
+     <section className="features-section spad bg-white">
         <div className="features-ads p-5">
             <div className="container-fluid">
                 <div className="row">
