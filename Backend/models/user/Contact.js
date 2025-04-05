@@ -8,7 +8,7 @@ const contactSchema = new mongoose.Schema({
     message: { type: String, required: true }
 });
 
-contactSchema.index({ email: 1 });
-contactSchema.index({ phone: 1 });
+// contactSchema.index({ email: 1 });
+// contactSchema.index({ phone: 1 });
 
 module.exports = mongoose.model("Contact", contactSchema);

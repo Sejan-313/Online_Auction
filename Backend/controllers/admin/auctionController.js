@@ -2,6 +2,8 @@ const Auction = require("../../models/seller/auctionModel");
 const Notification = require("../../models/seller/NotificationModel");
 const Bid = require("../../models/user/bidModel");
 const FinalBid = require("../../models/user/finalBidModel");
+const Contact = require('../../models/user/Contact');
+const nodemailer = require('nodemailer');
 
 const getAuctionsByStatus = async (req, res) => {
     try {
@@ -183,4 +185,56 @@ const getFinalBids = async (req, res) => {
   }
 };
 
-module.exports = { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids };
+
+
+const sendResponseEmail = (req, res) => {
+  const { email, responseMessage } = req.body;
+
+  if (!email || !responseMessage) {
+    return res.status(400).json({ success: false, message: 'Email and response message are required' });
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'sezansahin3011@gmail.com',  // Your Gmail address
+      pass: 'ylcd erxz kmho oohq',   // Your Gmail password or app-specific password
+    },
+  });
+
+  // Email details
+  const mailOptions = {
+    from: 'sezansahin3011@gmail.com',  // Sender email
+    to: email,                    // Receiver email (the user's email)
+    subject: 'Response to Your Query', 
+    text: responseMessage,        // The response message from the admin
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ success: false, message: 'Failed to send email' });
+    } else {
+      console.log('Email sent: ' + info.response);
+      return res.status(200).json({ success: true, message: 'Email sent successfully' });
+    }
+  });
+};
+
+const getAllContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find(); // Fetch all contact messages
+    if (contacts.length === 0) {
+      return res.status(404).json({ message: 'No contacts found' });
+    }
+    res.status(200).json(contacts); // Send the contacts as a response
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching contacts', error });
+  }
+};
+
+module.exports = { getAllContacts };
+
+
+module.exports = { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids,sendResponseEmail,getAllContacts };

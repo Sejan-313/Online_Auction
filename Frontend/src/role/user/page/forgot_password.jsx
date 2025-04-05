@@ -132,7 +132,7 @@ const handleOtpKeyDown = (e, index) => {
     return (
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border bg-white px-2`}>
+                <div className={`${css.login_form} border bg-white px-5`}>
                     {step === 1 && (
                         <div className={`${css['forgot_password_container']} border-bottom d-flex flex-column justify-content-evenly`}>
                             <h3 className="text-center mb-3 font-weight-bold" style={{color: "#4A90E2"}}>Forgot Password</h3>

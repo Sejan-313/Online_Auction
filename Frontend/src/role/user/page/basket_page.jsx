@@ -19,6 +19,10 @@ const Basket_Page = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setProducts(data);
+                console.log(data);
+                
+                
+                
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {

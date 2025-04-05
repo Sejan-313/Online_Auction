@@ -77,7 +77,7 @@ export default function Login() {
          <>
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border border-white bg-white px-2`}>
+                <div className={`${css.login_form} border border-white bg-white px-5`}>
                     <div className={`${css.login_form_container} border-bottom border-white d-flex flex-column justify-content-evenly`}>
                         <h3 className="text-center mb-3 font-weight-bold" style={{color: "#4A90E2"}}>Login</h3>
                         <form onSubmit={handleSubmit}>

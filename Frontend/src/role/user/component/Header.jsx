@@ -34,28 +34,28 @@ const Header = () => {
         <div className="container-fluid">
           <div className="d-flex justify-content-between align-items-center">
             
-            <div className="text-white">
-                <a href="./index.html">
-                  {/* <img src="img/logo.png" alt=""/> */}
-                  Best Platform
-                </a>
-            </div>
+          <div className="text-white">
+    <Link to="/">
+        <img src="img/logo-removebg-preview.png" alt="Logo" className="logo"/>
+    </Link>
+</div>
 
-            <nav className={`${styles.header} navbar navbar-expand-lg text-white `}>
+
+            <nav className={` navbar navbar-expand-lg text-white `}>
               <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav gap-3">
                   <li className="nav-item">
-                    <Link className="nav-link" to="/">Home</Link>
+                    <Link className="nav-link " to="/">Home</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/about">About</Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a className="nav-link" href="./check-out.html">Blog</a>
-                  </li>
+                  </li> */}
                   <li className="nav-item">
                     <Link className="nav-link" to="/contact">Contact</Link>
                   </li>
@@ -67,8 +67,8 @@ const Header = () => {
               {/* <IoIosSearch className="text-muted" size={27} /> */}
               {data.token && data.role === "user" && (
                 <>
-                  <Link to="/user-basket" className="text-white"> <HiOutlineShoppingBag className="text-muted" size={25} /> </Link>
-                  <Link to="/user-account" className="text-white"> <GoPerson className="text-muted" size={25} /> </Link>
+                  <Link to="/user-basket" className="text-white"> <HiOutlineShoppingBag className="text-white" size={25} /> </Link>
+                  <Link to="/user-account" className="text-white"> <GoPerson className="text-white" size={25} /> </Link>
                 </>
               )}
             </div>
@@ -97,20 +97,20 @@ const Header = () => {
           <div className="row">
             <div className="col-md-4">
               <div className="header-item">
-                <img src="img/icons/delivery.png" alt="" />
-                <p>Free shipping on orders over $30 in USA</p>
+                <img src="img/icons/delivery.png" alt="" className="text-black" />
+                <p className="text-black">Bid. Win. Enjoy!</p>
               </div>
             </div>
             <div className="col-md-4 text-left text-lg-center">
               <div className="header-item">
-                <img src="img/icons/voucher.png" alt="" />
-                <p>20% Student Discount</p>
+                <img src="img/icons/voucher.png" alt=""  className="text-black"/>
+                <p className="text-black">Find Amazing Dealsmin our Auctions</p>
               </div>
             </div>
             <div className="col-md-4 text-left text-xl-right">
               <div className="header-item">
-                <img src="img/icons/sales.png" alt="" />
-                <p>30% off on dresses. Use code: 30OFF</p>
+                <img src="img/icons/sales.png" alt="" className="text-black"/>
+                <button className="btn btn-info text-black">Start Bidding</button>
               </div>
             </div>
           </div>

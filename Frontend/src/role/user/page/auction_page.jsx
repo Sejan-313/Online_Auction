@@ -4,6 +4,7 @@ import { CiSaveUp2, CiSaveDown2 } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import css from "./auction_page.module.css";
+import tableStyles from "./auctionTable.module.css";  // Import CSS module
 import styles from "./Button.module.css";
 
 const Auction_Page = () => {
@@ -310,9 +311,9 @@ const Auction_Page = () => {
           )}
         </div>
       </div>
-      <div className="mb-1" style={{ height: "300px"}}>
+      <div className={tableStyles["table-container"]}>
         <h5 className="text-muted">Latest Bids</h5>
-        <table className="table">
+        <table className={`table ${tableStyles.table}`}>
           <thead>
             <tr>
               <th>Auction</th>
@@ -326,24 +327,34 @@ const Auction_Page = () => {
           </thead>
           <tbody>
             {latestBids.length > 0 ? (
-              latestBids.map((bid) =>
-                bid.users.map((user) =>
-                  user.bids.slice(-1).map((b, index) => (
-                    <tr key={index}>
-                      <td>{bid.auction_id.product_name}</td>
-                      <td>{bid.auction_id.status}</td>
-                      <td>{user.user_id.fullName}</td>
-                      <td>{user.user_id.email}</td>
-                      <td>{user.user_id.mobile}</td>
-                      <td>₹{b.amount}</td>
-                      <td>{new Date(b.bid_time).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
-                    </tr>
-                  ))
+              latestBids
+                .map((bid) =>
+                  bid.users
+                    .map((user) =>
+                      user.bids
+                        .slice(-1) 
+                        .sort((a, b) => b.amount - a.amount) 
+                        .map((b, index) => (
+                          <tr key={index}>
+                            <td>{bid.auction_id.product_name}</td>
+                            <td>{bid.auction_id.status}</td>
+                            <td>{user.user_id.fullName}</td>
+                            <td>{user.user_id.email}</td>
+                            <td>{user.user_id.mobile}</td>
+                            <td className={tableStyles["bid-amount"]}>₹{b.amount}</td>
+                            <td className={tableStyles["time-column"]}>
+                              {new Date(b.bid_time).toLocaleString("en-IN", {
+                                timeZone: "Asia/Kolkata",
+                              })}
+                            </td>
+                          </tr>
+                        ))
+                    )
                 )
-              )
+                .flat() // Flatten the array of bid rows
             ) : (
               <tr>
-                <td colSpan="10" className="text-center">
+                <td colSpan="7" className={tableStyles["no-bids"]}>
                   No bids yet
                 </td>
               </tr>
@@ -351,6 +362,8 @@ const Auction_Page = () => {
           </tbody>
         </table>
       </div>
+
+
 
       <h5 className="text-muted">Recommend</h5>
       <div

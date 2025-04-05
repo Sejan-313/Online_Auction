@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, #4A90E2 10%, #64A1FF 40%, #85CFFE 90%);
+    background-color: #081a35;
 }
 
 .login {
@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
 }
 .login_form_container {
     height: 450px;

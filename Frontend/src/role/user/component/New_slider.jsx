@@ -30,14 +30,14 @@ const New_slider = () => {
     },
     {
       id: 5,
-      name: "Netherlands",
-      img: "https://i.ibb.co/jTQfmTq/img5.jpg",
-      des: "X-Dev, Transforming code into visual poetry..!",
+      name: "Best Quality Furniture",
+      img: "img/Sofa_Set.jpg",
+      des: "Trenidngg",
     },
     {
       id: 6,
       name: "Ireland",
-      img: "https://i.ibb.co/RNkk6L0/img6.jpg",
+      img: "img/Headphones.jpg",
       des: "X-Dev, Transforming code into visual poetry..!",
     }
   ];

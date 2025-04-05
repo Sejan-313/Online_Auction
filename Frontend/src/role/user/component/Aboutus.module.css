@@ -3,14 +3,14 @@
 .section {
   width: 100%;
   min-height: 100vh;
-  background-color: #ddd;
+  background-color: white;
 }
 
 .container {
   width: 80%;
   display: block;
   margin: auto;
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 .containerSection {

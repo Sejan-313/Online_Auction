@@ -127,9 +127,13 @@ export default function Signup_User() {
                             </div>
                             <div className="w-100">
                                 <label className="form-label ">Gender</label>
-                                <div className={`form-control ${errors.gender ? "border-danger" : ""} border rounded p-2`}>
-                                    <input type="radio" name="gender" value="Male" onChange={handleChange} checked={formData.gender === "Male"} /> Male
-                                    <input type="radio" name="gender" value="Female" className="ms-3" onChange={handleChange} checked={formData.gender === "Female"} /> Female
+                                <div className={`form-control ${errors.gender ? "border-danger" : ""} border rounded p-2 d-flex`} style={{width: "310px", overflow: "hidden"}}>
+                                    <div className="d-flex w-25">
+                                    <input type="radio" name="gender" value="Male" onChange={handleChange} checked={formData.gender === "Male"} />Male     
+                                    </div> 
+                                    <div className="d-flex w-25">
+                                    <input type="radio" name="gender" value="Female" className="ms-3" onChange={handleChange} checked={formData.gender === "Female"} /> female 
+                                    </div>
                                 </div>
                                 {errors.gender && <small className="text-danger">{errors.gender}</small>}
                             </div>

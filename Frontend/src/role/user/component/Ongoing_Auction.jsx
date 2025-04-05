@@ -13,6 +13,8 @@ const Ongoing_Auction = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 setAuctions(response.data);
+                console.log(response.data);
+                
             } catch (error) {
                 console.error("Error fetching user bidded auctions", error);
             }

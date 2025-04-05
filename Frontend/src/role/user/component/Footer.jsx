@@ -1,16 +1,18 @@
+import styles from './Slider.module.css';
+
 const Footer = () =>
 {
     return <>
-     <footer className="footer-section spad footer p-5">
+     <footer className={`${styles.footer} footer-section spad footer p-5`}>
         <div className="w-75 mx-auto">
             <div className="newslatter-form">
                 <div className="row">
-                    <div className="col-lg-12">
+                    {/* <div className="col-lg-12">
                         <form action="#">
                             <input type="text" placeholder="Your email address"/>
-                            <button type="submit">Subscribe to our newsletter</button>
+                            <button type="submit">Submit</button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="footer-widget">

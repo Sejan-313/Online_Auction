@@ -3,16 +3,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
  
 }
 
 .header
 {
-  background-color: #64a1ff;
+  background-color: #081a35;
+  height: 150px;
+}
+
+.footer
+{
+  background-color: #081a35;
 }
 
 body {
-  background: #ccc6c6;
+  
   overflow-x: hidden; /* Prevent horizontal scrolling */
   font-family: Arial, sans-serif; /* Add a default font family */
 }
