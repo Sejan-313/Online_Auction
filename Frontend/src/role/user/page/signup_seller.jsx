@@ -1,11 +1,14 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import css from "./user_seller.module.css";
 import axios from "axios"; 
+import { toast } from 'react-toastify';
+
 
 export default function Signup_Seller() {
     const fileInputRef = useRef(null);
     const [errors, setErrors] = useState({});
+    const navigate=useNavigate();
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -74,9 +77,12 @@ export default function Signup_Seller() {
                 if (fileInputRef.current) {
                     fileInputRef.current.value = "";
                 }     
-                alert(res.data.message);
+                toast.error(res.data.message);
+                navigate("/login");
+
             } catch (error) {
-                alert(error.response?.data?.message || "Error occurred");
+                toast.error(error.response?.data?.message || "Error occurred");
+                alert();
             }
         }
       };

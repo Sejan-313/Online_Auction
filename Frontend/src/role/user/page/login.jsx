@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import css from "./user_seller.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -63,11 +64,13 @@ export default function Login() {
                         navigate("/");
                     }
                 } else {
-                    alert(data.message);
+                    toast.error(data.message);
+                    
                 }
             } catch (error) {
                 console.error("Login Error:", error.response?.data);
-                alert(error.response?.data?.message || "Login failed");
+                toast.error(error.response?.data?.message || "Login failed");
+
             }
         }
     }; 

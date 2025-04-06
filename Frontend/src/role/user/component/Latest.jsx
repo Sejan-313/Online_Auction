@@ -5,45 +5,39 @@ import { useState, useEffect } from "react";
 import styles from './SearchBar.module.css';
 import axios from "axios";
 
-// SearchBar component (you can define this inside this file or separately as shown before)
+// SearchBar component
 const SearchBar = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
   
     const handleChange = (event) => {
       setSearchTerm(event.target.value);
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      onSearch(searchTerm);
+      onSearch(event.target.value);  // Trigger search on every character change
     };
   
     return (
       <div className={styles.searchBarContainer}>
-        <form onSubmit={handleSubmit} className={styles.searchForm}>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleChange}
-            placeholder="Search for items..."
-            className={styles.searchInput}
-          />
-          <button type="submit" className={styles.searchButton}>Search</button>
-        </form>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleChange}
+          placeholder="Search for items..."
+          className={styles.searchInput}
+        />
       </div>
     );
-  };
+};
+
 const Latest = () => {
     const [auctions, setAuctions] = useState([]);
     const [filteredAuctions, setFilteredAuctions] = useState([]);
-    const [searchQuery, setSearchQuery] = useState("");
 
+    // Fetch auction data
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction`);
                 setAuctions(data);
-                setFilteredAuctions(data.slice(0, 12));
+                setFilteredAuctions(data);  // Initially, set filtered auctions as all auctions
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -51,27 +45,31 @@ const Latest = () => {
         fetchData();
     }, []);
 
-    const handleFilter = (selectedCategory) => {
-        if (selectedCategory === "All") {
-            setFilteredAuctions(auctions.slice(0, 12));
+    // Handle search filter
+    const handleSearch = (query) => {
+        if (!query) {
+            setFilteredAuctions(auctions);  // If search query is empty, show all auctions
         } else {
-            const filtered = auctions.filter(item => item.product_type.toLowerCase() === selectedCategory.toLowerCase());
-            setFilteredAuctions(filtered.slice(0, 12));
+            const filtered = auctions.filter(item => {
+                const productName = item.product_name || '';  // Default to empty string if undefined
+                const productDescription = item.product_description || '';  // Default to empty string if undefined
+                return (
+                    productName.toLowerCase().includes(query.toLowerCase()) ||
+                    productDescription.toLowerCase().includes(query.toLowerCase())
+                );
+            });
+            setFilteredAuctions(filtered);  // Update filtered results immediately
         }
     };
 
-    // Handle search filter
-    const handleSearch = (query) => {
-        setSearchQuery(query);
-          // Update search term
-
-        const filtered = auctions.filter(item =>
-            console.log(item.product_name)
-            
-            // item.product_name.toLowerCase().includes(query.toLowerCase()) ||
-            // item.product_description.toLowerCase().includes(query.toLowerCase())
-        );
-        // setFilteredAuctions(filtered.slice(0, 12)); // Show only the first 12 results
+    // Handle category filter
+    const handleFilter = (selectedCategory) => {
+        if (selectedCategory === "All") {
+            setFilteredAuctions(auctions);  // Reset to show all auctions
+        } else {
+            const filtered = auctions.filter(item => item.product_type.toLowerCase() === selectedCategory.toLowerCase());
+            setFilteredAuctions(filtered);  // Update filtered results based on category
+        }
     };
 
     return (

@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import css from "./user_seller.module.css";  
+import { toast } from 'react-toastify';
+
 import axios from "axios"; 
 
 export default function Signup_User() {
@@ -74,9 +76,10 @@ export default function Signup_User() {
                 if (fileInputRef.current) {
                     fileInputRef.current.value = "";
                 }     
-                alert(res.data.message);
+                toast.error(res.data.message);
+                navigate("/login");
             } catch (error) {
-                alert(error.response?.data?.message || "Error occurred");
+                toast.error(error.response?.data?.message || "Error occurred");
             }
         }
       };
