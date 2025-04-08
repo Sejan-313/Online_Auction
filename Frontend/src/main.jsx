@@ -5,6 +5,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
+
+import "https://checkout.razorpay.com/v1/checkout.js";
+// import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+// import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+
+
 import App from './App.jsx';
 import store from './role/store/index.js';
 
@@ -54,6 +60,7 @@ import Admin_CompleteAuction from "./role/admin/page/Complete_Auction.jsx";
 // import AuctionDetails from './role/admin/pages/AuctionDetails.jsx';
 // import RejectProduct from './role/admin/pages/RejectProduct.jsx';
 import Payement from './role/user/component/Payement.jsx';
+import UserQuery from './role/admin/page/UserQuery.jsx';
 
 
 const router = createBrowserRouter([
@@ -114,6 +121,7 @@ const router = createBrowserRouter([
       { path: "auction-manage", element: <Admin_Manage_Auctions/>},
       { path: "user-account", element: <Admin_UserAccount/>},
       { path: "seller-account", element: <Admin_SellerAccount/> },
+      { path: "user-query", element: <UserQuery/>},
       { path: "pending-auctions", element: <Admin_PendingAuction />},
       { path: "complete-auctions", element: <Admin_CompleteAuction />},
     ],

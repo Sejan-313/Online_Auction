@@ -81,34 +81,34 @@ const Manage_Auctions = () => {
 
   return (
     <div className="p-5">
-      <div className="border-bottom border-white mb-3 d-flex justify-content-between w-100 align-items-center px-5" style={{ height: "50px" }}>
-        <h3 className="text-white mb-4">Manage Auction</h3>
-        <select className="p-2 border-1 border-white w-25 text-white" style={{backgroundColor: "transparent"}} value={filter} onChange={handleFilterChange}>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="">All Auctions</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="future">Future Auctions</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="start_today">Today's Auctions (Bidding to Start)</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="close_today">Today's Auctions (Bidding to Close)</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="active">Active Auctions</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="inactive">Inactive Auctions</option>
-          <option style={{color: "white", backgroundColor: "#85CFFE"}} value="rejected">Rejected Auctions</option>
+      <div className="border-bottom mb-3 d-flex justify-content-between w-100 align-items-center px-5" style={{ height: "50px" }}>
+        <h3 className="mb-4" style={{color: "#4A90E2"}}>Manage Auction</h3>
+        <select className="p-2 border-1 w-25 text-seocndary bg-white border" value={filter} onChange={handleFilterChange}>
+          <option value="">All Auctions</option>
+          <option value="future">Future Auctions</option>
+          <option value="start_today">Today's Auctions (Bidding to Start)</option>
+          <option value="close_today">Today's Auctions (Bidding to Close)</option>
+          <option value="active">Active Auctions</option>
+          <option value="inactive">Inactive Auctions</option>
+          <option value="rejected">Rejected Auctions</option>
         </select>
       </div>
 
       <div className={css['auction-table']}>
         <table className="w-100">
-          <thead className="border border-white" style={{ height: "50px" }}>
+          <thead className="border" style={{ height: "50px" }}>
             <tr>
-              <th className="text-white">#</th>
-              <th className="text-white">Image</th>
-              <th className="text-white">Product Name</th>
-              <th className="text-white">Starting Price</th>
-              <th className="text-white">Increment Price</th>
-              <th className="text-white">Start Date</th>
-              <th className="text-white">End Date</th>
-              <th className="text-white">Type</th>
-              <th className="text-white">Quantity</th>
-              <th className="text-white">Status</th>
-              <th className="text-white">Action</th>
+              <th>#</th>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Starting Price</th>
+              <th>Increment Price</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -118,19 +118,19 @@ const Manage_Auctions = () => {
               </tr>
             ) : (
               filteredData.map((item, index) => (
-                <tr key={item._id} className="border-top border-white mt-5">
-                  <td className="text-white">{index + 1}</td>
+                <tr key={item._id} className="border-top mt-5">
+                  <td className="text-secondary">{index + 1}</td>
                   <td>
                     <img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction" style={{ width: "100px", height: "100px", padding: "7px" }} />
                   </td>
-                  <td className="text-white">{item.product_name}</td>
-                  <td className="text-white">{item.starting_price}</td>
-                  <td className="text-white">{item.increment_price}</td>
-                  <td className="text-white">{item.start_date}</td>
-                  <td className="text-white">{item.end_date}</td>
-                  <td className="text-white">{item.product_type}</td>
-                  <td className="text-white">{item.quantity}</td>
-                  <td className="text-white">{item.status}</td>
+                  <td className="text-secondary">{item.product_name}</td>
+                  <td className="text-secondary">{item.starting_price}</td>
+                  <td className="text-secondary">{item.increment_price}</td>
+                  <td className="text-secondary">{item.start_date}</td>
+                  <td className="text-secondary">{item.end_date}</td>
+                  <td className="text-secondary">{item.product_type}</td>
+                  <td className="text-secondary">{item.quantity}</td>
+                  <td className="text-secondary">{item.status}</td>
                   <td className="text-center">
                     {(item.status === "Active" && item.end_date === new Date().toISOString().split("T")[0]) ? (
                       <input

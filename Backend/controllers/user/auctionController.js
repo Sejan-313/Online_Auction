@@ -194,94 +194,113 @@ const payement = async (req, res) => {
 };
 
 const order = async (req, res) => {
-    const {amount} = req.body;
-    const razorpayInstance = new Razorpay ({
-      key_id:process.env.RAZORPAY_KEY_ID,
-      key_secret:process.env.RAZORPAY_SECERET
-    })
-    
-    try{
+    const amountInPaise = 35000;  // Hardcoded amount (₹350 = 35000 paise)
 
-        const options={
-            amount:Number(amount),
-            currency:"INR",
-            receipt:crypto.randomBytes(10).toString("hex"),
-            
-        }
-        razorpayInstance.orders.create(options,(error,order)=>{
-            if(error){
-                console.log(error);
-                return res.status(500).json({message:"Something went Wrong!!"});
+    const razorpayInstance = new Razorpay({
+        key_id: "rzp_test_b4iBWY0X70QR2V",
+        key_secret:"6dBzpps9xTpwpG7P9cPeciUu"
+    });
+
+    try {
+        const options = {
+            amount: amountInPaise,  
+            currency: "INR",
+            receipt: crypto.randomBytes(10).toString("hex"),
+        };
+
+        razorpayInstance.orders.create(options, (error, order) => {
+            if (error) {
+                console.log('Error in Razorpay order creation:', error);
+                return res.status(500).json({ message: "Something went wrong!" });
             }
 
-           res.status(200).json({data:order});
-           console.log(order);
-           
-        })
+            res.status(200).json({ data: order });
+        });
 
-    }
-    catch(error)
-    {
-
-        res.status(500).json({message:"server error!"});
-        console.log(error);
-        
+    } catch (error) {
+        console.log('Error in order creation:', error);
+        res.status(500).json({ message: "Server error!" });
     }
 };
 
 const verify = async (req, res) => {
-    const { razorpay_payement_id,razorpay_signature, razorpay_order_id} = req.body;
-   
-    console.log(req.body);
+    const { razorpay_payment_id, razorpay_signature, razorpay_order_id } = req.body;
 
+    console.log(req.body);  // Check what data Razorpay is sending during verification
 
-    
-    
-    try{
+    try {
+        const sign = razorpay_order_id + "|" + razorpay_payment_id;
 
-        const sign= razorpay_order_id + "|" + razorpay_payement_id;
+        const expectedSign = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
+            .update(sign.toString())
+            .digest("hex");
 
+        const isAuthentic = expectedSign === razorpay_signature;
 
-        const expectedSign=crypto.createHmac("sej30",process.env.RAZORPAY_SECERET)
-        .update(sign.toString())
-        .digest("hex");
-
-
-        const isAuthentic=expectedSign===razorpay_signature;
-
-        
-
-        if(isAuthentic)
-        {
-            
-            const payement = new payement({
+        if (isAuthentic) {
+            const payment = new payment({
                 razorpay_order_id,
-                razorpay_payement_id,
+                razorpay_payment_id,
                 razorpay_signature,
-            })
+            });
 
-            await payement.save();
+            await payment.save();
 
             res.json({
-                message:"Payement Successfull"
-            })
+                message: "Payment Successful"
+            });
+        } else {
+            res.status(400).json({
+                message: "Payment Signature Mismatch"
+            });
         }
 
-
-     
-
-    }
-    catch(error)
-    {
-
-        res.status(500).json({message:"Internal server error!"});
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error!" });
         console.log(error);
-        
     }
-};
+};  
+
+const getAllBidsforHome = async (req, res) => {
+    try {
+        // Step 1: Get all auctions with populated bid information
+        const auctions = await Auction.find().exec();
+    
+        // Step 2: Get latest bid for each auction
+        const auctionsWithLatestBid = [];
+    
+        for (const auction of auctions) {
+          const bid = await Bid.findOne({ auction_id: auction._id }).exec();
+          
+          if (bid && bid.users.length > 0) {
+            // Find the latest bid for each auction
+            const allBids = bid.users.flatMap(user => user.bids);
+            if (allBids.length > 0) {
+              const latestBid = allBids.sort((a, b) => b.bid_time - a.bid_time)[0];  // Sort bids by bid_time and get the latest
+              auctionsWithLatestBid.push({
+                auction_id: auction._id,
+                product_name: auction.product_name,
+                image: auction.image,
+                latest_bid: latestBid.amount,
+                end_date: auction.end_date,
+              });
+            }
+          }
+        }
+    
+        if (auctionsWithLatestBid.length === 0) {
+          return res.status(404).json({ message: "No auctions with bids found." });
+        }
+    
+        res.json(auctionsWithLatestBid);
+      } catch (error) {
+        console.error('Error fetching latest bids:', error);
+        res.status(500).json({ message: 'Server Error' });
+      }
+  };
 
 
 
 
-module.exports = { get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify };
+module.exports = { get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, checkSavedProduct, getUserSavedProducts, place_Bid,get_Auction_All, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify,getAllBidsforHome };
 

@@ -61,14 +61,14 @@ const Pending_Auction = () => {
 
   return (
     <div className="p-5">
-      <h3 className="text-start w-100 mb-4 border-bottom text-white">Pending Auction</h3>
+      <h3 className="text-start w-100 mb-4 border-bottom" style={{color: "#4A90E2"}}>Pending Auction</h3>
       <div className={css["auction-table"]}>
         {rejectingAuction ? (
           <div style={{height: "500px"}}>
 
             <textarea type="text" placeholder="Enter reason" value={reason} onChange={(e) => setReason(e.target.value)} style={{height: "450px"}} className="w-100 border p-3"/>
             <div className="mt-2">
-              <button className="btn btn-link me-3 text-white" onClick={handleCancelReject}>Back</button>
+              <button className="btn btn-link me-3" style={{color: "#4A90E2"}} onClick={handleCancelReject}>Back</button>
               <button className="btn btn-outline-danger w-25" onClick={handleRejectConfirm}>Submit</button>
             </div>
 
@@ -77,39 +77,39 @@ const Pending_Auction = () => {
           <table className="w-100">
             <thead className="border" style={{ height: "50px" }}>
               <tr>
-                <th className="text-white">#</th>
-                <th className="text-white">Image</th>
-                <th className="text-white">Product Name</th>
-                <th className="text-white">Starting Price</th>
-                <th className="text-white">Increment Price</th>
-                <th className="text-white">Start Date</th>
-                <th className="text-white">End Date</th>
-                <th className="text-white">Type</th>
-                <th className="text-white">Quantity</th>
-                <th className="text-white">Status</th>
-                <th className="text-white">Action</th>
+                <th>#</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Starting Price</th>
+                <th>Increment Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {msg ? (
                 <tr>
-                  <td colSpan="9" className={`text-white ${css.noDataMessage}`}>Data not found</td>
+                  <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}>Data not found</td>
                 </tr>
               ) : (
                 sellerdata.map((item, index) => (
-                  <tr key={item._id} className="border-top border-white mt-5">
-                    <td className="text-white">{index + 1}</td>
+                  <tr key={item._id} className="border-top mt-5">
+                    <td className="text-secondary">{index + 1}</td>
                     <td>
                       <img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction Image" style={{ width: "100px", height: "100px", padding: "7px" }} />
                     </td>
-                    <td className="text-white">{item.product_name}</td>
-                    <td className="text-white">{item.starting_price}</td>
-                    <td className="text-white">{item.increment_price}</td>
-                    <td className="text-white">{item.start_date}</td>
-                    <td className="text-white">{item.end_date}</td>
-                    <td className="text-white">{item.product_type}</td>
-                    <td className="text-white">{item.quantity}</td>
-                    <td className="text-white">{item.status}</td>
+                    <td className="text-secondary">{item.product_name}</td>
+                    <td className="text-secondary">{item.starting_price}</td>
+                    <td className="text-secondary">{item.increment_price}</td>
+                    <td className="text-secondary">{item.start_date}</td>
+                    <td className="text-secondary">{item.end_date}</td>
+                    <td className="text-secondary">{item.product_type}</td>
+                    <td className="text-secondary">{item.quantity}</td>
+                    <td className="text-secondary">{item.status}</td>
                     <td>
                       <button className={`${css.updateButton} btn btn-outline-success`} onClick={() => handleApprove(item._id)}>Approve</button>
                       <button className={`${css.deleteButton} ms-3 btn btn-outline-danger`} onClick={() => handleRejectClick(item._id)}>Rejected</button>

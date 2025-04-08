@@ -58,9 +58,10 @@ const Sidebar = () => {
                 <Link to="seller-account" className="text-white nav-link d-flex align-items-center">
                     <FaStore className="me-2" /> Seller
                 </Link>
-                {/* <Link to="feedback" className="text-white nav-link d-flex align-items-center">
-                    <FaComments className="me-2" /> Feedback
-                </Link> */}
+
+                <Link to="user-query" className="text-white nav-link d-flex align-items-center">
+                    <FaComments className="me-2" /> User Query
+                </Link>
             </Nav>
 
             <div className="mt-auto p-3 border-top border-white d-flex align-items-center">

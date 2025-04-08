@@ -4,6 +4,8 @@ import { CiSaveUp2, CiSaveDown2 } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import css from "./auction_page.module.css";
+import tableStyles from "./auctionTable.module.css";  // Import CSS module
+import styles from "./Button.module.css";
 
 const Auction_Page = () => {
   const navigate = useNavigate();
@@ -18,7 +20,9 @@ const Auction_Page = () => {
   const [isAuctionActive, setIsAuctionActive] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [timeLeft, setTimeLeft] = useState("");
+
   const [latestBids, setLatestBids] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +42,12 @@ const Auction_Page = () => {
             setIsSaved(savedRes.saved);
           }
 
+
           const { data: latestBidsData } = await axios.get(
             `${import.meta.env.VITE_API_URL}/user/latest-bids/${id}`
           );
           setLatestBids(latestBidsData);
+
         }
 
         const { data: recData } = await axios.get(
@@ -59,6 +65,41 @@ const Auction_Page = () => {
     const interval = setInterval(() => {
       const now = new Date();
       setCurrentTime(now);
+
+  //     const hours = now.getHours();
+  //     if (hours >= 16 || hours < 9) {
+  //       setIsAuctionActive(false);
+  //       setError("Auction is active from 9:00 AM to 4:00 PM.");
+
+  //       const nextAuctionStart = new Date();
+  //       nextAuctionStart.setHours(10, 0, 0, 0);
+
+  //       if (hours >= 17) {
+  //         nextAuctionStart.setDate(nextAuctionStart.getDate() + 1);
+  //       }
+
+  //       const timeDiff = nextAuctionStart - now;
+  //       const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+  //       const minutesLeft = Math.floor(
+  //         (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
+  //       );
+  //       const secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+  //       setTimeLeft(
+  //         `Auction starts in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`
+  //       );
+  //     } else {
+  //       setIsAuctionActive(true);
+  //       setError("");
+  //       setTimeLeft("");
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
+
+
   
       const hours = now.getHours();
       const minutes = now.getMinutes();
@@ -94,6 +135,7 @@ const Auction_Page = () => {
     return () => clearInterval(interval);
   }, []);  
 
+
   const handleSaveProduct = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -122,20 +164,23 @@ const Auction_Page = () => {
       return false;
     }
 
+
+
     setError("");
     return true;
   };
 
   const handleBid = async () => {
     if (!validateBid()) return;
-  
+
     try {
       const token = localStorage.getItem("token");
       if (!token || localStorage.getItem("role") !== "user") {
         return alert("Login required to place a bid!");
       }
       setLoading(true);
-      
+
+
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/user/place-bid`,
         {
@@ -144,20 +189,24 @@ const Auction_Page = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       setProduct((prev) => ({ ...prev, current_bid: data.current_bid }));
       alert(data.message);
       setBidAmount(0);
       setCurrentBidAmount("");
+
   
     //   fetchData(); 
+
     } catch (error) {
       alert(error.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
+
   
+
 
   return (
     <div className="container-fluid p-5">
@@ -242,16 +291,19 @@ const Auction_Page = () => {
                     </>
                   )}
                 </div>
-
-                {product.status !== "Inactive" && (
-                  <button
-                    className="btn btn-secondary w-100"
-                    disabled={!isAuctionActive || loading}
-                    onClick={handleBid}
-                  >
-                    {loading ? "Placing Bid..." : `+ ₹${bidAmount}`}
-                  </button>
-                )}
+ <div className={styles.buttonContainer}>
+ <button
+   className={`${styles.btn} btn btn-secondary w-100`}
+   disabled={!isAuctionActive || loading}
+   onClick={handleBid}
+ >
+   {loading
+     ? "Placing Bid..."
+     : product.status !== "Active"
+     ? "Bidding Not Allowed"
+     : `+ ₹${bidAmount}`}
+ </button>
+ </div>
               </div>
             </div>
           ) : (
@@ -259,9 +311,9 @@ const Auction_Page = () => {
           )}
         </div>
       </div>
-      <div className="mb-1" style={{ height: "300px"}}>
+      <div className={tableStyles["table-container"]}>
         <h5 className="text-muted">Latest Bids</h5>
-        <table className="table">
+        <table className={`table ${tableStyles.table}`}>
           <thead>
             <tr>
               <th>Auction</th>
@@ -275,24 +327,34 @@ const Auction_Page = () => {
           </thead>
           <tbody>
             {latestBids.length > 0 ? (
-              latestBids.map((bid) =>
-                bid.users.map((user) =>
-                  user.bids.slice(-1).map((b, index) => (
-                    <tr key={index}>
-                      <td>{bid.auction_id.product_name}</td>
-                      <td>{bid.auction_id.status}</td>
-                      <td>{user.user_id.fullName}</td>
-                      <td>{user.user_id.email}</td>
-                      <td>{user.user_id.mobile}</td>
-                      <td>₹{b.amount}</td>
-                      <td>{new Date(b.bid_time).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
-                    </tr>
-                  ))
+              latestBids
+                .map((bid) =>
+                  bid.users
+                    .map((user) =>
+                      user.bids
+                        .slice(-1) 
+                        .sort((a, b) => b.amount - a.amount) 
+                        .map((b, index) => (
+                          <tr key={index}>
+                            <td>{bid.auction_id.product_name}</td>
+                            <td>{bid.auction_id.status}</td>
+                            <td>{user.user_id.fullName}</td>
+                            <td>{user.user_id.email}</td>
+                            <td>{user.user_id.mobile}</td>
+                            <td className={tableStyles["bid-amount"]}>₹{b.amount}</td>
+                            <td className={tableStyles["time-column"]}>
+                              {new Date(b.bid_time).toLocaleString("en-IN", {
+                                timeZone: "Asia/Kolkata",
+                              })}
+                            </td>
+                          </tr>
+                        ))
+                    )
                 )
-              )
+                .flat() // Flatten the array of bid rows
             ) : (
               <tr>
-                <td colSpan="10" className="text-center">
+                <td colSpan="7" className={tableStyles["no-bids"]}>
                   No bids yet
                 </td>
               </tr>
@@ -300,6 +362,8 @@ const Auction_Page = () => {
           </tbody>
         </table>
       </div>
+
+
 
       <h5 className="text-muted">Recommend</h5>
       <div
@@ -334,5 +398,6 @@ const Auction_Page = () => {
     </div>
   );
 };
+
 
 export default Auction_Page;

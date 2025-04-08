@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import css from "./user_seller.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -63,11 +64,13 @@ export default function Login() {
                         navigate("/");
                     }
                 } else {
-                    alert(data.message);
+                    toast.error(data.message);
+                    
                 }
             } catch (error) {
                 console.error("Login Error:", error.response?.data);
-                alert(error.response?.data?.message || "Login failed");
+                toast.error(error.response?.data?.message || "Login failed");
+
             }
         }
     }; 
@@ -77,12 +80,12 @@ export default function Login() {
          <>
         <div className={`${css.container}`}>
             <div className={`${css.login}`}>
-                <div className={`${css.login_form} border border-white px-2`}>
+                <div className={`${css.login_form} border border-white bg-white px-5`}>
                     <div className={`${css.login_form_container} border-bottom border-white d-flex flex-column justify-content-evenly`}>
-                        <h3 className="text-center mb-3 font-weight-bold text-white">Login</h3>
+                        <h3 className="text-center mb-3 font-weight-bold" style={{color: "#4A90E2"}}>Login</h3>
                         <form onSubmit={handleSubmit}>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label text-white">Email</label>
+                                <label className="form-label">Email</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -94,7 +97,7 @@ export default function Login() {
                                 {errors.email && <small className="text-danger">{errors.email}</small>}
                             </div>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label text-white">Password</label>
+                                <label className="form-label">Password</label>
                                 <input
                                     type="password"
                                     name="password"
@@ -106,7 +109,7 @@ export default function Login() {
                                 {errors.password && <small className="text-danger">{errors.password}</small>}
                             </div>
                             <div className={`${css.login_form_field}`}>
-                                <label className="form-label text-white">Role</label>
+                                <label className="form-label">Role</label>
                                 <select
                                     name="role"
                                     className={`form-select ${errors.role ? "border-danger" : ""}`}
@@ -119,16 +122,15 @@ export default function Login() {
                                 </select>
                                 {errors.role && <small className="text-danger">{errors.role}</small>}
                             </div>
-                            <button type="submit" className="w-100 btn border-white text-white"> Login </button>
+                            <button type="submit" className="w-100 btn border"> Login </button>
                         </form>
                     </div>
-                    <Link to="/forgot-password" className={`text-white ${css['forgot_password_link']}`}>Forgot password?</Link>
+                    <Link to="/forgot-password" className={`border-top ${css['forgot_password_link']}`} style={{color: "#4A90E2"}}>Forgot password?</Link>
                 </div>
-                <div className={`${css.login_link} border border-white p-3 text-center`}>
-                    <p className="text-white"> Don't have an account?  
-                        <Link to="/signup_user" className="text-white"> User</Link> |  
-                        <Link to="/signup_seller" className="text-white"> Seller</Link>
-                    </p>
+                <div className={`${css.login_link} bg-white p-3 text-center`}>
+                Don't have an account?  
+                        <Link to="/signup_user" style={{color: "#4A90E2"}}> User</Link> |  
+                        <Link to="/signup_seller" style={{color: "#4A90E2"}}> Seller</Link>
                 </div>
             </div>
         </div>

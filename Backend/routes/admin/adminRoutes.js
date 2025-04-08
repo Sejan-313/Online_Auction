@@ -5,7 +5,7 @@ const express = require("express");
 // const {updateAuctionAprove,updateAuctionRejectDescription,updateAuctionExpired} = require("../../controllers/seller/auctionController");
 const { login, getUserAccount, getSellerAccount, deleteUser, deleteSeller } = require("../../controllers/admin/authController");
 
-const { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids } = require("../../controllers/admin/auctionController");
+const { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids ,sendResponseEmail,getAllContacts} = require("../../controllers/admin/auctionController");
 
 const router = express.Router();
 router.post("/login", login);
@@ -24,6 +24,18 @@ router.put("/auction-status/:id", updateAuctionStatus);
 router.delete("/auction/:id", deleteAuction);
 router.put("/auction-complete/:id", completeAuction);
 router.get("/final-bids", getFinalBids);
+let contacts = [
+  {
+    fullName: 'Sezan',
+    email: 'sezansahin3011@gmail.com',
+    phone: '7043834447',
+    subject: 'website',
+    message: 'hello',
+  },
+];
+
+router.get('/contacts', getAllContacts);
+router.post('/send-response', sendResponseEmail);
 
 // router.get("/all/user", getUserAll); 
 // router.get("/all/seller", getsellrAll);

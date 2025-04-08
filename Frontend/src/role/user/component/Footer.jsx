@@ -1,16 +1,18 @@
+import styles from './Slider.module.css';
+
 const Footer = () =>
 {
     return <>
-     <footer className="footer-section spad footer p-5">
+     <footer className={`${styles.footer} footer-section spad footer p-5`}>
         <div className="w-75 mx-auto">
             <div className="newslatter-form">
                 <div className="row">
-                    <div className="col-lg-12">
+                    {/* <div className="col-lg-12">
                         <form action="#">
                             <input type="text" placeholder="Your email address"/>
-                            <button type="submit">Subscribe to our newsletter</button>
+                            <button type="submit">Submit</button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="footer-widget">
@@ -66,7 +68,7 @@ const Footer = () =>
                 </div>
             </div>
         </div>
-        <div className="social-links-warp">
+        {/* <div className="social-links-warp">
 			<div className="d-flex justify-content-center">
 				<div className="social-links">
 					<a href="" className="instagram"><i className="fa fa-instagram"></i><span>instagram</span></a>
@@ -83,7 +85,7 @@ const Footer = () =>
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i className="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                     </p>
                 </div>
-		</div>
+		</div> */}
     </footer>
 
     </>

@@ -4,14 +4,14 @@
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    background: linear-gradient(to right, #4A90E2 10%, #64A1FF 40%, #85CFFE 90%);
-    background-size: cover;
-    background-position: center;
 }
 
 .container_col {
     width: 320px;
-    min-width: 280px;
+    min-width: 350px;
+    background-color: #081a35;
+    background-size: cover;
+    background-position: center;
 }
 
 .container_col2 {

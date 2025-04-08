@@ -1,3 +1,4 @@
+
 a {
     text-decoration: none !important;
 }
@@ -5,6 +6,17 @@ a {
 .home-btn
 {
     size: 100px;
+}
+
+.logo {
+  width: 150px;  /* Adjust the width as needed */
+  height: auto;  /* Ensures the height adjusts proportionally to the width */
+}
+
+.text-white {
+  display: flex;
+  justify-content: center;  /* Centers the logo horizontally */
+  align-items: center;      /* Centers the logo vertically */
 }
 
 .user-font
@@ -21,6 +33,11 @@ a {
     right: 0px;
     left: 90px;
 }
+
+/* body
+{
+  background-color: #64a1ff;
+} */
 
 
 .gradient-custom {
