@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './UserQuery.module.css'; // Import your CSS module for styling
+import styles from './UserQuery.module.css'; 
 
 const UserQuery = () => {
-  const API_URL = import.meta.env.VITE_API_URL;  // Assuming you have set this in your .env
+  const API_URL = import.meta.env.VITE_API_URL; 
 
   const [contacts, setContacts] = useState([]);
   const [responseMessage, setResponseMessage] = useState('');
@@ -11,7 +11,7 @@ const UserQuery = () => {
   // Fetch contact messages
   useEffect(() => {
     axios
-      .get(`${API_URL}/admin/contacts`)  // The route in your backend to fetch contacts
+      .get(`${API_URL}/admin/contacts`)  
       .then((response) => {
         setContacts(response.data);
       })
@@ -20,20 +20,18 @@ const UserQuery = () => {
       });
   }, []);
 
-  // Handle sending the response email to the user
   const handleSendResponse = (email) => {
     if (!responseMessage.trim()) {
       alert('Please enter a response message.');
       return;
     }
 
-    // Send the response message to the backend
     axios
       .post(`${API_URL}/admin/send-response`, { email, responseMessage })
       .then((response) => {
         if (response.data.success) {
           alert(`Response sent to ${email}`);
-          setResponseMessage(''); // Clear the response message after sending
+          setResponseMessage(''); 
         } else {
           alert('Failed to send response');
         }
@@ -48,7 +46,6 @@ const UserQuery = () => {
     <div className={styles['admin-panel']}>
       <h1>Contact Messages</h1>
 
-      {/* Display contacts in a table */}
       {contacts.length === 0 ? (
         <p>No contact messages</p>
       ) : (

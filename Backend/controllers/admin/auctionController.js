@@ -224,7 +224,7 @@ const sendResponseEmail = (req, res) => {
 
 const getAllContacts = async (req, res) => {
   try {
-    const contacts = await Contact.find(); // Fetch all contact messages
+    const contacts = await Contact.find({status: { $in: ['Unread'] }}); // Fetch all contact messages
     if (contacts.length === 0) {
       return res.status(404).json({ message: 'No contacts found' });
     }
