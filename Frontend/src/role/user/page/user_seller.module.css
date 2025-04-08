@@ -12,9 +12,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: black;
 }
 .login_form_container {
     height: 450px;
+    background-color: black;
 }
 .login_form {
     height: 520px;
