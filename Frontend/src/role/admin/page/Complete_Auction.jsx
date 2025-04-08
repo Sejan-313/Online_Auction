@@ -41,44 +41,49 @@ const Complete_Auction = () => {
         <table className="w-100">
           <thead className="border" style={{height: "50px"}}>
           <tr>
-              <th>#</th>
-              <th>Auction Name</th>
-              <th>Starting Price</th>
-              <th>Auction Type</th>
-              <th>Winner Name</th>
-              <th>Email</th>
-              <th>City</th>
-              <th>Gender</th>
-              <th>Final Amount</th>
-              <th>Payment</th>
-              <th>Action</th>
+              <th className="text-center">#</th>
+              <th className="text-center">Auction Name</th>
+              <th className="text-center">Starting Price</th>
+              <th className="text-center">Auction Type</th>
+              <th className="text-center">Winner Name</th>
+              <th className="text-center">Email</th>
+              <th className="text-center">City</th>
+              <th className="text-center">Gender</th>
+              <th className="text-center">Final Amount</th>
+              <th className="text-center">Payment</th>
+              <th className="text-center">Action</th>
           </tr>
           </thead>
           <tbody>
-            {msg ? (
-              <tr>
-                <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}> Data not found </td>
+          {sellerdata.length === 0 ? (
+            <tr>
+              <td colSpan="11" className={`text-secondary text-center ${css.noDataMessage}`}>
+                Auction not found
+              </td>
+            </tr>
+          ) : (
+            sellerdata.map((item, index) => (
+              <tr key={item._id} className="text-secondary border-top mt-5">
+                <td className="text-secondary text-center">{index + 1}</td>
+                <td className="text-secondary text-center">{item?.auctionId?.product_name}</td>
+                <td className="text-secondary text-center">{item?.auctionId?.starting_price}</td>
+                <td className="text-secondary text-center">{item?.auctionId?.product_type}</td>
+                <td className="text-secondary text-center">{item?.winnerId?.fullName}</td>
+                <td className="text-secondary text-center">{item?.winnerId?.email}</td>
+                <td className="text-secondary text-center">{item?.winnerId?.city}</td>
+                <td className="text-secondary text-center">{item?.winnerId?.gender}</td>
+                <td className="text-secondary text-center">{item?.finalAmount}</td>
+                <td className="text-secondary text-center">{item?.paymentStatus}</td>
+                <td>
+                  <input
+                    type="submit"
+                    value="Delete"
+                    className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
+                    onClick={() => handleDelete(item._id)}
+                  />
+                </td>
               </tr>
-            ) : (
-            sellerdata.map((item, index) => {
-              return (
-                <tr key={item._id} className="text-secondary border-top mt-5">
-                  <td className="text-secondary">{index+1}</td>
-                  <td className="text-secondary">{item?.auctionId?.product_name}</td>
-                  <td className="text-secondary">{item?.auctionId?.starting_price}</td>
-                  <td className="text-secondary">{item?.auctionId?.product_type}</td>
-                  <td className="text-secondary">{item?.winnerId?.fullName}</td>
-                  <td className="text-secondary">{item?.winnerId?.email}</td>
-                  <td className="text-secondary">{item?.winnerId?.city}</td>
-                  <td className="text-secondary">{item?.winnerId?.gender}</td>
-                  <td className="text-secondary">{item?.finalAmount}</td>
-                  <td className="text-secondary">{item?.paymentStatus}</td>
-                  <td>
-                    <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`} onClick={() => handleDelete(item._id)}/>
-                  </td>
-                </tr>
-              );
-            })
+            ))
           )}
           </tbody>
         </table>

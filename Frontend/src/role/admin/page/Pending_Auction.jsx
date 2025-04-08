@@ -46,6 +46,10 @@ const Pending_Auction = () => {
   };
 
   const handleRejectConfirm = async () => {
+    if (!reason.trim()) {
+      alert("Please enter a reason for rejection.");
+      return;
+    }
     try {
       await axios.post(`${API_URL}/admin/reject-auction`, {
         auctionId: rejectingAuction,
@@ -77,39 +81,39 @@ const Pending_Auction = () => {
           <table className="w-100">
             <thead className="border" style={{ height: "50px" }}>
               <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Starting Price</th>
-                <th>Increment Price</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th className="text-center">#</th>
+                <th className="text-center">Image</th>
+                <th className="text-center">Product Name</th>
+                <th className="text-center">Starting Price</th>
+                <th className="text-center">Increment Price</th>
+                <th className="text-center">Start Date</th>
+                <th className="text-center">End Date</th>
+                <th className="text-center">Type</th>
+                <th className="text-center">Quantity</th>
+                <th className="text-center">Status</th>
+                <th className="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {msg ? (
                 <tr>
-                  <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}>Data not found</td>
+                  <td colSpan="11" className={`text-secondary text-center ${css.noDataMessage}`}>Auction not found</td>
                 </tr>
               ) : (
                 sellerdata.map((item, index) => (
                   <tr key={item._id} className="border-top mt-5">
-                    <td className="text-secondary">{index + 1}</td>
+                    <td className="text-secondary text-center">{index + 1}</td>
                     <td>
                       <img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction Image" style={{ width: "100px", height: "100px", padding: "7px" }} />
                     </td>
-                    <td className="text-secondary">{item.product_name}</td>
-                    <td className="text-secondary">{item.starting_price}</td>
-                    <td className="text-secondary">{item.increment_price}</td>
-                    <td className="text-secondary">{item.start_date}</td>
-                    <td className="text-secondary">{item.end_date}</td>
-                    <td className="text-secondary">{item.product_type}</td>
-                    <td className="text-secondary">{item.quantity}</td>
-                    <td className="text-secondary">{item.status}</td>
+                    <td className="text-secondary text-center">{item.product_name}</td>
+                    <td className="text-secondary text-center">{item.starting_price}</td>
+                    <td className="text-secondary text-center">{item.increment_price}</td>
+                    <td className="text-secondary text-center">{item.start_date}</td>
+                    <td className="text-secondary text-center">{item.end_date}</td>
+                    <td className="text-secondary text-center">{item.product_type}</td>
+                    <td className="text-secondary text-center">{item.quantity}</td>
+                    <td className="text-secondary text-center">{item.status}</td>
                     <td>
                       <button className={`${css.updateButton} btn btn-outline-success`} onClick={() => handleApprove(item._id)}>Approve</button>
                       <button className={`${css.deleteButton} ms-3 btn btn-outline-danger`} onClick={() => handleRejectClick(item._id)}>Rejected</button>

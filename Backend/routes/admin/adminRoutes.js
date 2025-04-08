@@ -5,7 +5,7 @@ const express = require("express");
 // const {updateAuctionAprove,updateAuctionRejectDescription,updateAuctionExpired} = require("../../controllers/seller/auctionController");
 const { login, getUserAccount, getSellerAccount, deleteUser, deleteSeller } = require("../../controllers/admin/authController");
 
-const { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids ,sendResponseEmail,getAllContacts} = require("../../controllers/admin/auctionController");
+const { getDashboardStats, getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids ,sendResponseEmail,getAllContacts} = require("../../controllers/admin/auctionController");
 
 const router = express.Router();
 router.post("/login", login);
@@ -36,6 +36,7 @@ let contacts = [
 
 router.get('/contacts', getAllContacts);
 router.post('/send-response', sendResponseEmail);
+router.get('/dashboard-stats', getDashboardStats);
 
 // router.get("/all/user", getUserAll); 
 // router.get("/all/seller", getsellrAll);

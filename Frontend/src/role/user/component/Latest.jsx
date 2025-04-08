@@ -73,9 +73,9 @@ const Latest = () => {
     };
 
     return (
-        <div className="latest-products spad p-5">
+        <div className="latest-products spad border" style={{ minHeight: "1000px" }}>
             <div className="container-fluid">
-                <SearchBar onSearch={handleSearch} /> {/* Add search bar */}
+                <SearchBar onSearch={handleSearch} /> 
                 <Latestlink onFilter={handleFilter} />
                 <div className="row" id="product-list">
                     {filteredAuctions.length > 0 ? (
@@ -97,7 +97,7 @@ const Latest = () => {
                             </Link>
                         ))
                     ) : (
-                        <p>No Products Available</p>
+                        <p className="text-center">No Products Available</p>
                     )}
                 </div>
             </div>

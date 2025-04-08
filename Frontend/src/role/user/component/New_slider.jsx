@@ -67,7 +67,7 @@ const New_slider = () => {
     <div>
       
 
-      <div className={styles.container}>
+      <div className={`${styles.container}`}>
         <div className={styles.slide}>
           {items.map((item, index) => (
             <div

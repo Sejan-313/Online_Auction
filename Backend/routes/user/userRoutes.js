@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { register, login, getUser ,getUserById, updateUser, changePassword } = require("../../controllers/user/authController");
 const { submitContact } = require("../../controllers/user/contactController");
-const { get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, place_Bid, getUserSavedProducts, checkSavedProduct, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify ,getAllBidsforHome} = require("../../controllers/user/auctionController");
+const { getPendingPayments, get_Auction, getLatestBids, get_AuctionById, get_RecommendAuction, toggleSave, place_Bid, getUserSavedProducts, checkSavedProduct, getUserBiddedAuctions, getUserBiddingHistory,payement,order,verify ,getAllBidsforHome} = require("../../controllers/user/auctionController");
 const { forgotPassword, verifyOTP, resetPassword } = require("../../controllers/user/forgotPasswordController");
 const authenticate = require("../../middlewares/authMiddleware");
 
@@ -37,6 +37,7 @@ router.get("/bidding-history", authenticate, getUserBiddingHistory);
 router.get("/get-payement",payement);
 router.get("/latest-bids/:auctionId", getLatestBids);
 router.get('/latest-bids-all-auctions',getAllBidsforHome);
+router.get("/pending-payments/:userId", getPendingPayments);
 
 //order router
 router.post("/order", order);

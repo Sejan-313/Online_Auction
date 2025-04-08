@@ -13,7 +13,6 @@ const Ongoing_Auction = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 setAuctions(response.data);
-                console.log(response.data);
                 
             } catch (error) {
                 console.error("Error fetching user bidded auctions", error);
@@ -43,19 +42,19 @@ const Ongoing_Auction = () => {
                     <tbody>
                         {auctions.length > 0 ? (
                             auctions.map((auction) => (
-                                <tr key={auction._id} className="text-center">
-                                    <td className="border-top py-2">
-                                        <img src={`http://localhost:5000/uploads/seller/${auction.image}`} alt="img" className="h-16 w-16 object-cover rounded" style={{ width: "100px", height: "100px" }}/>
+                                <tr key={auction?._id} className="text-center">
+                                    <td className="border-top text-center py-2">
+                                        <img src={`http://localhost:5000/uploads/seller/${auction?.image}`} alt="img" className="h-16 w-16 object-cover rounded" style={{ width: "100px", height: "100px" }}/>
                                     </td>
-                                    <td className="border-top py-2">{auction.product_name}</td>
-                                    <td className="border-top py-2">{auction.product_type}</td>
-                                    <td className="border-top py-2">₹{auction.starting_price}</td>
-                                    <td className="border-top py-2 text-green-600 font-bold">₹{auction.starting_price + auction.current_bid}</td>
-                                    <td className="border-top py-2">{auction.quantity}</td>
-                                    <td className="border-top py-2">{auction.start_date}</td>
-                                    <td className="border-top py-2 text-red-500">{auction.end_date}</td>
-                                    <td className="border-top py-2">
-                                        <Link to={`/auction-product/${auction._id}`}>View</Link>
+                                    <td className="border-top text-center py-2">{auction?.product_name}</td>
+                                    <td className="border-top text-center py-2">{auction?.product_type}</td>
+                                    <td className="border-top text-center py-2">₹{auction?.starting_price}</td>
+                                    <td className="border-top text-center py-2 text-green-600 font-bold">₹{auction?.starting_price + auction?.current_bid}</td>
+                                    <td className="border-top text-center py-2">{auction?.quantity}</td>
+                                    <td className="border-top text-center py-2">{auction?.start_date}</td>
+                                    <td className="border-top text-center py-2 text-red-500">{auction?.end_date}</td>
+                                    <td className="border-top text-center py-2">
+                                        <Link className="text-primary" to={`/auction-product/${auction?._id}`}>View</Link>
                                     </td>
                                 </tr>
                             ))

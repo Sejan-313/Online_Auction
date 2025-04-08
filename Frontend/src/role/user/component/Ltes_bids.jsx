@@ -29,7 +29,7 @@ const Ltes_bids = () => {
 
   return (
     <div className="container-fluid p-5">
-      <h3 className="mb-4 text-center">Latest Bids on Auctions</h3>
+      <h1 className="text-center">Latest Bid on Auction</h1>
       {loading ? (
         <p>Loading latest bids...</p>
       ) : (
@@ -40,22 +40,22 @@ const Ltes_bids = () => {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Product Name</th>
-                  <th>Latest Bid</th>
-                  <th>Bidding Ends</th>
-                  <th>Action</th>
+                  <th className="text-center">Product Name</th>
+                  <th className="text-center">Latest Bid</th>
+                  <th className="text-center">Bidding Ends</th>
+                  <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {latestBids.map((auction) => (
                   <tr key={auction.auction_id}>
-                    <td>{auction.product_name}</td>
-                    <td>₹{auction.latest_bid}</td>
-                    <td>{new Date(auction.end_date).toLocaleString()}</td>
+                    <td className="text-center">{auction.product_name}</td>
+                    <td className="text-center">₹{auction.latest_bid}</td>
+                    <td className="text-center">{new Date(auction.end_date).toLocaleString()}</td>
                     <td>
                       <Link
                         to={`/auction-product/${auction.auction_id}`}
-                        className="btn btn-dark"
+                        className="btn btn-link text-primary d-flex justify-content-center "
                       >
                         View Auction
                       </Link>

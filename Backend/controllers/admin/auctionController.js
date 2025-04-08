@@ -4,6 +4,15 @@ const Bid = require("../../models/user/bidModel");
 const FinalBid = require("../../models/user/finalBidModel");
 const Contact = require('../../models/user/Contact');
 const nodemailer = require('nodemailer');
+const User = require("../../models/user/userModel");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "bawjee0@gmail.com",
+    pass: "mumb xhcv amlv kyqi", 
+  },
+});
 
 const getAuctionsByStatus = async (req, res) => {
     try {
@@ -166,7 +175,27 @@ const completeAuction = async (req, res) => {
     auction.status = "Completed";
     await auction.save();
 
-    res.status(200).json({ message: "Auction completed successfully", finalBid });
+    // ✉️ Email Notifications
+    for (const user of bidData.users) {
+      const userData = await User.findById(user.user_id);
+      if (!userData || !userData.email) continue;
+
+      const isWinner = user.user_id.toString() === highestBid.user_id.toString();
+      const subject = isWinner ? "Congratulations! You Won the Auction 🎉" : "Auction Result";
+      const text = isWinner
+        ? `Dear ${userData.fullName},\n\nCongratulations! You have won the auction for "${auction.title}" with a bid of ₹${highestBid.amount}. Please proceed with the payment.\n\nThank you!`
+        : `Dear ${userData.fullName},\n\nUnfortunately, you did not win the auction for "${auction.title}". Better luck next time!\n\nThank you!`;
+
+      await transporter.sendMail({
+        from: "bawjee0@gmail.com",
+        to: userData.email,
+        subject,
+        text,
+      });
+    }
+
+    res.status(200).json({ message: "Auction completed and emails sent successfully", finalBid });
+
   } catch (error) {
     console.error("Error completing auction:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -234,7 +263,53 @@ const getAllContacts = async (req, res) => {
   }
 };
 
-module.exports = { getAllContacts };
+const getDashboardStats = async (req, res) => {
+  try {
+    const auctions = await Auction.find();
+    const finalBids = await FinalBid.find();
+
+    const totalEarnings = finalBids.reduce((acc, bid) => acc + bid.finalAmount, 0);
+    const totalAuctions = auctions.length;
+    const completedOrders = auctions.filter(a => a.status === "Completed").length;
+
+    const auctionStats = auctions.reduce((acc, auction) => {
+      acc[auction.status] = (acc[auction.status] || 0) + 1;
+      return acc;
+    }, {});
+
+    const chartData = Object.keys(auctionStats).map(status => ({
+      name: status,
+      count: auctionStats[status],
+    }));
+
+    const earningsData = auctions.map(a => ({
+      product_name: a.product_name,
+      earnings: finalBids.find(bid => bid.auctionId.toString() === a._id.toString())?.finalAmount || 0
+    }));
+
+    const paymentStatusData = finalBids.reduce((acc, bid) => {
+      acc[bid.paymentStatus] = (acc[bid.paymentStatus] || 0) + 1;
+      return acc;
+    }, {});
+
+    const paymentChartData = Object.keys(paymentStatusData).map(status => ({
+      name: status,
+      count: paymentStatusData[status],
+    }));
+
+    res.json({
+      totalEarnings,
+      totalAuctions,
+      completedOrders,
+      chartData,
+      earningsData,
+      paymentChartData,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err });
+  }
+};
 
 
-module.exports = { getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids,sendResponseEmail,getAllContacts };
+
+module.exports = { getDashboardStats, getAllContacts, getAuctionsByStatus, getAllAuctions, getPendingAuctions, getCompleteAuctions, updateStatus, rejectAuction, updateAuctionStatus, deleteAuction, completeAuction, getFinalBids,sendResponseEmail,getAllContacts };

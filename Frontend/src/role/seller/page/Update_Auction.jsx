@@ -170,7 +170,7 @@ const Update_Auction = () => {
                     </div>
                 </div>
                 <div className={css['Auction_Row_Btn']}>
-                    <button type="submit" className="btn w-50 text-center border" style={{background: "transparent"}}>Add Auction</button>
+                    <button type="submit" className="btn w-50 text-center border" style={{background: "transparent"}}>Update Auction</button>
                 </div>
             </form>
         </div>

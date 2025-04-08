@@ -59,13 +59,15 @@ const Manage_Auctions = () => {
   };
 
   const handleComplete = async (id, status) => {
-    if (!window.confirm(`Are you sure you want to mark this auction as ${status}?`)) return;
+    if (!window.confirm(`Are you sure you want to complete this seller account?`)) return;
     try {
         await axios.put(`${import.meta.env.VITE_API_URL}/admin/auction-complete/${id}`);
         alert("Auction marked as completed!");
         fetchsellerdata();  
     } catch (error) {
-        console.error("Error updating status:", error);
+      const msg = error.response?.data?.message || "Something went wrong";
+      alert(msg);
+      console.error("Error updating status:", error);
     }
 };
 
@@ -98,69 +100,75 @@ const Manage_Auctions = () => {
         <table className="w-100">
           <thead className="border" style={{ height: "50px" }}>
             <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Starting Price</th>
-              <th>Increment Price</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Type</th>
-              <th>Quantity</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th className="text-center">#</th>
+              <th className="text-center">Image</th>
+              <th className="text-center">Product Name</th>
+              <th className="text-center">Starting Price</th>
+              <th className="text-center">Increment Price</th>
+              <th className="text-center">Start Date</th>
+              <th className="text-center">End Date</th>
+              <th className="text-center">Type</th>
+              <th className="text-center">Quantity</th>
+              <th className="text-center">Status</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            {msg ? (
-              <tr>
-                <td colSpan="9" className={`text-muted ${css.noDataMessage}`}>Data not found</td>
-              </tr>
-            ) : (
-              filteredData.map((item, index) => (
-                <tr key={item._id} className="border-top mt-5">
-                  <td className="text-secondary">{index + 1}</td>
-                  <td>
-                    <img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction" style={{ width: "100px", height: "100px", padding: "7px" }} />
-                  </td>
-                  <td className="text-secondary">{item.product_name}</td>
-                  <td className="text-secondary">{item.starting_price}</td>
-                  <td className="text-secondary">{item.increment_price}</td>
-                  <td className="text-secondary">{item.start_date}</td>
-                  <td className="text-secondary">{item.end_date}</td>
-                  <td className="text-secondary">{item.product_type}</td>
-                  <td className="text-secondary">{item.quantity}</td>
-                  <td className="text-secondary">{item.status}</td>
-                  <td className="text-center">
-                    {(item.status === "Active" && item.end_date === new Date().toISOString().split("T")[0]) ? (
-                      <input
-                        type="submit"
-                        value="Completed"
-                        className={`${css.deleteButton} ms-3 w-75 btn btn-outline-secondary`}
-                        onClick={() => handleComplete(item._id, "Completed")}
-                      />
-                    ) : (
-                      <>
-                        {(item.status === "Approved" || item.status === "Active" || item.status === "Inactive" || item.status === "Pending") && (
-                          <input
-                            type="submit"
-                            value={item.status === "Active" ? "Inactive" : "Active"}
-                            className={`${css.deleteButton} ms-3 btn btn-outline-success`}
-                            onClick={() => handleStatusChange(item._id, item.status === "Active" ? "Inactive" : "Active")}
-                          />
-                        )}
+          {filteredData.length === 0 ? (
+            <tr>
+              <td colSpan="11" className={`text-muted text-center ${css.noDataMessage}`}>
+                Auction not found
+              </td>
+            </tr>
+          ) : (
+            filteredData.map((item, index) => (
+              <tr key={item._id} className="border-top mt-5">
+                <td className="text-secondary text-center">{index + 1}</td>
+                <td>
+                  <img
+                    src={`http://localhost:5000/uploads/seller/${item?.image}`}
+                    alt="Auction"
+                    style={{ width: "100px", height: "100px", padding: "7px" }}
+                  />
+                </td>
+                <td className="text-secondary text-center">{item.product_name}</td>
+                <td className="text-secondary text-center">{item.starting_price}</td>
+                <td className="text-secondary text-center">{item.increment_price}</td>
+                <td className="text-secondary text-center">{item.start_date}</td>
+                <td className="text-secondary text-center">{item.end_date}</td>
+                <td className="text-secondary text-center">{item.product_type}</td>
+                <td className="text-secondary text-center">{item.quantity}</td>
+                <td className="text-secondary text-center">{item.status}</td>
+                <td className="text-center">
+                  {(item.status === "Active" && item.end_date === new Date().toISOString().split("T")[0]) ? (
+                    <input
+                      type="submit"
+                      value="Completed"
+                      className={`${css.deleteButton} ms-3 w-75 btn btn-outline-secondary`}
+                      onClick={() => handleComplete(item._id, "Completed")}
+                    />
+                  ) : (
+                    <>
+                      {(item.status === "Approved" || item.status === "Active" || item.status === "Inactive" || item.status === "Pending") && (
                         <input
                           type="submit"
-                          value="Delete"
-                          className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
-                          onClick={() => handleDelete(item._id)}
+                          value={item.status === "Active" ? "Inactive" : "Active"}
+                          className={`${css.deleteButton} w-25 ms-3 btn btn-outline-success`}
+                          onClick={() => handleStatusChange(item._id, item.status === "Active" ? "Inactive" : "Active")}
                         />
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
+                      )}
+                      <input
+                        type="submit"
+                        value="Delete"
+                        className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
+                        onClick={() => handleDelete(item._id)}
+                      />
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
           </tbody>
         </table>
       </div>

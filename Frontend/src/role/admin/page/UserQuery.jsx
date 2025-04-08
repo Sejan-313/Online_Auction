@@ -44,7 +44,7 @@ const UserQuery = () => {
 
   return (
     <div className={styles['admin-panel']}>
-      <h1>Contact Messages</h1>
+      <h1>Contact Message</h1>
 
       {contacts.length === 0 ? (
         <p>No contact messages</p>

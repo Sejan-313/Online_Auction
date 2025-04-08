@@ -32,10 +32,10 @@ const Reject_auction = () => {
 
   return (
     <div className="p-5">
-      <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>Rejected Auctions</h3>
+      <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>Rejected Auction</h3>
       <div className={css['auction-table']}>
         {msg ? ( 
-          <div className={`${css.noDataMessage}`}>Data not found</div>
+          <div className={`${css.noDataMessage}`}>Auction not found</div>
         ) : (
           sellerdata.map((item) => {
             return (

@@ -42,7 +42,7 @@ const Manage_Auctions = () => {
 
   return (
      <div className="p-5">
-     <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>Manage Auctions</h3>
+     <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>Manage Auction</h3>
       <div className={css['auction-table']}>
         <table className="w-100">
           <thead className="border" style={{height: "50px"}}>
@@ -63,27 +63,27 @@ const Manage_Auctions = () => {
           <tbody>
             {msg ? (
               <tr>
-                <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}> Data not found </td>
+                <td colSpan="11" className={`text-secondary ${css.noDataMessage}`}> Auction not found </td>
               </tr>
             ) : (
             sellerdata.map((item, index) => {
               return (
                 <tr key={item._id} className="border-top border-white mt-5">
-                  <td className="text-center text-secondary">{index+1}</td>
+                  <td className="text-secondary text-center">{index+1}</td>
                   <td><img src={`http://localhost:5000/uploads/seller/${item?.image}`} alt="Auction Image" style={{ width: "100px", height: "100px", padding: "7px" }}/></td>
-                  <td className="text-secondary">{item.product_name}</td>
-                  <td className="text-secondary">{item.starting_price}</td>
-                  <td className="text-secondary">{item.increment_price}</td>
-                  <td className="text-secondary">{item.start_date}</td>
-                  <td className="text-secondary">{item.end_date}</td>
-                  <td className="text-secondary">{item.product_type}</td>
-                  <td className="text-secondary">{item.quantity}</td>
-                  <td className="text-secondary">{item.status}</td>
+                  <td className="text-secondary text-center">{item.product_name}</td>
+                  <td className="text-secondary text-center">{item.starting_price}</td>
+                  <td className="text-secondary text-center">{item.increment_price}</td>
+                  <td className="text-secondary text-center">{item.start_date}</td>
+                  <td className="text-secondary text-center">{item.end_date}</td>
+                  <td className="text-secondary text-center">{item.product_type}</td>
+                  <td className="text-secondary text-center">{item.quantity}</td>
+                  <td className="text-secondary text-center">{item.status}</td>
                   <td>
                   <Link to={`/seller/update-auction/${item._id}`}>
-                      <input type="submit" value="Update" className={`${css.updateButton} btn btn-outline-success`} />
+                      <input type="submit" value="Update" className={`${css.updateButton} w-100 btn btn-outline-success`} />
                   </Link>
-                  <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`} onClick={() => handleDelete(item._id)}/>
+                  <input type="submit" value="Delete" className={`${css.deleteButton} w-100 btn btn-outline-danger`} onClick={() => handleDelete(item._id)}/>
                   </td>
                 </tr>
               );

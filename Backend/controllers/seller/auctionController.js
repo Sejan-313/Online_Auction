@@ -1,5 +1,6 @@
 const Auction = require("../../models/seller/auctionModel");
 const Notification = require("../../models/seller/NotificationModel");
+const FinalBid = require("../../models/user/finalBidModel");
 const multer = require("multer");
 const path = require("path");
 
@@ -45,6 +46,56 @@ const createAuction = async (req, res) => {
         }
     });
 };
+
+const getSellerDashboardStats = async (req, res) => {
+  try {
+    const seller_id = req.query.seller_id;
+    if (!seller_id) {
+      return res.status(400).json({ message: "Seller ID is required in query" });
+    }
+
+    const auctions = await Auction.find({ seller_id });
+    const finalBids = await FinalBid.find().populate("auctionId");
+
+    const sellerFinalBids = finalBids.filter(
+      bid => bid.auctionId?.seller_id?.toString() === seller_id
+    );
+
+    const totalEarnings = sellerFinalBids.reduce((acc, bid) => acc + bid.finalAmount, 0);
+    const completedOrders = auctions.filter(a => a.status === "Completed").length;
+
+    const auctionStats = auctions.reduce((acc, auction) => {
+      acc[auction.status] = (acc[auction.status] || 0) + 1;
+      return acc;
+    }, {});
+
+    const paymentStats = sellerFinalBids.reduce((acc, bid) => {
+      acc[bid.paymentStatus] = (acc[bid.paymentStatus] || 0) + 1;
+      return acc;
+    }, {});
+
+    const enrichedAuctions = auctions.map(a => {
+      const bid = sellerFinalBids.find(b => b.auctionId._id.toString() === a._id.toString());
+      return {
+        _id: a._id,
+        product_name: a.product_name,
+        earnings: bid ? bid.finalAmount : 0,
+      };
+    });
+
+    res.json({
+      auctions: enrichedAuctions,
+      totalEarnings,
+      completedOrders,
+      auctionStats,
+      paymentStats,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
+
 
 const getAuction = async (req, res) => {
     try {
@@ -211,5 +262,5 @@ const getAuctionById = async (req, res) => {
   
 
 
-module.exports = { createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getRejectedNotifications,getAuctionsStatus,getAuctionById, updateAuction };
+module.exports = { getSellerDashboardStats, createAuction,getAuction,deleteAuction,getAuctionAll,updateAuctionAprove,updateAuctionRejectDescription,getRejectedNotifications,getAuctionsStatus,getAuctionById, updateAuction };
 

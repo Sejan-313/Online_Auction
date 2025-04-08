@@ -9,7 +9,6 @@ const Home = () =>
 {
     return (
       <>
-        {/* <Slider /> */}
         <New_slider/>
         <Latest />
         <Ltes_bids />

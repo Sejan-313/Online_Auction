@@ -28,6 +28,7 @@ const User_Account = () => {
       }, []);
   
     const handleDelete = async (pid) => {
+      if (!window.confirm(`Are you sure you want to delete this seller account?`)) return;
       try {
         await axios.delete(`${API_URL}/admin/user-account/${pid}`);
         fetchsellerdata();
@@ -38,50 +39,47 @@ const User_Account = () => {
   
     return (
       <div className="p-5">
-        <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>User Accounts</h3>
+        <h3 className='text-start w-100 mb-4 border-bottom' style={{color: "#4A90E2"}}>User Account</h3>
         <div className={css['auction-table']}>
           <table className="w-100">
             <thead className="border" style={{height: "50px"}}>
             <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Address</th>
-              <th>City</th>
-              <th>Pincode</th>
-              <th>Gender</th>
-              <th>Birthdate</th>
-              <th>Action</th>
+              <th className="text-center">#</th>
+              <th className="text-center">Image</th>
+              <th className="text-center">Full Name</th>
+              <th className="text-center">Email</th>
+              <th className="text-center">Mobile</th>
+              <th className="text-center">Address</th>
+              <th className="text-center">City</th>
+              <th className="text-center">Pincode</th>
+              <th className="text-center">Gender</th>
+              <th className="text-center">Birthdate</th>
+              <th className="text-center">Action</th>
             </tr>
             </thead>
             <tbody>
               {msg ? (
-                <tr> <td colSpan="9" className={`text-secondary ${css.noDataMessage}`}> Data not found </td> </tr>
+                <tr> <td colSpan="9" className={`text-secondary text-center ${css.noDataMessage}`}> User not found </td> </tr>
               ) : (
               sellerdata.map((item, index) => {
                 return (
                   <tr key={item._id} className="text-secondary border-top mt-5">
-                    <td className="text-secondary">{index+1}</td>
+                    <td className="text-secondary text-center">{index+1}</td>
                     <td><img src={`http://localhost:5000/uploads/user/${item?.image}`} alt="Auction Image" style={{ width: "80px", height: "80px", padding: "7px" }}/></td>
-                    <td className="text-secondary">{item.fullName}</td>
-                    <td className="text-secondary">{item.email}</td>
-                    <td className="text-secondary">{item.mobile}</td>
-                    <td className="text-secondary">{item.address}</td>
-                    <td className="text-secondary">{item.city}</td>
-                    <td className="text-secondary">{item.pincode}</td>
-                    <td className="text-secondary">{item.gender}</td>
-                    <td className="text-secondary">{item.birthdate}</td>
+                    <td className="text-secondary text-center">{item.fullName}</td>
+                    <td className="text-secondary text-center">{item.email}</td>
+                    <td className="text-secondary text-center">{item.mobile}</td>
+                    <td className="text-secondary text-center">{item.address}</td>
+                    <td className="text-secondary text-center">{item.city}</td>
+                    <td className="text-secondary text-center">{item.pincode}</td>
+                    <td className="text-secondary text-center">{item.gender}</td>
+                    <td className="text-secondary text-center">{item.birthdate}</td>
                     <td>
-                    <Link to={`/seller/update-auction/${item._id}`}>
-                        <input type="submit" value="Active" className={`${css.updateButton} btn btn-outline-success`} />
-                    </Link>
-                    <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
-                      onClick={() => {
-                        handleDelete(item._id);
-                      }}
-                    />
+                      <input type="submit" value="Delete" className={`${css.deleteButton} ms-3 btn btn-outline-danger`}
+                        onClick={() => {
+                          handleDelete(item._id);
+                        }}
+                      />
                     </td>
                   </tr>
                 );
