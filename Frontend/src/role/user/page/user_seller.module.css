@@ -3,20 +3,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(to right, #4A90E2 10%, #64A1FF 40%, #85CFFE 90%);
 }
 
 .login {
-    height: 520px;
+    height: 590px;
     width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.login_form {
+.login_form_container {
     height: 450px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+}
+.login_form {
+    height: 520px;
 }
 .login_form_field {
     height: 95px;
@@ -27,7 +28,7 @@
 
 .signup {
     height: 800px;
-    width: 1000px;
+    width: 700px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -59,6 +60,13 @@
 .icon:hover
 {
     color: black;
-
 }
 
+.forgot_password_link {
+    height: 68px;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}

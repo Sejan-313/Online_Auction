@@ -1,138 +1,208 @@
-
 import Latestlink from "./Latestlink";
+import css from "./Latest.module.css";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const Latest = () => {
+    const [auctions, setAuctions] = useState([]);
+    const [filteredAuctions, setFilteredAuctions] = useState([]);
+    // const [isAuctionAvailable, setIsAuctionAvailable] = useState(true); 
+    // const [countdown, setCountdown] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/user/auction`);
+                setAuctions(data);
+                setFilteredAuctions(data.slice(0, 12))
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const handleFilter = (selectedCategory) => {
+        if (selectedCategory === "All") {
+            setFilteredAuctions(auctions.slice(0, 12))
+        } else {
+            const filtered = auctions.filter(item => item.product_type.toLowerCase() === selectedCategory.toLowerCase());
+            setFilteredAuctions(filtered.slice(0, 12))
+        }
+    };
+
+    // const startCountdown = () => {
+    //     const currentTime = new Date();
+    //     let nextAvailableTime = new Date();
+
+    //     if (currentTime.getHours() >= 17) {
+    //         nextAvailableTime.setHours(9, 0, 0, 0);
+    //     } else {
+    //         nextAvailableTime.setHours(9, 0, 0, 0); 
+    //     }
+
+    //     const timeDifference = nextAvailableTime - currentTime;
+    //     setCountdown(timeDifference); 
+
+    //     const interval = setInterval(() => {
+    //         setCountdown(prevCountdown => {
+    //             if (prevCountdown <= 0) {
+    //                 clearInterval(interval);
+    //                 return 0;
+    //             }
+    //             return prevCountdown - 1000;
+    //         });
+    //     }, 1000);
+    // };
+
+    // const checkAuctionAvailability = () => {
+    //     const currentTime = new Date();
+    //     const currentHour = currentTime.getHours();
+
+    //     if (currentHour >= 9 && currentHour <= 17) {
+    //         setIsAuctionAvailable(true); 
+    //     } else {
+    //         setIsAuctionAvailable(false); 
+    //         startCountdown(); 
+
+    //     }   
+    // };
+
+    // const startCountdownTo5PM = () => {
+    //     const currentTime = new Date();
+    //     const currentHour = currentTime.getHours();
+    //     const currentMinute = currentTime.getMinutes();
+    //     const currentSecond = currentTime.getSeconds();
+
+    //     let next5PM = new Date();
+    //     next5PM.setHours(9, 0, 0, 0); 
+
+    //     if (currentHour >= 9) {
+    //         next5PM.setDate(next5PM.getDate() + 1); 
+    //     }
+
+    //     const timeRemaining = next5PM - currentTime; 
+    //     setCountdown(timeRemaining);
+
+    //     const interval = setInterval(() => {
+    //         setCountdown((prevCountdown) => {
+    //             if (prevCountdown <= 0) {
+    //                 clearInterval(interval);
+    //                 return 0;
+    //             }
+    //             return prevCountdown - 1000; 
+    //         });
+    //     }, 1000);
+    // };
+
+    // const formatTime = (time) => {
+    //     const hours = Math.floor(time / (1000 * 60 * 60));
+    //     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    //     const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    //     return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
+    //         .toString()
+    //         .padStart(2, "0")}`;
+    // };
+
+    // const expireAllAuctions = async () => {
+    //     try {
+    //         await axios.put(`${import.meta.env.VITE_API_URL}/admin/auctionexpired/all`);
+    //         console.log("All auctions have been expired!");
+    //     } catch (error) {
+    //         console.error('Error expiring auctions:', error);
+    //     }
+    // };
+
+    // const checkAuctionStatus = () => {
+    //     const currentTime = new Date();
+    //     const currentHour = currentTime.getHours();
+
+    //     if (currentHour >= 17) {
+    //         setIsAuctionAvailable(false); 
+    //     } else {
+    //         setIsAuctionAvailable(true); 
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     checkAuctionAvailability();
+    //     startCountdownTo5PM();
+    //     checkAuctionStatus();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (!isAuctionAvailable) {
+    //         setFilteredAuctions([]); 
+    //     }
+    // }, [isAuctionAvailable]);
+
+ 
 
 
-const Latest = () =>
-{
-    const images =[
-    {
-        name:"img/products/img-1.jpg",
-        price:"22.90 Rs",
-        prdname:"BM",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-2.jpg",
-        price:"22.90 Rs",
-        prdname:"Slavia",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-3.jpg",
-        price:"22.90 Rs",
-        prdname:"Virtus",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-4.jpg",
-        price:"22.90 Rs",
-        prdname:"Swift",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-5.jpg",
-        price:"22.90 Rs",
-        prdname:"Audi",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-6.jpg",
-        price:"22.90 Rs",
-        prdname:"Rolse Royce",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-7.jpg",
-        price:"22.90 Rs",
-        prdname:"Mercedes",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-8.jpg",
-        price:"22.90 Rs",
-        prdname:"BMW",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-8.jpg",
-        price:"22.90 Rs",
-        prdname:"car",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-10.jpg",
-        price:"22.90 Rs",
-        prdname:"laptop",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-11.jpg",
-        price:"22.90 Rs",
-        prdname:"television",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-12.jpg",
-        price:"22.90 Rs",
-        prdname:"pen",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-10.jpg",
-        price:"22.90 Rs",
-        prdname:"eraser",
-        description:"Best Product",
-        company:"bmw"
-    },
-    {
-        name:"img/products/img-14.jpg",
-        price:"22.90 Rs",
-        prdname:"pencil",
-        description:"Best Product",
-        company:"bmw"
-    }
-]
-
-    return <>
-         <section className="latest-products spad">
-        <div className="container">
-        <Latestlink></Latestlink>
+    return (
+        <div className="latest-products spad p-5">
+        <div className="container-fluid">
+            <Latestlink onFilter={handleFilter} />
             <div className="row" id="product-list">
-
-                {images.map((images)=>(
-                     <div className="col-lg-3 col-sm-6 mix all dresses bags">
-                     <div className="single-product-item">
-                         <figure>
-                             <a href="#"><img src={images.name} alt=""/></a>
-                             <div className="p-status">new</div>
-                         </figure>
-                         <div className="product-text">
-                             <h6>{images.prdname}</h6>
-                             <p>Company : {images.company}</p>
-                             <p>{images.price}</p>
-                             <p>{images.description}</p>
-                             <button className="btn btn-success mt-1">Bid</button>
-                         </div>
-                     </div>
-                 </div>
-                ))}
+                {
+                    filteredAuctions.length > 0 ? (
+                        filteredAuctions.map((item) => (
+                            <Link key={item.id} to={`/auction-product/${item._id}`} className="col-lg-3 col-sm-6">
+                                <div className={css.productItem}>
+                                    <figure className="position-relative border rounded">
+                                        <img
+                                            src={`http://localhost:5000/uploads/seller/${item.image}`}
+                                            alt={item.product_name}
+                                            className={css.productImage}
+                                        />
+                                        <div className={`${css.pStatus} w-25}`}>
+                                            ₹ {item.current_bid + item.starting_price}
+                                        </div>
+                                        <div className={css.overlay}>{item.product_name}</div>
+                                                          
+                                        </figure>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <p>No Products Available</p>
+                    )
+                }
+                {/* {isAuctionAvailable ? (
+                    filteredAuctions.length > 0 ? (
+                        filteredAuctions.map((item) => (
+                            <Link key={item.id} to={`/auction-product/${item._id}`} className="col-lg-3 col-sm-6">
+                                <div className={css.productItem}>
+                                    <figure className="position-relative border rounded">
+                                        <img
+                                            src={`http://localhost:5000/uploads/seller/${item.image}`}
+                                            alt={item.product_name}
+                                            className={css.productImage}
+                                        />
+                                        <div className={`${css.pStatus} w-25}`}>
+                                            ₹ {item.current_bid + item.starting_price}
+                                        </div>
+                                        <div className={css.overlay}>{item.product_name}</div>
+                                      
+                                    </figure>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <p>No Products Available</p>
+                    )
+                ) : (
+                    <div className={`${css.countdown_timer}`}>
+                        <p>Auction is currently closed. Next auction starts in:</p>
+                        <span>{formatTime(countdown)}</span>
+                    </div>
+                )} */}
             </div>
         </div>
-    </section>
-
-    </>
-}
+    </div>
+    );
+};
 
 export default Latest;
